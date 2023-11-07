@@ -1,4 +1,5 @@
 package com.example.mentoring_project.service;
 
-public class MentoringServiceImpl {
+public class MentoringServiceImpl implements MentoringService{
+
 }
