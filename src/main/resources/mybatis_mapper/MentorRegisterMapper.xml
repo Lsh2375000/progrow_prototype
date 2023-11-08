@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mentoring_project.mapper.MentorRegisterMapper">
+    <insert id="insert">
+        INSERT into user_mentor (mentorNo, mantor_id, passwd, name, region, age, nickname, lngName, portfolio, mNo, gradeByMNum, type)
+        values (#{mentorNo}, #{mantor_id}, #{passwd}, #{name}, #{region}, #{age}, #{nickname}, #{lngName}, #{portfolio}, #{mNo}, #{gradeByMNum}, #{type} )
+    </insert>
+
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.MentorRegisterVO">
+        SELECT * FROM user_mentor WHERE mentorNo = #{mentorNo}
+    </select>
+
+    <update id="updateOne">
+        UPDATE user_mentor SET mantor_id = #{mantor_id}, passwd = #{passwd}, region = #{region},
+                               nickname = #{nickname}, lngName = #{lngName}, portfolio = #{portfolio} where mentorNo = #{mentorNo}
+    </update>
+
+    <delete id="deleteOne">
+        DELETE FROM user_mentor WHERE mentorNo = #{mentorNo}
+    </delete>
+
+</mapper>

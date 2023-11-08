@@ -38,6 +38,13 @@ dependencies {
     implementation 'org.modelmapper:modelmapper:3.1.0'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
 
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    // 메일링 서비스
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 tasks.named('test') {
     useJUnitPlatform()

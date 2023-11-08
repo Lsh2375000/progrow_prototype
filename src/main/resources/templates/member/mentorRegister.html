@@ -1,10 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/inc.html}">
 
-</body>
+<div layout:fragment="content">
+    <section>
+        <div id="register-title">
+            <span>회원가입</span>
+        </div>
+        <form name="frmMember" action="/member/mentorRegister" method="post">
+            <div id="register-container">
+                <div id="register-input-container">
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-id" type="text" placeholder="아이디" name="memberId">
+                            <div id="register-id-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span>영문 또는 영문, 숫자 조합 4~12 자리<br></span>
+                        <span id="id-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-pw" type="password" placeholder="비밀번호" name="passwd">
+                            <div id="register-pw-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리<br></span>
+                        <span id = pw-warn-span></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-pw-re" type="password" placeholder="비밀번호 확인">
+                            <div id="register-pwRe-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id = pw-re-warn-span></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-name" type="text" placeholder="이름" name="name">
+                            <div id="register-name-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="name-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-region" type="text" placeholder="지역" name="region">
+                            <div id="register-region-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="region-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-age" type="text" placeholder="나이" name="age">
+                            <div id="register-age-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="age-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-nick" type="text" placeholder="닉네임" name="nickName">
+                            <div id="register-nick-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="nick-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-lngName" type="text" placeholder="프로그래밍 언어" name="lngName">
+                            <div id="register-lngName-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="lngName-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-portfolio" type="text" placeholder="포트폴리오" name="portfolio">
+                            <div id="register-portfolio-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="portfolio-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-intro" type="text" placeholder="자기소개" name="intro">
+                            <div id="register-intro-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="intro-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-type" type="text" placeholder="타입" name="type">
+                            <div id="register-type-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id="type-warn-span"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="register-buttons">
+                <input type="button" id="submit-btn" value="등록">
+                <input type="button" onclick=window.location.href="login" value="취소">
+            </div>
+        </form>
+    </section>
+</div>
+
 </html>
