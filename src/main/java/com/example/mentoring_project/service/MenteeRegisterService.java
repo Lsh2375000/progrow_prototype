@@ -10,5 +10,5 @@ public interface MenteeRegisterService {
     List<MenteeRegisterDTO> getAll();
     MenteeRegisterDTO getOne(Long menteeNo, String mode);
     void modifyOne(MenteeRegisterDTO menteeRegisterDTO);
-    void removeOne(Long memteeNo);
+    void removeOne(Long menteeNo);
 }

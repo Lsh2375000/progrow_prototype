@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MentorRegisterDTO {
     private Long mentorNo; // 멘토 넘버
-    private String mentee_id; // 멘토 ID
+    private String mentor_id; // 멘토 ID
     private String passwd; // 멘토 PW
     private String name; // 멘토 이름
     private String region; // 멘토 지역

@@ -21,7 +21,9 @@ public class MenteeRegisterServiceImpl implements MenteeRegisterService{
 
     @Override
     public void add(MenteeRegisterDTO menteeRegisterDTO) {
-        menteeRegisterMapper.insert(modelMapper.map(menteeRegisterMapper, MenteeRegisterVO.class));
+        MenteeRegisterVO menteeRegisterVO = modelMapper.map(menteeRegisterDTO, MenteeRegisterVO.class);
+        menteeRegisterMapper.insert(menteeRegisterVO);
+//        menteeRegisterMapper.insert(modelMapper.map(menteeRegisterMapper, MenteeRegisterVO.class));
     }
 
     @Override

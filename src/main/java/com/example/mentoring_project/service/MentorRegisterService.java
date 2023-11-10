@@ -14,5 +14,5 @@ public interface MentorRegisterService {
 
     void modifyOne(MentorRegisterDTO menteeRegisterDTO);
 
-    void removeOne(Long memtorNo);
+    void removeOne(Long mentorNo);
 }

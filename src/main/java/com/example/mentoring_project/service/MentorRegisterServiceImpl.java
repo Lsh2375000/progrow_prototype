@@ -21,7 +21,9 @@ public class MentorRegisterServiceImpl implements MentorRegisterService {
 
     @Override
     public void add(MentorRegisterDTO mentorRegisterDTO) {
-        mentorRegisterMapper.insert(modelMapper.map(mentorRegisterMapper, MentorRegisterVO.class));
+        MentorRegisterVO mentorRegisterVO = modelMapper.map(mentorRegisterDTO, MentorRegisterVO.class);
+        mentorRegisterMapper.insert(mentorRegisterVO);
+
     }
 
     @Override

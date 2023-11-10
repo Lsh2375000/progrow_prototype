@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layout/board.html}">
+      layout:decorate="~{layout/inc.html}">
+
 <head>
     <meta charset="UTF-8">
-    <title>Board Post</title>
+    <title>멘티 회원가입</title>
 </head>
 <body>
 <div layout:fragment="content">
     <form name="frmMentee" action="/member/menteeRegister" method="post" class="form-horizontal">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input name="type" type="hidden" value="type">
         <div class="form-group row">
             <label class="col-sm-2 control-label" >아이디</label>
             <div class="col-sm-3">
-                <input name="mentee_id" type="id" class="form-control" placeholder="mentee_id">
+                <input name="mentee_id" id="menteeID" type="id" class="form-control " placeholder="mentee_id">
             </div>
         </div>
         <div class="form-group row">
@@ -48,7 +54,7 @@
         <div class="form-group row">
             <label class="col-sm-2 control-label">닉네임</label>
             <div class="col-sm-5">
-                <input name="nickName" type="text" class="form-control" placeholder="nickName">
+                <input name="nickname" type="text" class="form-control" placeholder="nickName">
             </div>
         </div>
         <div class="form-group row">
@@ -59,7 +65,7 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="button" class="btn btn-primary btn-menteeRegister" value=" 가입하기 ">
+                <input type="submit" class="btn btn-primary btn-menteeRegister" value=" 가입하기 ">
                 <input type="reset" class="btn btn-primary" value=" 취소 ">
             </div>
         </div>
@@ -71,24 +77,29 @@
         const btnMenteeRegister = document.querySelector('.btn-menteeRegister');
         const frmMentee = document.querySelector('form[name=frmMentee]');
 
-        btnMenteeRegister.addEventListener('click', function () {
+        const menteeID = document.getElementById('menteeID').value;
+        btnMenteeRegister.addEventListener('click', function (e) {
             if (!frmMentee.mentee_id.value) {
                 alert("ID를 입력하세요.");
+                e.preventDefault();
                 return;
             }
             if (!frmMentee.passwd.value) {
                 alert("비밀번호를 입력하세요.");
+                e.preventDefault();
                 return;
             }
             if (!frmMentee.name.value) {
                 alert("이름을 입력하세요.");
+                e.preventDefault();
                 return;
             }
             if (!frmMentee.nickName.value) {
                 alert("닉네임을 입력하세요.");
+                e.preventDefault();
                 return;
             }
-            frmMentee.submit();
+            console.log(menteeID);
         });
     });
 </script>
