@@ -8,6 +8,9 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,14 @@ public class MenteeRegisterServiceImpl implements MenteeRegisterService{
     @Override
     public void add(MenteeRegisterDTO menteeRegisterDTO) {
         menteeRegisterMapper.insert(modelMapper.map(menteeRegisterMapper, MenteeRegisterVO.class));
+    }
+
+    @Override
+    public List<MenteeRegisterDTO> getAll() {
+        List<MenteeRegisterVO> menteeRegisterVOList = menteeRegisterMapper.selectAll();
+        List<MenteeRegisterDTO> menteeRegisterDTOList = new ArrayList<>();
+        menteeRegisterVOList.forEach(menteeRegisterVO -> menteeRegisterDTOList.add(modelMapper.map(menteeRegisterVO, MenteeRegisterDTO.class)));
+        return menteeRegisterDTOList;
     }
 
     @Override

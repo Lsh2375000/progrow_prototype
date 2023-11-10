@@ -1,71 +1,23 @@
-package com.example.mentoring_project.controller;
-
-import com.example.mentoring_project.dto.MentorRegisterDTO;
-import com.example.mentoring_project.service.MentorRegisterService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-
-@Controller
-@RequestMapping("/mentorRegister")
-@Log4j2
-@RequiredArgsConstructor
-public class MentorRegisterController {
-    private final MentorRegisterService mentorRegisterService;
-
-    @GetMapping("/mentorRegister")
-    public void add() {
-        log.info("회원가입");
-    }
-
-    @PostMapping("/mentorRegister")
-    public String addPost(MentorRegisterDTO mentorRegisterDTO, HttpServletRequest request) {
-        log.info("회원가입 포스트");
-        log.info(mentorRegisterDTO);
-        mentorRegisterService.add(mentorRegisterDTO);
-
-        return "redirect:/member/mentorRegister";
-    }
-
-//    @GetMapping({"/mentorRegister", "/mentorModify"})
-//    public void view(int mentorNo, PageRequestDTO pageRequestDTO, Model model, HttpServletRequest request) {
-//        log.info("멤버 보기");
-//        String requestedUrl = request.getRequestURI();
-//        log.info(requestedUrl);
+//package com.example.mentoring_project.controller;
 //
-//        MentorRegisterDTO mentorRegisterDTO = null;
-//        if (requestedUrl.equals("/member/mentorRegister")) {
-//            MentorRegisterDTO = MentorRegisterService.getOne(mentorNo, "mentorRegister");
-//        } else {
-//            MentorRegisterDTO = MentorRegisterService.getOne(mentorNo, "modify");
-//        }
+//import com.example.mentoring_project.service.MentorRegisterService;
+//import lombok.RequiredArgsConstructor;
+//import lombok.extern.log4j.Log4j2;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.RequestMapping;
 //
-//        model.addAttribute("dto", mentorRegisterDTO);
-//    }
-
-    @PostMapping("/modify")
-    public String modify(MentorRegisterDTO mentorRegisterDTO, RedirectAttributes redirectAttributes) {
-        log.info("멘토 정보 수정" + mentorRegisterDTO);
-
-        mentorRegisterService.modifyOne(mentorRegisterDTO);
-
-        redirectAttributes.addAttribute("mentorNo", mentorRegisterDTO.getMentorNo());
-
-        return "redirect:/main";
-    }
-
-    @PostMapping("/remove")
-    public String  remove(Long mentorNo) {
-        log.info("멘토 삭제");
-        mentorRegisterService.removeOne(mentorNo);
-
-        return "redirect:/main";
-    }
-
-}
+//@Controller
+//@RequestMapping("/member/mentorRegister")
+//@Log4j2
+//@RequiredArgsConstructor
+//public class MentorRegisterController {
+//    @Value("${com.example.mentoring_project.upload.path}") // 파일 업, 다운로드 처리 위해 어노테이션 추가
+//    private String uploadPath;
+//
+//    @Autowired
+//    private final MentorRegisterService mentorRegisterService;
+//
+//
+//}

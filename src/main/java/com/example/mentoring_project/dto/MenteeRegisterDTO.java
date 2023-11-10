@@ -21,4 +21,5 @@ public class MenteeRegisterDTO {
     private int mNo; // 멘토링 세션방 고유번호
     private int mNum; // 멘토링 참가 횟수
     private String type; // 멘토 , 멘티 타입
+
 }

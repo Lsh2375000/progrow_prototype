@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 
 @SpringBootTest
 @Log4j2
@@ -13,30 +15,16 @@ class MentorRegisterMapperTests {
     @Autowired
     private MentorRegisterMapper mentorRegisterMapper;
 
-    private Long mentorNo; // 멘토 넘버
-    private String mentee_id; // 멘토 ID
-    private String passwd; // 멘토 PW
-    private String name; // 멘토 이름
-    private String region; // 멘토 지역
-    private int age; // 멘토 나이
-    private String nickname; // 멘토 닉네임
-    private String lngName; // 멘토 프로그래밍 언어
-    private String portfolio; // 멘토 포트폴리오
-    private String intro; // 멘토 소개
-    private int mNo; // 멘토링 세션방 고유번호
-    private int gradeByMNum; // 멘토링 횟수(횟수에 따라 멘토링 등급 반여)
-    private String type; // 멘토, 멘티 타입
-
     @Test
     public void insertTest() {
         for (int i = 1; i < 11; i++) {
             MentorRegisterVO mentorRegisterVO = MentorRegisterVO.builder()
-                    .mentor_id("mentorTest" + i)
+                    .mentor_id("멘토Test" + i)
                     .passwd("1234" + i)
-                    .name("mentorName" + i)
+                    .name("멘토Name" + i)
                     .region("대구시 수성구 황금동" + i)
                     .age(10 + i)
-                    .nickname("mentorNick" + i)
+                    .nickname("멘토Nick" + i)
                     .lngName("Java" + i)
                     .portfolio("portFolioTest" + i)
                     .intro("let me introduce")
@@ -47,6 +35,12 @@ class MentorRegisterMapperTests {
     }
 
     @Test
+    public void selectAllTest() {
+        List<MentorRegisterVO> voList = mentorRegisterMapper.selectAll();
+        voList.forEach(log::info);
+    }
+
+    @Test
     public void selectOneTest() {
         log.info(mentorRegisterMapper.selectOne(2L));
     }
@@ -54,14 +48,15 @@ class MentorRegisterMapperTests {
     @Test
     public void updateTest() {
         MentorRegisterVO mentorRegisterVO = MentorRegisterVO.builder()
-                .mentor_id("mentorTestUp")
+                .mentorNo(10L)
+                .mentor_id("멘토TestUp")
                 .passwd("1111")
-                .name("mentorNameUp")
+                .name("멘토NameUp")
                 .region("대구시 북구 매천동")
                 .age(10)
-                .nickname("mentorNickUp")
+                .nickname("멘토NickUp")
                 .lngName("C++")
-                .portfolio("portFolioTestUp")
+                .portfolio("멘토TestUp")
                 .intro("let me introduce myself")
                 .type("tor")
                 .build();
