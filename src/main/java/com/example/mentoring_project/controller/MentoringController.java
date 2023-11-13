@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequestMapping("/mentor")
 @Log4j2
 @RequiredArgsConstructor
-public class MentorController {
+public class MentoringController {
     private final MentoringService mentoringService;
 
     @GetMapping("/register")

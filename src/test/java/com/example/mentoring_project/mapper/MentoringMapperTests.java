@@ -18,47 +18,47 @@ public class MentoringMapperTests {
 
     @Test
     public void insertTest() {
-        MentoringVO mentoringVO = MentoringVO.builder()
-                .id("test")
-                .maxNumPeople(3)
-                .menteeNum(2)
-                .region("대구")
-                .lngName("JAVA")
-                .meeting(true)
-                .on_off(true)
-                .build();
-        mentoringMapper.insert(mentoringVO);
+        for (int i = 0; i < 50; i++) {
+            MentoringVO mentoringVO = MentoringVO.builder()
+                    .id("test" + i)
+                    .maxNumPeople(3)
+                    .menteeNum(2)
+                    .region("대구" + i)
+                    .lngName("JAVA" + i)
+                    .meeting(true)
+                    .on_off(true)
+                    .build();
+            mentoringMapper.insert(mentoringVO);
+        }
     }
+
     @Test
     public void selectAllTest() {
         List<MentoringVO> mentoringVOList = mentoringMapper.selectAll();
         mentoringVOList.forEach(mentoringVO -> log.info(mentoringVO));
     }
+
     @Test
     public void selectOneTest() {
-        Long mNo = 2L;
-        log.info("selectOneTest..."+mentoringMapper.selectOne(mNo));
+        Long mNo = 1L;
+        MentoringVO mentoringVO = mentoringMapper.selectOne(mNo);
+        log.info(mentoringVO);
     }
 
     @Test
     public void updateTest() {
-        Long mNo = 2L;
         MentoringVO mentoringVO = MentoringVO.builder()
-                .mNo(mNo)
-                .maxNumPeople(5)
-                .menteeNum(4)
-                .region("대구")
-                .lngName("JAVA")
-                .meeting(true)
-                .on_off(true)
+                .mNo(1L)
+                .region("서울")
+                .lngName("Python")
+                .on_off(false)
                 .build();
         mentoringMapper.update(mentoringVO);
+        log.info(mentoringMapper.selectOne(1L));
     }
 
     @Test
     public void deleteTest() {
-        Long mNo = 51L;
-        mentoringMapper.delete(mNo);
+        mentoringMapper.delete(1L);
     }
-
 }
