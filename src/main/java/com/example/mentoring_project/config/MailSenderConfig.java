@@ -10,27 +10,37 @@ import java.util.Properties;
 
 @Configuration
 public class MailSenderConfig {
+
     @Value("${mail.smtp.port}")
     private int port;
+
     @Value("${mail.smtp.socketFactory.port}")
     private int socketPort;
+
     @Value("${mail.smtp.auth}")
     private boolean auth;
+
     @Value("${mail.smtp.starttls.enable}")
     private boolean starttls;
+
     @Value("${mail.smtp.starttls.required}")
     private boolean starttlsRequired;
+
     @Value("${mail.smtp.socketFactory.fallback}")
     private boolean fallback;
+
     @Value("${myapp.custom.mail.sender.username}")
     private String username;
+
     @Value("${myapp.custom.mail.sender.password}")
     private String password;
+
     @Value("${myapp.custom.mail.sender.host}")
     private String host;
 
+
     @Bean
-    public JavaMailSender javaMailService() {
+    public JavaMailSender javaMailSender() { // 메일 인증 관련 메소드
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(host);
         javaMailSender.setUsername(username);
@@ -47,8 +57,15 @@ public class MailSenderConfig {
         properties.put("mail.smtp.auth", auth);
         properties.put("mail.smtp.starttls.enable", starttls);
         properties.put("mail.smtp.starttls.required", starttlsRequired);
-        properties.put("mail.smtp.socketFactory.fallback", fallback);
+        properties.put("mail.smtp.socketFactory.fallback",fallback);
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         return properties;
+
+
+
+
+
     }
+
+
 }

@@ -16,7 +16,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.mentoring_project.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.mentoring_project"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
@@ -24,7 +24,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Board_ex_jpa Project Swagger")
+                .title("ProGrow Project Swagger")
                 .build();
     }
 }

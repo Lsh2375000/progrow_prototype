@@ -1,138 +1,444 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/inc.html}">
-<head>
-    <meta charset="UTF-8">
-    <title>멘토 회원가입</title>
-</head>
-<body>
+<style layout:fragment="style">
+    .form-group{
+        margin-bottom: 30px;
+    }
+    input[name = "region"] {
+        margin-bottom: 10px;
+    }
+    #zipcode {
+        width: 300px;
+    }
+    .btnFindZipcode {
+        cursor: pointer;
+        width: 130px;
+        height: 40px;
+    }
+</style>
 <div layout:fragment="content">
-    <form name="frmMentor" action="/member/mentorRegister" method="post" class="form-horizontal">
-        <br>
-        <br>
-        <br>
-        <br>
-        <input name="type" type="hidden" value="type">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form name="frmAdd" action="/member/mentorRegister" method="post" class="form-horizontal">
+        <input type="hidden" name="type" value="tor"> <!--멘토 타입 db로 보내주기 위한 input 태그-->
+
         <div class="form-group row">
-            <label class="col-sm-2 control-label" >아이디</label>
-            <div class="col-sm-3">
-                <input name="mentor_id" id="mentorID" type="id" class="form-control" placeholder="mentor_id">
+            <label class="col-sm-2 control-label">*이메일 인증</label>
+            <div class="col-sm-3" style="display: flex; align-items: center;">
+                <label for="email" id="mailTxt"></label>
+                <input name="mentor_id" type="text" class="form-control mentor_id" id="email" style="width: 320px;">
+            </div>
+            <div class="col-sm-7" style="display: flex; align-items: center">
+                <button type="button" class="btn btn-primary chkBtn" id="emailAuth">인증하기</button>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 control-label" >비밀번호</label>
-            <div class="col-sm-3">
-                <input name="passwd" type="password" class="form-control" placeholder="passwd">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-5">
+                <input name="mail" type="text" disabled="disabled" class="form-control" id="authCode" style="width: 200px;">
+                <span id="emailAuthWarn"></span>
+            </div>
+        </div>
+        <!--이메일 아이디 끝-->
+
+        <!--비밀번호 시작-->
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">*비밀번호</label>
+            <div class="col-sm-5">
+                <span for="passChk" id="pswCon"></span>
+                <input name="passwd" type="password" class="form-control passwd" placeholder="password">
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 control-label" >비밀번호 확인</label>
-            <div class="col-sm-3">
-                <input name="passwd_check" type="password" class="form-control" placeholder="passwd_check">
+            <label class="col-sm-2 control-label">*비밀번호 확인</label>
+            <div class="col-sm-5">
+                <span for="passChk" id="chkTxt"></span>
+                <input name="passwdChk" type="password" class="form-control passwdChk" id="passChk" placeholder="password">
             </div>
         </div>
+        <!--비밀번호 끝-->
+
+        <!--주소 시작-->
         <div class="form-group row">
-            <label class="col-sm-2 control-label" >이름</label>
-            <div class="col-sm-3">
-                <input name="name" type="text" class="form-control" placeholder="name">
+            <label class="col-sm-2 control-label">*주소</label>
+            <div class="col-10">
+                <table>
+                    <tr style="display: flex;">
+                        <td>
+                            <input name="region" class="form-control" id="zipcode" size="10" maxlength="7" style="width: 300px" readonly>
+                        </td>
+                        <td><span type="button" class="btn btn-primary btnFindZipcode">우편번호 검색</span><br/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="region" class="form-control" id="address01" size="70" maxlength="70" style="width: 470px" readonly>
+                            <input name="region" class="form-control" id="address02" size="70" maxlength="70" style="width: 470px">
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
+        <!--주소 끝-->
+
+        <!--이름 시작-->
         <div class="form-group row">
-            <label class="col-sm-2 control-label" >지역</label>
-            <div class="col-sm-3">
-                <input name="region" type="text" class="form-control" placeholder="region">
+            <label class="col-sm-2 control-label">*이름</label>
+            <div class="col-sm-5">
+                <input name="name" type="text" class="form-control name" placeholder="name">
             </div>
         </div>
+        <!--이름 끝-->
+
+        <!--나이 시작-->
         <div class="form-group row">
             <label class="col-sm-2 control-label">나이</label>
             <div class="col-sm-5">
-                <input name="age" type="text" class="form-control" placeholder="age">
+                <input name="age" type="text" class="form-control age" placeholder="age">
             </div>
         </div>
+        <!--나이 끝-->
+
+        <!--닉네임 시작-->
         <div class="form-group row">
             <label class="col-sm-2 control-label">닉네임</label>
             <div class="col-sm-5">
-                <input name="nickname" type="text" class="form-control" placeholder="nickName">
+                <input name="nickname" type="text" class="form-control nickname" placeholder="nickname">
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-sm-2 control-label">프로그래밍 언어</label>
-            <div class="col-sm-5">
-                <input name="lngName" type="text" class="form-control" placeholder="lngName">
-            </div>
-        </div>
+        <!--닉네임 끝-->
+
+        <!-- 오류방지용 임시 포트폴리오 text태그로 값을 받음 나중에 파일업로드 기능 구현해서 수정-->
         <div class="form-group row">
             <label class="col-sm-2 control-label">포트폴리오</label>
             <div class="col-sm-5">
-                <input name="portfolio" type="text" class="form-control" placeholder="portfolio">
+                <input name="portfolio" value="testFile.pdf" type="text" class="form-control" placeholder="portfolio">
             </div>
         </div>
+        <!-- 포트폴리오 끝-->
+
+        <!--프로그래밍 언어 시작-->
         <div class="form-group row">
-            <label class="col-sm-2 control-label">자기소개</label>
+            <label class="col-sm-2 control-label">프로그래밍 언어</label>
             <div class="col-sm-5">
-                <input name="intro" type="text" class="form-control" placeholder="intro">
+                <select name="lngName" class="form-select lngName">
+                    <option value="JAVA">JAVA</option>
+                    <option value="Python">Python</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="C#">C#</option>
+                </select>
             </div>
         </div>
+        <!--프로그래밍 언어 끝-->
+
+        <!--멘토 소개 시작-->
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">멘토 소개</label>
+            <div class="col-sm-5">
+                <textarea name="intro" cols="100" rows="10" class="form-control intro" placeholder="추후 작성 가능합니다"></textarea>
+            </div>
+        </div>
+        <!--멘토 소개 끝-->
+
         <div class="form-group row">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-primary btn-mentorRegister" value=" 가입하기 ">
+                <input type="submit" class="btn btn-primary btn-submit" value=" 등록 ">
                 <input type="reset" class="btn btn-primary" value=" 취소 ">
             </div>
         </div>
+
+        <script type="text/javascript">
+            // 이메일을 입력 받는 input 태그의 id : email
+            // 인증받기 버튼 태그의 id : emailAuth
+            // 인증 번호를 입력 받는 input 태그의 id : authCode
+            // 입력한 인증 번호와 이메일로 받은 인증 번호가 일치하는지 여부를 보여주는 span 태그의 id : emailAuthWarn
+
+            // 이메일 정규식 검사
+            $("#email").on("keyup", function () {
+                console.log("이메일 인식함")
+                let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+                //console.log("email : "+$memail.val());
+                if (!regExp.test($("#email").val())) {
+                    // console.log("형식 미확인");
+                    emchk = false;
+
+                    $("#mailTxt").html("<span id='chkmail'>이메일 형식이 맞지 않습니다</span>");
+
+                    $("#chkmail").css({
+                        "color": "#FA3E3E",
+                        "font-weight": "bold",
+                        "font-size": "15px",
+                        "position": "absolute",
+                        "padding-top": "25px",
+                        "z-index" : "-1"
+                    });
+
+                } else {
+                    emchk = true;
+
+                    console.log("형식 확인");
+                    $("#mailTxt").html("<span id='chkmail'>이메일을 형식을 확인했습니다</span>")
+
+                    $("#chkmail").css({
+                        "color": "#0D6EFD",
+                        "font-weight": "bold",
+                        "font-size": "15px",
+                        "position": "absolute",
+                        "padding-top": "25px",
+                        "z-index" : "-1"
+                    })
+                }
+            });
+
+
+            //인증하기 버튼을 눌렀을 때 동작
+            $("#emailAuth").click(function () {
+                const email = $("#email").val(); //사용자가 입력한 이메일 값 얻어오기
+                //Ajax로 전송
+                $.ajax({
+                    url: './sendConfirmMail?mailTo=' + email, // 비동기로 회원이 작성한 이메일을 주소로 보낸다.
+                    data: {
+                        mail: email // 이메일을 json형태로 보낸다
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log("result : " + result);
+                        $("#authCode").attr("disabled", false);
+                        // 여기에 인증번호 유효시간 출력하는 코드 작성
+                        code = result;
+                        alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
+                    }
+                }); //End Ajax
+            });
+
+            // 인증번호 일치 여부 비동기로 확인하기
+            $("#authCode").on("keyup", function () {
+                const inputCode = $("#authCode").val(); //인증번호 입력 칸에 작성한 내용 가져오기
+                let okCode; // 일치여부의 반환 값을 담을 변수 선언
+
+                $.ajax({ // 메일로 보낸 인증번호를 비동기방식으로 세션에 저장된 인증번호와 비교한다.
+                    url: './isConfirmKey', // 인증 여부 확인할 주소값
+                    data: { // json형태로 메일로 받은 인증키를 담아서 보내준다.
+                        confirmKey: inputCode // Value : Key
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) { // URL로 보낸 인증코드를 확인해서 true로 반환 되면 콜백함수 실행
+                        console.log("okCode : " + result);
+                        okCode = result; // success 콜백 함수에서 okCode 변수를 설정합니다.
+
+                        if (okCode) {
+
+                            $("#emailAuthWarn").html('인증번호가 일치합니다.');
+                            $("#emailAuthWarn").css({
+                                "color": "#0D6EFD",
+                                "font-weight": "bold",
+                                "font-size": "15px",
+                                "position": "absolute",
+                                "z-index" : "-1"
+                            });
+                            $('#emailAuth').attr('disabled', true);
+                            $('#email').attr('readonly', true);
+                            $("#registerBtn").attr("disabled", false);
+
+                        } else if (okCode == false){
+
+                            $("#emailAuthWarn").html('인증번호가 불일치 합니다. 다시 확인해주세요!');
+                            $("#emailAuthWarn").css({
+                                "color": "#FA3E3E",
+                                "font-weight": "bold",
+                                "font-size": "15px",
+                                "position": "absolute",
+                                "z-index" : "-1"});
+                            $("#registerBtn").attr("disabled", true);
+                            const btnSubmit = document.querySelector('.btn-submit');
+                            btnSubmit.addEventListener('click', function (e) {
+                                alert('이메일인증이 완료 되지 않았습니다.')
+                                e.preventDefault();
+                            });
+                        }
+                    }
+                }); //End Ajax
+            });
+
+
+
+            // 비밀번호 입력
+            $('.passwd').on("focusout", function () {
+                isChk();
+                const passwdChk = $('.passwdChk').val();
+                const passwd = $('.passwd').val();
+                if (passwd != passwdChk || passwd.length < 8) {
+                    // 비밀 번호와 비밀번호 확인이 다르거나 비밀번호 입력칸이 비어있거나 비밀번호가 8자리 미만이면
+                    $("#chkTxt").html('비밀번호가 일치하지 않습니다.');
+                    $("#chkTxt").css({
+                        "color": "#FA3E3E",
+                        "font-weight": "bold",
+                        "font-size": "15px",
+                        "position": "absolute",
+                        "padding-top": "40px",
+                        "z-index": "-1"
+                    });
+                }
+            });
+            // 비밀번호 확인
+            $('.passwdChk').on("keyup", function () {
+                isChk();
+            });
+
+
+
+
+            function isChk() {
+
+                const passwdChk = $('.passwdChk').val();
+                const passwd = $('.passwd').val();
+
+                if (passwd.length < 8) { // 비밀번호가 8자리 미만이면
+
+                    $("#pswCon").html('비밀번호는 9자리 이상입력해야 합니다.');
+
+                    $("#pswCon").css({
+                        "color": "#FA3E3E",
+                        "font-weight": "bold",
+                        "font-size": "15px",
+                        "position": "absolute",
+                        "padding-top": "40px",
+                        "z-index" : "-1"
+                    });
+                }
+                else if (passwd.length > 8 && passwd === passwdChk && passwd !== '') { // 비밀번호가 비어있지 않고, 완벽히 일치 하고, 비밀번호가 9자리 이상이면
+                    $("#pswCon").html(''); // 비밀번호 조건 메시지 초기화
+                    $("#chkTxt").html('비밀번호가 일치합니다');
+                    $("#chkTxt").css({
+                        "color": "#0D6EFD",
+                        "font-weight": "bold",
+                        "font-size": "15px",
+                        "position": "absolute",
+                        "padding-top": "40px",
+                        "z-index" : "-1"
+                    });
+                } // end All if()
+            } // end isChk()
+
+
+
+        </script>
+
+        <!--카카오 주소 API Script-->
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('span.btnFindZipcode').addEventListener('click', execDaumPostcode);
+                function execDaumPostcode() {
+                    /* 상황에 맞춰서 변경해야 하는 부분 */
+                    const zipcode = document.getElementById('zipcode');
+                    const address01 = document.getElementById('address01');
+                    const address02 = document.getElementById('address02');
+
+                    /* 수정없이 사용 하는 부분 */
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                            var fullAddr = ''; // 최종 주소 변수
+                            var extraAddr = ''; // 조합형 주소 변수
+
+                            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                                fullAddr = data.roadAddress;
+                            }
+                            else { // 사용자가 지번 주소를 선택했을 경우(J)
+                                fullAddr = data.jibunAddress;
+                            }
+
+                            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                            if(data.userSelectedType === 'R'){
+                                //법정동명이 있을 경우 추가한다.
+                                if(data.bname !== ''){
+                                    extraAddr += data.bname;
+                                }
+                                // 건물명이 있을 경우 추가한다.
+                                if(data.buildingName !== ''){
+                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                }
+                                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                            }
+
+                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                            zipcode.value = data.zonecode; //5자리 새우편번호 사용
+                            address01.value = fullAddr;
+
+                            // 커서를 상세주소 필드로 이동한다.
+                            address02.focus();
+                        }
+                    }).open();
+                }
+
+                const btnSubmit = document.querySelector('.btn-submit');
+                btnSubmit.addEventListener('click', function (e) { // 필수 요소 유효성 검사
+                    const mentor_id = document.querySelector('.mentor_id').value;
+                    const passwd = document.querySelector('.passwd').value;
+                    const passwdChk = document.querySelector('.passwdChk').value;
+                    const age = document.querySelector('.age').value;
+                    const nickname = document.querySelector('.nickname').value;
+                    const lngName = document.querySelector('.lngName').value;
+
+                    if (mentor_id === '') {
+                        alert('이메일 인증을 해주세요')
+                        e.preventDefault();
+                    } else if (passwd === '') {
+                        alert('비밀번호를 입력해 주세요')
+                        e.preventDefault();
+                    } else if (passwdChk === '' || passwd != passwdChk) {
+                        alert('비밀번호 재확인 해주세요')
+                        e.preventDefault();
+                    } else if (age === '') {
+                        alert('나이를 입력해 주세요')
+                        e.preventDefault();
+                    } else if (nickname === '') {
+                        alert('닉네임을 입력해 주세요')
+                        e.preventDefault();
+                    } else if (lngName === '') {
+                        alert('프로그래밍 언어를 선택해 주세요')
+                    }
+                });
+
+            });
+        </script>
+
+
+
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
 </div>
 
-<script layout:fragment="script" th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        const btnMentorRegister = document.querySelector('.btn-mentorRegister');
-        const frmMentor = document.querySelector('form[name=frmMentor]');
 
-        const mentorID = document.getElementById('mentorID').value;
-        btnMentorRegister.addEventListener('click', function (e) {
-            if (!frmMentor.mentor_id.value) {
-                alert("ID를 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.passwd.value) {
-                alert("비밀번호를 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.name.value) {
-                alert("이름을 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.region.value) {
-                alert("이름을 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.nickName.value) {
-                alert("닉네임을 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.lngName.value) {
-                alert("프로그래밍 언어를 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.portfolio.value) {
-                alert("포트폴리오를 첨부하세요.");
-                e.preventDefault();
-                return;
-            }
-            if (!frmMentor.intro.value) {
-                alert("자기소개를 입력하세요.");
-                e.preventDefault();
-                return;
-            }
-            console.log(mentorID);
-        });
-    });
-</script>
-</body>
+
+
 </html>
