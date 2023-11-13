@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mentoring_project.mapper.MemberMapper">
+    <insert id="insert">
+        INSERT into member (id, name, region, type, age, nickname)
+        values (#{id}, #{name}, #{region}, #{type}, #{age}, #{nickname})
+    </insert>
+    
+<!--    <select id="selectAll" resultType="com.example.mentoring_project.domain.MenteeVO">-->
+<!--        SELECT * from user_mentee order by menteeNo DESC;-->
+<!--    </select>-->
+
+<!--    <select id="selectOne" resultType="com.example.mentoring_project.domain.MenteeVO">-->
+<!--        select * from user_mentee where menteeNo = #{menteeNo};-->
+<!--    </select>-->
+
+<!--    <update id="update">-->
+<!--        update user_mentee set passwd = #{passwd}, name = #{name}, region = #{region}, nickname = #{nickname}, lngName = #{lngName} where menteeNo = #{menteeNo}-->
+<!--    </update>-->
+
+<!--    <delete id="delete">-->
+<!--        delete from user_mentee where menteeNo = #{menteeNo}-->
+<!--    </delete>-->
+
+
+</mapper>

@@ -1,0 +1,90 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/inc.html}">
+
+<title>약관 동의</title>
+
+<div layout:fragment="content">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>회원가입 약관동의</h1>
+    <div class="form-group row">
+        <label for="agree_all">
+            <input type="checkbox" name="agree_all" id="agree_all">
+            <span>모두 동의합니다</span>
+        </label>
+        <label for="agree">
+            <input type="checkbox" class="essentialChk1"  name="agree" value="1">
+            <span>이용약관 동의<strong>(필수)</strong></span>
+        </label>
+        <label for="agree">
+            <input type="checkbox" class="essentialChk2" name="agree" value="2">
+            <span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
+        </label>
+        <label for="agree">
+            <input type="checkbox" name="agree" value="3">
+            <span>개인정보 이용 동의<strong>(필수)</strong></span>
+        </label>
+        <label for="agree">
+            <input type="checkbox" name="agree" value="4">
+            <span>이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></span>
+        </label>
+
+        <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-primary btnMentor" onclick="location.href='/member/mentorRegister';" disabled> 멘토 회원가입 </button>
+                <button type="button" class="btn btn-primary btnMentee" onclick="location.href='/member/menteeRegister';" disabled> 멘티 회원가입 </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const agreeChkAll = document.querySelector('input[name=agree_all]');
+
+        agreeChkAll.addEventListener('change', (e) => {
+            let agreeChk = document.querySelectorAll('input[name=agree]');
+            for(let i = 0; i < agreeChk.length; i++){
+                agreeChk[i].checked = e.target.checked;
+            }
+        });
+
+        const essentialChk1 = document.querySelector('.essentialChk1');
+        const essentialChk2 = document.querySelector('.essentialChk2');
+
+        const mentor = document.querySelector('.btnMentor');
+        const mentee = document.querySelector('.btnMentee');
+
+        if (essentialChk1.checked === true && essentialChk2.checked === true) {
+            mentor.disabled = false;
+            mentee.disabled = false;
+        }
+
+
+
+
+
+
+
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+</html>
