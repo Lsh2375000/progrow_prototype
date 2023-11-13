@@ -3,29 +3,41 @@
       layout:decorate="~{layout/inc.html}">
 
 <div layout:fragment="content">
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>레이아웃 테스트 여기에 내용을 넣으면 됩니다.</h1>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div class="login-movie-container">
+        <main>
+            <section>
+                <div class="login-container">
+                    <!--       맨 위             -->
+                    <div class="top-container">
+                        <h2>로그인</h2>
+                    </div>
+                    <!--       아이디 비밀번호             -->
+                    <form class="frmlogin" action="/login" method="post">
+                        <div class="input-container">
+                            <input type="text" placeholder="아이디" name="memberId">
+                            <input type="text" placeholder="비밀번호" name="passwd">
+                            <c:if test="${result != null}">
+                                <span>ID나 비밀번호가 일치하지 않습니다</span>
+                            </c:if>
+                        </div>
+                        <div class="login-btn-container">
+                            <button type="submit">로그인</button>
+                        </div>
+                    </form>
+                    <div class="agreement-register-container">
+                        <span>회원 가입을 원하시나요?&nbsp;</span>
+                        <a class="register-link" href="/member/agreement">회원가입하기</a>
+                    </div>
+                    <div class="findId-container">
+                        <span>아이디 찾기</span>
+                        <a class="register-link" href="/member/findId">아이디 찾기</a>
+                    </div>
+                    <div class="findPw-container">
+                        <span>비밀번호 찾기</span>
+                        <a class="register-link" href="/member/findPw">비밀번호 찾기</a>
+                    </div>
+                </div>
+            </section>
 </div>
 
 </html>

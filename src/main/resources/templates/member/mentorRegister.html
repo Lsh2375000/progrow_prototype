@@ -1,10 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/inc.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>멘토 회원가입</title>
 </head>
 <body>
+<div layout:fragment="content">
+    <form name="frmMentor" action="/member/mentorRegister" method="post" class="form-horizontal">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input name="type" type="hidden" value="type">
+        <div class="form-group row">
+            <label class="col-sm-2 control-label" >아이디</label>
+            <div class="col-sm-3">
+                <input name="mentor_id" id="mentorID" type="id" class="form-control" placeholder="mentor_id">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label" >비밀번호</label>
+            <div class="col-sm-3">
+                <input name="passwd" type="password" class="form-control" placeholder="passwd">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label" >비밀번호 확인</label>
+            <div class="col-sm-3">
+                <input name="passwd_check" type="password" class="form-control" placeholder="passwd_check">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label" >이름</label>
+            <div class="col-sm-3">
+                <input name="name" type="text" class="form-control" placeholder="name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label" >지역</label>
+            <div class="col-sm-3">
+                <input name="region" type="text" class="form-control" placeholder="region">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">나이</label>
+            <div class="col-sm-5">
+                <input name="age" type="text" class="form-control" placeholder="age">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">닉네임</label>
+            <div class="col-sm-5">
+                <input name="nickname" type="text" class="form-control" placeholder="nickName">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">프로그래밍 언어</label>
+            <div class="col-sm-5">
+                <input name="lngName" type="text" class="form-control" placeholder="lngName">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">포트폴리오</label>
+            <div class="col-sm-5">
+                <input name="portfolio" type="text" class="form-control" placeholder="portfolio">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">자기소개</label>
+            <div class="col-sm-5">
+                <input name="intro" type="text" class="form-control" placeholder="intro">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-primary btn-mentorRegister" value=" 가입하기 ">
+                <input type="reset" class="btn btn-primary" value=" 취소 ">
+            </div>
+        </div>
+    </form>
+</div>
 
+<script layout:fragment="script" th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnMentorRegister = document.querySelector('.btn-mentorRegister');
+        const frmMentor = document.querySelector('form[name=frmMentor]');
+
+        const mentorID = document.getElementById('mentorID').value;
+        btnMentorRegister.addEventListener('click', function (e) {
+            if (!frmMentor.mentor_id.value) {
+                alert("ID를 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.passwd.value) {
+                alert("비밀번호를 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.name.value) {
+                alert("이름을 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.region.value) {
+                alert("이름을 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.nickName.value) {
+                alert("닉네임을 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.lngName.value) {
+                alert("프로그래밍 언어를 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.portfolio.value) {
+                alert("포트폴리오를 첨부하세요.");
+                e.preventDefault();
+                return;
+            }
+            if (!frmMentor.intro.value) {
+                alert("자기소개를 입력하세요.");
+                e.preventDefault();
+                return;
+            }
+            console.log(mentorID);
+        });
+    });
+</script>
 </body>
 </html>
