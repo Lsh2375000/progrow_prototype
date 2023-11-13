@@ -1,6 +1,5 @@
 package com.example.mentoring_project.mapper;
 
-import com.example.mentoring_project.domain.BoardVO;
 import com.example.mentoring_project.domain.QBoardVO;
 import org.apache.ibatis.annotations.Mapper;
 

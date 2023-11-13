@@ -1,6 +1,5 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.dto.BoardDTO;
 import com.example.mentoring_project.dto.QBoardDTO;
 
 import java.util.List;

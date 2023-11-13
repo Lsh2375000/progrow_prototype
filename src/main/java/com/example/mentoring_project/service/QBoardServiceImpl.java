@@ -2,7 +2,6 @@ package com.example.mentoring_project.service;
 
 
 import com.example.mentoring_project.domain.QBoardVO;
-import com.example.mentoring_project.dto.BoardDTO;
 import com.example.mentoring_project.dto.QBoardDTO;
 import com.example.mentoring_project.mapper.QBoardMapper;
 import lombok.RequiredArgsConstructor;
