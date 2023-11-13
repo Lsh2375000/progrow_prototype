@@ -2,31 +2,31 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    <mapper namespace="com.example.mentoring_project.mapper.BoardMapper">
-<!--insert mapper-->
+<mapper namespace="com.example.mentoring_project.mapper.QBoardMapper">
+    <!--insert mapper-->
     <insert id="insert">
-        insert into board (id, hit, nickName, content, title)
+        insert into qnaboard (id, hit, nickName, content, title)
         values(#{id}, #{hit}, #{nickName}, #{content}, #{title})
     </insert>
     <!--update mapper-->
     <update id="update">
-        update board  set title = #{title}, content = #{content}
-        where boardNo = #{boardNo}
+        update qnaboard  set title = #{title}, content = #{content}
+        where qboardNo = #{qboardNo}
     </update>
     <!-- delete mapper-->
     <delete id="delete">
-        delete from board where boardNo
+        delete from qnaboard where qboardNo
     </delete>
 
     <delete id="deleteOne">
         delete
-        from board
-        where boardNo;
+        from qnaboard
+        where qboardNo;
     </delete>
 
     <!-- select mapper -->
     <select id="selectAll">
-        select boardNo, id, hit, nickName, content, title from board where boardNo
+        select qboardNo, id, hit, nickName, content, title from qnaboard where qboardNo;
     </select>
 
-    </mapper>
+</mapper>
