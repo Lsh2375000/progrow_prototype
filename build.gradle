@@ -48,6 +48,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
 
 
+    // DTO의 검증을 위한 validate 관련 라이브러리 // 유효성검사
+    // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+    implementation 'org.hibernate.validator:hibernate-validator:6.2.1.Final'
+
 }
 tasks.named('test') {
     useJUnitPlatform()

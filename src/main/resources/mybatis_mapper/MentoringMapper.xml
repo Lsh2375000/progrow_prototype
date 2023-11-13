@@ -4,8 +4,66 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mentoring_project.mapper.MentoringMapper">
     <insert id="insert">
-        INSERT into mentoring (id, maxNumPeople, menteeNum, region, lngName, meeting, on_off, addDate)
-        values (#{id}, #{maxNumPeople}, #{menteeNum}, #{region}, #{lngName}, #{meeting}, #{on_off}, now())
+        INSERT into mentoring (id, maxNumPeople, menteeNum, region, lngName, cLog, mData, meeting, on_off, addDate, roomNo, payment)
+        values (#{id}, #{maxNumPeople}, #{menteeNum}, #{region}, #{lngName}, #{cLog}, #{mData}, #{meeting}, #{on_off}, now(), #{roomNo}, #{payment})
     </insert>
+
+    <select id="selectAll" resultType="com.example.mentoring_project.domain.MentoringVO">
+        SELECT * from mentoring order by mNo DESC;
+    </select>
+
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.MentoringVO">
+        select *
+        from mentoring
+        where mNo = #{mNo};
+    </select>
+    
+    <update id="update">
+        update mentoring
+        set maxNumPeople=#{maxNumPeople},
+            menteeNum=#{menteeNum},
+            region=#{region},
+            lngName=#{lngName},
+            meeting=#{meeting},
+            on_off=#{on_off}
+        where mNo = #{mNo}
+    </update>
+
+    <delete id="delete">
+        delete
+        from mentoring
+        where mNo = #{mNo};
+    </delete>
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator="OR">
+                    <if test="type == 'l'.toString()">
+                        lngName like concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type=='r'.toString()">
+                        region like concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type=='i'.toString()">
+                        id like concat('%',#{keyword},'%')
+                    </if>
+                </foreach>
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="selectList" resultType="com.example.mentoring_project.domain.MentoringVO">
+        select * from mentoring
+        <include refid="search"/>
+        order by mNo desc limit #{skip}, #{size};
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(mNo) from mentoring
+        <include refid="search"/>
+    </select>
+
 
 </mapper>

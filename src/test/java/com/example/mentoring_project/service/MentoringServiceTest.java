@@ -36,4 +36,29 @@ public class MentoringServiceTest {
         List<MentoringDTO> mentoringDTOList = mentoringService.getAll();
         mentoringDTOList.forEach(mentoringDTO -> log.info(mentoringDTO));
     }
+
+    @Test
+    public void getOneTest() {
+        Long mNo = 2L;
+        log.info("getOneTest..." + mentoringService.getOne(mNo));
+    }
+
+    @Test
+    public void modifyOneTest() {
+        MentoringDTO mentoringDTO = MentoringDTO.builder()
+                .mNo(50L)
+                .maxNumPeople(7)
+                .menteeNum(6)
+                .region("대구77")
+                .lngName("JAVA77")
+                .meeting(false)
+                .on_off(false)
+                .build();
+        mentoringService.modifyOne(mentoringDTO);
+    }
+
+    @Test
+    public void removeOneTest() {
+        mentoringService.removeOne(52L);
+    }
 }
