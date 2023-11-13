@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/inc.html}">
+
+<div layout:fragment="content">
+    <section>
+        <div id="register-title">
+            <span>회원수정</span>
+        </div>
+        <form name="frmMember" action="/member/modify" method="post">
+            <div id="register-container">
+                <div id="register-input-container">
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-id" type="text" placeholder="아이디" value="${loginInfo.memberId}" name="memberId" readonly>
+                        </div>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-pw" type="password" placeholder="비밀번호" name="passwd">
+                            <div id="register-pw-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리<br></span>
+                        <span id = pw-warn-span></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-pw-re" type="password" placeholder="비밀번호 확인">
+                            <div id="register-pwRe-check"><i class="fa-solid fa-check fa-lg"></i></div>
+                        </div>
+                        <span id = pw-re-warn-span></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-name" type="text" placeholder="이름" value="${loginInfo.name}" name="name">
+                            <input id="original-name" type="hidden" value="${loginInfo.name}">
+                            <div id="register-name-check"><i class="fa-solid fa-check fa-lg" style="color: #000000"></i></div>
+                        </div>
+                        <span id="name-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-region" type="text" placeholder="지역" value="${loginInfo.name}" name="name">
+                            <input id="reoriginal-name" type="hidden" value="${loginInfo.name}">
+                            <div id="register-name-check"><i class="fa-solid fa-check fa-lg" style="color: #000000"></i></div>
+                        </div>
+                        <span id="name-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-name" type="text" placeholder="이름" value="${loginInfo.name}" name="name">
+                            <input id="original-name" type="hidden" value="${loginInfo.name}">
+                            <div id="register-name-check"><i class="fa-solid fa-check fa-lg" style="color: #000000"></i></div>
+                        </div>
+                        <span id="name-warn-span"></span>
+                    </div>
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-name" type="text" placeholder="이름" value="${loginInfo.name}" name="name">
+                            <input id="original-name" type="hidden" value="${loginInfo.name}">
+                            <div id="register-name-check"><i class="fa-solid fa-check fa-lg" style="color: #000000"></i></div>
+                        </div>
+                        <span id="name-warn-span"></span>
+                    </div>
+
+
+
+                    <div class="register-input">
+                        <div class="register-input-div">
+                            <input id="register-input-nick" type="text" placeholder="닉네임" value="${loginInfo.nickName}" name="nickName">
+                            <input id="original-nick" type="hidden" value="${loginInfo.nickName}">
+                            <div id="register-nick-check"><i class="fa-solid fa-check fa-lg" style="color: #000000"></i></div>
+                        </div>
+                        <span id="nick-warn-span"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="register-buttons">
+                <input type="button" id="submit-btn" value="수정">
+                <input type="button" onclick="location.href='list.mypage'" value="취소">
+            </div>
+        </form>
+    </section>
+</div>
+
+</html>
