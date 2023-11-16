@@ -11,22 +11,68 @@
     <!--update mapper-->
     <update id="update">
         update qnaboard  set title = #{title}, content = #{content}
-        where qboardNo = #{qboardNo}
+        where qBoardNo = #{qBoardNo}
     </update>
+
+    <!--updateHit mapper-->
+    <update id="updateHit">
+        UPDATE board SET hit = hit + 1 WHERE bno = #{bno}
+    </update>
+
     <!-- delete mapper-->
     <delete id="delete">
-        delete from qnaboard where qboardNo
+        delete from qnaboard where qBoardNo
     </delete>
 
     <delete id="deleteOne">
         delete
         from qnaboard
-        where qboardNo;
+        where qBoardNo;
     </delete>
 
     <!-- select mapper -->
     <select id="selectAll">
-        select qboardNo, id, hit, nickName, content, title from qnaboard where qboardNo;
+        select qBoardNo, id, hit, nickName, content, title from qnaboard where qBoardNo;
     </select>
+
+    <!-- selectList mapper -->
+    <select id="selectList" resultType="com.example.mentoring_project.domain.QBoardVO">
+        SELECT * FROM qnaboard
+        <include refid="search"/>
+        ORDER BY qBoardNo DESC limit #{skip}, #{size}
+    </select>
+
+
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.QBoardVO">
+        SELECT * FROM qnaboard WHERE qBoardNo = #{qBoardNo}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(*) from qnaboard
+        <include refid="search"/>
+    </select>
+
+
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        name like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'c'.toString()">
+                        content like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+
 
 </mapper>

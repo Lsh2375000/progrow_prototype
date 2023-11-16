@@ -37,7 +37,7 @@ public class QBoardServiceImplTests {
     public void updateTest(){
         Long qBoardNo = 1L;
         QBoardDTO qBoardDTO = QBoardDTO.builder()
-                .QboardNo(qBoardNo)
+                .qBoardNo(qBoardNo)
                 .title("MEMO")
                 .content("JAVA")
                 .build();

@@ -1,6 +1,6 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.dto.QBoardDTO;
+import com.example.mentoring_project.dto.*;
 
 import java.util.List;
 
@@ -19,6 +19,12 @@ public interface QBoardService {
 
     void modify(QBoardDTO qBoardDTO); // 게시글 수정
 
-
     List<QBoardDTO> getAll();
+
+    QBoardDTO getOne(Long qBoardNo, String view);
+
+    PageResponseDTO<QBoardDTO> getList(PageRequestDTO pageRequestDTO);
+
+
+
 }

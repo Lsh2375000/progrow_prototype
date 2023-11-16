@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class QBoardVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long QboardNo;
+    private Long qBoardNo;
 
 
     private String id;
