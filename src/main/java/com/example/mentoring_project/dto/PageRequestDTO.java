@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,7 +18,8 @@ import java.util.Arrays;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageRequestDTO { // 페이지 이동 정보 - Model로 자동 전달
+public class PageRequestDTO {
+    public static Pageable of; // 페이지 이동 정보 - Model로 자동 전달
     @Builder.Default
     @Min(value=1)
     @Positive // 양수
@@ -35,6 +37,8 @@ public class PageRequestDTO { // 페이지 이동 정보 - Model로 자동 전�
     // 검색 기능을 위한 추가
     private String[] types; //
     private String keyword; // 제목,작성자 검색에 사용하는 문자열
+
+
 
     public int getSkip() { // limit에서 사용하는 건너뛰기skip의 수
         return (page - 1) * size;

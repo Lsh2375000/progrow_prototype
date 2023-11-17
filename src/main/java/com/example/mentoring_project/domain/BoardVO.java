@@ -14,11 +14,8 @@ public class BoardVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardNo;
-
-
     private String id;
     private Integer hit;
-    private String nickName;
 
     @Column(length = 2000, nullable = false)
     private String content;

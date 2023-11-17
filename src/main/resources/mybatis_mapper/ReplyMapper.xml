@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mentoring_project.mapper.ReplyMapper">
+
+    <insert id="insertReply">
+        insert into progrow_project.reply(replyText, replyWriter, boardNo)
+        values (#{replyText}, #{replyWriter}, #{boardNo})
+    </insert>
+
+    <select id="listOfBoard">
+        select * from progrow_project.reply;
+    </select>
+
+</mapper>

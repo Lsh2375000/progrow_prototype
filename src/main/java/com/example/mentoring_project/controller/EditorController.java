@@ -31,7 +31,7 @@ import java.util.UUID;
 @Log4j2
 @RequestMapping("/editor")
 public class EditorController {
-    @Value("${com.example.mentoring_project.upload.path}")
+    @Value("${com.example.upload.path}")
     private String uploadPath;
 
     @GetMapping("/view/{dataFolder}/{fileName}")

@@ -1,13 +1,10 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.domain.BoardVO;
 import com.example.mentoring_project.dto.BoardDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
 
 @Log4j2
 @SpringBootTest
@@ -20,7 +17,6 @@ public class BoardServiceImplTests {
         BoardDTO boardDTO = BoardDTO.builder()
                 .id("TestUser")
                 .hit(20)
-                .nickName("User")
                 .content("제발 좀 되라")
                 .title("최악").build();
         boardService.add(boardDTO);
@@ -44,4 +40,8 @@ public class BoardServiceImplTests {
                 .content("JAVA")
                 .build();
     }
+
+
+
+
 }

@@ -1,7 +1,6 @@
 package com.example.mentoring_project.mapper;
 
 import com.example.mentoring_project.domain.BoardVO;
-import com.example.mentoring_project.domain.QBoardVO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,12 +17,13 @@ public interface BoardMapper {
 
     void delete(BoardVO boardVO);
 
-    Optional<BoardVO> selectOne(Long boardNo); //게시글 하나 선택해서 읽기
-
     List<BoardVO> selectAll();
 
+    List<BoardVO> list(PageRequestDTO pageRequestDTO); // 검색 매핑
 
+    Optional<BoardVO> selectOne(Long boarNo);
 
+//    int getCount(PageRequestDTO pageRequestDTO);
 
 
 }

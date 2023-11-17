@@ -3,6 +3,8 @@ package com.example.mentoring_project.service;
 
 import com.example.mentoring_project.domain.BoardVO;
 import com.example.mentoring_project.dto.BoardDTO;
+import com.example.mentoring_project.dto.PageRequestDTO;
+import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,18 +21,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Log4j2
 @Transactional
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     private final ModelMapper modelMapper;
     private final BoardMapper boardMapper;
 
     @Override
-    public void getAll(BoardDTO boardDTO) {
-        BoardDTO boardDTO1 = modelMapper.map(boardDTO, BoardDTO.class);
-
-    }
-
-    @Override
-    public void add(BoardDTO boardDTO){
+    public void add(BoardDTO boardDTO) {
         BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
 
         boardMapper.insert(boardVO);
@@ -45,33 +41,58 @@ public class BoardServiceImpl implements BoardService{
 
     /*게시물 하나 선택해서 삭제*/
     @Override
-    public void deleteOne(Long boardDTO){
+    public void deleteOne(Long boardDTO) {
 
     }
 
     @Override
-    public void selectOne(Long boardNo){
+    public BoardDTO selectOne(Long boardNo) {
         Optional<BoardVO> optionalBoardVO = boardMapper.selectOne(boardNo);
         BoardVO boardVO = optionalBoardVO.orElseThrow();
-        BoardDTO  boardDTO = new BoardDTO();
-
+        return modelMapper.map(boardVO, BoardDTO.class);
     }
 
+
     @Override
-    public void modify(BoardDTO boardDTO){
-        Optional<BoardVO> optionalBoardVO = boardMapper.modify(boardDTO.getBoardNo());
-        BoardVO boardVO = optionalBoardVO.orElseThrow();
+    public void modify(BoardDTO boardDTO) {
+        Optional<BoardVO> result = boardMapper.modify(boardDTO.getBoardNo());
+        BoardVO boardVO = result.orElseThrow();
         boardVO.change(boardVO.getTitle(), boardVO.getContent());
         boardMapper.modify(boardVO.getBoardNo());
 
     }
 
     @Override
+    public BoardDTO readOne(Long boardNo) {
+        return null;
+    }
+
+    //목록 가져오기
+    @Override
     public List<BoardDTO> getAll() {
         List<BoardVO> boardVOList = boardMapper.selectAll();
         List<BoardDTO> boardDTOList = new ArrayList<>();
         boardVOList.forEach(boardVO -> boardDTOList.add(modelMapper.map(boardVO, BoardDTO.class)));
         return boardDTOList;
+    }
+
+    /*검색 기능*/
+    @Override
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+
+       List<BoardVO> boardVOList = boardMapper.list(pageRequestDTO);
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        for (BoardVO boardVO : boardVOList){
+            boardDTOList.add(modelMapper.map(boardVO, BoardDTO.class));
+        }
+        int total = 0;
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(boardDTOList)
+                .total(total)
+                .build();
     }
 
 
