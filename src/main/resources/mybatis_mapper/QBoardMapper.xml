@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mentoring_project.mapper.QBoardMapper">
+    <!--insert mapper-->
+    <insert id="insert">
+        insert into qnaboard (id, hit, nickName, content, title)
+        values(#{id}, #{hit}, #{nickName}, #{content}, #{title})
+    </insert>
+    <!--update mapper-->
+    <update id="update">
+        update qnaboard  set title = #{title}, content = #{content}
+        where qBoardNo = #{qBoardNo}
+    </update>
+
+    <!--updateHit mapper-->
+    <update id="updateHit">
+        UPDATE board SET hit = hit + 1 WHERE bno = #{bno}
+    </update>
+
+    <!-- delete mapper-->
+    <delete id="delete">
+        delete from qnaboard where qBoardNo
+    </delete>
+
+    <delete id="deleteOne">
+        delete
+        from qnaboard
+        where qBoardNo;
+    </delete>
+
+    <!-- select mapper -->
+    <select id="selectAll">
+        select qBoardNo, id, hit, nickName, content, title from qnaboard where qBoardNo;
+    </select>
+
+    <!-- selectList mapper -->
+    <select id="selectList" resultType="com.example.mentoring_project.domain.QBoardVO">
+        SELECT * FROM qnaboard
+        <include refid="search"/>
+        ORDER BY qBoardNo DESC limit #{skip}, #{size}
+    </select>
+
+
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.QBoardVO">
+        SELECT * FROM qnaboard WHERE qBoardNo = #{qBoardNo}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(*) from qnaboard
+        <include refid="search"/>
+    </select>
+
+
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        name like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'c'.toString()">
+                        content like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+
+
+</mapper>

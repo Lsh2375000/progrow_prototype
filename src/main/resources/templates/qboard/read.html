@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/inc.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>QBoard Read</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="form-group row">
+    <label class="col-sm-2 control-label">이름</label>
+    <div class="col-sm-3">
+      [[${dto.name}]]
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 control-label">제목</label>
+    <div class="col-sm-5">
+      [[${dto.title}]]
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 control-label">내용</label>
+    <div class="col-sm-8" style="word-break: break-all;" th:utext="${dto.content}">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-10">
+
+      <div class="my-4">
+        <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
+          <a th:href="|@{/qboard/list}?${link}|" class="text-decoration-none">
+            <button type="button" class="btn btn-primary">목록</button>
+          </a>
+          <a th:href="|@{/qboard/modify(qBoardNo=${dto.qBoardNo})}&${link}|" class="text-decoration-none">
+            <button type="button" class="btn btn-secondary">수정</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- register btn -->
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="my-4">
+        <button class="btn btn-info qAddReplyBtn">ADD REPLY Q</button>
+      </div>
+      <ul class="list-group qReplyList">
+
+      </ul>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <ul class="pagination qReplyPaging">
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- regist modal -->
+  <div class="modal qRegisterModal" tabindex="1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Register Reply Q</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <span class="input-group-text">Reply Text Q</span>
+            <input type="text" class="form-control qReplyText">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text">ReplyWriter Q</span>
+            <input type="text" class="form-control qReplyWriter">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary qRegisterBtn">Register</button>
+          <button type="button" class="btn btn-outline-dark qCloseRegisterBtn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modify modal -->
+  <div class="modal qModifyModal" tabindex="1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title qReplyHeader"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <span class="input-group-text">Reply Text(Q)</span>
+            <input type="text" class="form-control qModifyText">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info qModifyBtn">Modify</button>
+          <button type="button" class="btn btn-danger qRemoveBtn">Remove</button>
+          <button type="button" class="btn btn-outline-dark qCloseModifyBtn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/js/reply.js"></script>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+  const qBoardNo = [[${dto.qBoardNo}]];
+  // console.log(get1(bno));
+
+  function printReplies(page, size, goLast) {
+    getList({qBoardNo, page, size, goLast})
+            .then(data => {
+              console.log(data);
+              printList(data.dtoList); // 목록처리
+              printPages(data); // 페이지 처리
+            })
+            .catch(e => console.error());
+  }
+  printReplies(1, 10); // 무조건 호출
+  printReplies(1, 10, true);
+
+  const qReplyList = document.querySelector('.qReplyList'); // 댓글 목록 DOM
+  const qReplyPaging = document.querySelector('.replyPaging'); // 페이지 목록 DOM
+
+  function printList(dtoList) { // 댓글 목록 출력
+    let str = '';
+    if (dtoList && dtoList.length > 0) {
+      for (const dto of dtoList) {
+        str += `<li class="list-group-item d-flex qReplyItem">
+                    <span class="col-2">${dto.qRno}</span>
+                    <span class="col-6" data-rno="${dto.qRno}">${dto.qReplyText}</span>
+                    <span class="col-2">${dto.qReplyWriter}</span>
+                    <span class="col-2">${dto.regDate}</span>
+                  </li>`;
+      }
+    }
+    qReplyList.innerHTML = str;
+  }
+
+  function printPages(data) { // 페이지 목록 출력
+    // pagination
+    let pageStr = '';
+    if (data.prev) {
+      pageStr += `<li class="page-item">
+                        <a class="page-link" data-page="${data.start - 1}">PREV</a>
+                    </li>`;
+    }
+    for (let i = data.start; i <= data.end; i++) {
+      pageStr += `<li class="page-item ${i === data.page ? "active" : ""}">
+                        <a class="page-link" data-page="${i}">${i}</a>
+                    </li>`;
+    }
+    if (data.next) {
+      pageStr += `<li class="page-item">
+                        <a class="page-link" data-page="${data.end + 1}">NEXT</a>
+                    </li>`;
+    }
+    console.log(pageStr);
+    replyPaging.innerHTML = pageStr;
+  }
+
+  // 댓글 등록 모달
+  const qRegisterModal = new bootstrap.Modal(document.querySelector(".qRegisterModal"));
+  // registerModal
+  const qRegisterBtn = document.querySelector(".qRegisterBtn");
+  const qReplyText = document.querySelector(".qReplyText");
+  const qReplyWriter = document.querySelector(".qReplyWriter");
+  const qCloseRegisterBtn = document.querySelector(".qCloseRegisterBtn");
+
+  document.querySelector('.qAddReplyBtn').addEventListener('click', function (e) {
+    qRegisterBtn.show();
+  });
+
+  qCloseRegisterBtn.addEventListener('click', function (e) {
+    registerModal.hide();
+  });
+
+  qRegisterBtn.addEventListener('click', function (e) {
+    const replyObj = {qBoardNo: qBoardNo, qReplyText: qReplyText.value, qReplyWriter: qReplyWriter.value};
+    addReply(replyObj).then(result => {
+      alert(result.data.qRno);
+      registerModal.hide();
+      qReplyText.value = '';
+      qReplyWriter.value = '';
+      printReplies(1, 10, true); // 댓글 목록 갱신
+    }).catch(e => {
+      alert("Exception...");
+    });
+  });
+
+  let page = 1;
+  let size = 10;
+
+  qReplyPaging.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+
+    const target = e.target;
+
+    if (!target || target.tagName != 'A') {
+      return;
+    }
+
+    page = target.getAttribute('data-page');
+    printReplies(page, size);
+  });
+
+  // 댓글 수정 모달
+  const qModifyModal = new bootstrap.Modal(document.querySelector('.qModifyModal'));
+  const qReplyHeader = document.querySelector('.qReplyHeader');
+  const qModifyText = document.querySelector('.qModifyText');
+  const qModifyBtn = document.querySelector('.qModifyBtn');
+  const qCloseModifyBtn = document.querySelector('.qCloseModifyBtn');
+
+  qReplyList.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const target = e.target;
+
+    if (!target || target.tagName != 'SPAN') {
+      return;
+    }
+
+    const qRno = target.getAttribute('data-qRno');
+    if (!qRno) {
+      return;
+    }
+
+    getReply(qRno).then(reply => { // 댓글의 내용을 모달창에 채워서 보여줌.
+      console.log(reply);
+      qReplyHeader.innerHTML = reply.qRno;
+      qModifyText.value = reply.replyText;
+      qModifyModal.show();
+    }).catch(e => alert('error'));
+  });
+
+  qModifyBtn.addEventListener('click', function (e) {
+    const replyObj = {qBoardNo: qBoardNo, qRno: replyHeader.innerHTML, replyText: modifyText.value};
+    modifyReply(replyObj).then(result => {
+      alert(result.qRno + ' 댓글이 수정되었습니다.');
+      qReplyText.value = '';
+      qModifyModal.hide();
+      printReplies(page, size);
+    }).catch(e => console.log(e));
+  });
+
+  const removeBtn = document.querySelector('.removeBtn');
+  removeBtn.addEventListener('click', function (e) {
+    removeReply(replyHeader.innerHTML).then(result => {
+      alert(result.qRno + ' 댓글이 삭제되었습니다.');
+      qReplyText.value = '';
+      qModifyModal.hide();
+      page = 1; // 이 부분이 없다면 원래 페이지로
+      printReplies(page, size);
+    }).catch(e => console.log(e));
+  });
+</script>
+
+</body>
+</html>

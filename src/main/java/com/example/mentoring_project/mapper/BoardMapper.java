@@ -1,6 +1,8 @@
 package com.example.mentoring_project.mapper;
 
 import com.example.mentoring_project.domain.BoardVO;
+import com.example.mentoring_project.domain.QBoardVO;
+import com.example.mentoring_project.dto.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public interface BoardMapper {
     Optional<BoardVO> selectOne(Long boardNo); //게시글 하나 선택해서 읽기
 
     List<BoardVO> selectAll();
+
+
+
 
 
 }

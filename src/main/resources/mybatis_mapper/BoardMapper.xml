@@ -5,28 +5,28 @@
     <mapper namespace="com.example.mentoring_project.mapper.BoardMapper">
 <!--insert mapper-->
     <insert id="insert">
-        insert into projectboard (id, hit, nickName, content, title)
+        insert into board (id, hit, nickName, content, title)
         values(#{id}, #{hit}, #{nickName}, #{content}, #{title})
     </insert>
     <!--update mapper-->
     <update id="update">
-        update projectboard  set title = #{title}, content = #{content}
+        update board  set title = #{title}, content = #{content}
         where boardNo = #{boardNo}
     </update>
     <!-- delete mapper-->
     <delete id="delete">
-        delete  from projectboard where boardNo
+        delete from board where boardNo
     </delete>
 
     <delete id="deleteOne">
         delete
-        from projectboard
+        from board
         where boardNo;
     </delete>
 
     <!-- select mapper -->
     <select id="selectAll">
-        select boardNo, id, hit, nickName, content, title from projectboard where boardNo
+        select boardNo, id, hit, nickName, content, title from board where boardNo
     </select>
 
     </mapper>
