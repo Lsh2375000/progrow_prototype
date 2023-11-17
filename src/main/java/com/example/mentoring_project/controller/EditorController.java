@@ -34,7 +34,7 @@ public class EditorController {
     @Value("${com.example.mentoring_project.upload.path}")
     private String uploadPath;
 
-    @GetMapping("/read/{dataFolder}/{fileName}")
+    @GetMapping("/view/{dataFolder}/{fileName}")
     public ResponseEntity<Resource> viewFile(@PathVariable String dataFolder, @PathVariable String fileName) {
         // 이미지 파일 출력
         log.info(fileName);
