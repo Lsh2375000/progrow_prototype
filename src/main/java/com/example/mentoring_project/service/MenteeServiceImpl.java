@@ -8,6 +8,8 @@ import com.example.mentoring_project.mapper.MenteeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,7 +24,10 @@ public class MenteeServiceImpl implements MenteeService{
 
     @Override
     public void add(MenteeDTO menteeDTO) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         log.info("service add()...");
+        log.info(menteeDTO);
+        menteeDTO.setPasswd(passwordEncoder.encode(menteeDTO.getPasswd()));
         MenteeVO menteeVO = modelMapper.map(menteeDTO, MenteeVO.class);
         menteeMapper.insert(menteeVO);
     }
@@ -42,7 +47,6 @@ public class MenteeServiceImpl implements MenteeService{
     @Override
     public MenteeDTO getOne(Long menteeNo) {
         log.info("service getOne()...");
-
         MenteeVO menteeVO = menteeMapper.selectOne(menteeNo);
         MenteeDTO menteeDTO = modelMapper.map(menteeVO, MenteeDTO.class);
         return menteeDTO;

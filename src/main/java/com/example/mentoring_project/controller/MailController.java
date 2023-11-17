@@ -1,6 +1,6 @@
 package com.example.mentoring_project.controller;
 
-import com.example.mentoring_project.dto.MemberDTO;
+
 import com.example.mentoring_project.service.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

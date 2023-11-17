@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             return;
         }
-        else if (passwd === '') {
+        if (passwd === '') {
             alert('비밀번호를 입력해 주세요')
             e.preventDefault();
             return;
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             return;
         }
-        else if (nickname === '') {
+        if (nickname === '') {
             alert('닉네임을 입력해 주세요')
             e.preventDefault();
             return;
@@ -86,21 +86,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    function validatePassword() {
-        const password = document.getElementsByName("passwd")[0].value;
-        const confirmPassword = document.getElementsByName("passwdChk")[0].value;
-        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-        if (password != confirmPassword) {
-            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-            return false;
-        }
-
-        if (!pattern.test(password)) {
-            alert("비밀번호는 8자 이상이며, 영문 대/소문자, 숫자, 특수문자가 각각 하나 이상 포함되어야 합니다.");
-            return false;
-        }
-
-        return true;
-    }
+    // function validatePassword() {
+    //     const password = document.getElementsByName("passwd")[0].value;
+    //     const confirmPassword = document.getElementsByName("passwdChk")[0].value;
+    //     const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    //
+    //     // if (password != confirmPassword) {
+    //     //     alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+    //     //     return false;
+    //     // }
+    //
+    //     if (!pattern.test(password)) {
+    //         alert("비밀번호는 8자 이상이며, 영문 대/소문자, 숫자, 특수문자가 각각 하나 이상 포함되어야 합니다.");
+    //         return false;
+    //     }
+    //
+    //     return true;
+    // }
 });

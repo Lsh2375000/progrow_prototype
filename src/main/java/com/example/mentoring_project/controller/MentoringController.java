@@ -17,11 +17,19 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/mentoring")
+@RequestMapping({"/mentoring", "/"})
 @Log4j2
 @RequiredArgsConstructor
 public class MentoringController {
     private final MentoringService mentoringService;
+
+    @GetMapping("/")
+    public String mainBa(PageRequestDTO pageRequestDTO, Model model) {
+        PageResponseDTO<MentoringDTO> responseDTO = mentoringService.getList(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
+
+        return "/mentoring/main";
+    }
 
     @GetMapping("/register")
     public void register() {

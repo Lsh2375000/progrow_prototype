@@ -50,6 +50,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     implementation 'org.hibernate.validator:hibernate-validator:6.2.1.Final'
 
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 소셜 로그인 연동
+
 }
 tasks.named('test') {
     useJUnitPlatform()

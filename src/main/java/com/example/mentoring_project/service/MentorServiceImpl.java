@@ -10,6 +10,8 @@ import com.example.mentoring_project.mapper.MentorMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ public class MentorServiceImpl implements MentorService{
     @Override
     public void add(MentorDTO mentorDTO) {
         log.info("MentorService add()...");
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        mentorDTO.setPasswd(passwordEncoder.encode(mentorDTO.getPasswd()));
+
         MentorVO mentorVO = modelMapper.map(mentorDTO, MentorVO.class);
         mentorMapper.insert(mentorVO);
     }
