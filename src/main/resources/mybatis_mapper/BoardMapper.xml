@@ -5,12 +5,14 @@
 <mapper namespace="com.example.mentoring_project.mapper.BoardMapper">
 
     <!--insert mapper-->
-    <insert id="insert">
-        insert into board(id, hit, content, title)
-        values(#{id}, #{hit}, #{content}, #{title})
+    <insert id="save">
+        insert into board(boardNo, id, hit, content, title, writer)
+        values(#{boardNo}, #{id}, #{hit}, #{content}, #{title}, #{writer})
     </insert>
+
+
     <!--update mapper-->
-    <update id="update">
+    <update id="modify">
         update board  set title = #{title}, content = #{content}
         where boardNo = #{boardNo}
     </update>
@@ -20,9 +22,7 @@
     </delete>
 
     <delete id="deleteOne">
-        delete
-        from board
-        where boardNo;
+        delete from board where boardNo = #{boardNo};
     </delete>
 
     <!-- select mapper -->
@@ -34,6 +34,7 @@
         select *  from  board  where boardNo = #{boardNo};
     </select>
 
+
     <!--검색어-->
     <select id="list">
         select * from board
@@ -42,10 +43,34 @@
         </if>
     </select>
 
-    <!--수정 mapper-->
-    <update id="modify">
-        update board  set boardNo= #{boardNo}, title = #{title}, content = #{content}
-        where boardNo = #{boardNo}
-    </update>
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        name like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'c'.toString()">
+                        content like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <!--페이징-->
+    <select id="getCount" resultType="int">
+        select count(*) from board
+        <include refid="search" />
+    </select>
+
+    <select id="selectList" resultType="com.example.mentoring_project.domain.BoardVO">
+        select * from board
+        <include refid="search" />
+        order by boardNo DESC limit #{skip}, #{size}
+    </select>
 
 </mapper>

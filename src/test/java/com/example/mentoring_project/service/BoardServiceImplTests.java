@@ -16,19 +16,20 @@ public class BoardServiceImplTests {
     public void addTest(){
         BoardDTO boardDTO = BoardDTO.builder()
                 .id("TestUser")
+                .writer("User")
                 .hit(20)
                 .content("제발 좀 되라")
                 .title("최악").build();
-        boardService.add(boardDTO);
+        boardService.register(boardDTO);
     }
 
 
 
     /*전체 삭제 테스트 코드(완)*/
     @Test
-    public void deleteTest(){
-        Long boardNo = 1L;
-        boardService.delete(boardNo);
+    void deleteOneTest(){
+        Long boardNo = 710L;
+        boardService.deleteOne(boardNo);
     }
 
     @Test
@@ -41,6 +42,20 @@ public class BoardServiceImplTests {
                 .build();
     }
 
+    @Test
+    public void testRegister(){
+        log.info(boardService.getClass().getName());
+
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("Java Test...")
+                .content("Test..")
+                .id("user00")
+                .writer("Hello")
+                .build();
+        Long boardNo = boardService.register(boardDTO);
+
+        log.info("boardNo: " + boardNo);
+    }
 
 
 

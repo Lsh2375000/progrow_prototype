@@ -1,7 +1,6 @@
 package com.example.mentoring_project.mapper;
 
 import com.example.mentoring_project.domain.BoardVO;
-import com.example.mentoring_project.dto.BoardDTO;
 import com.example.mentoring_project.service.BoardService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ public class BoardMapperTests {
                 .content("Test...Content...")
                 .title("Test...ing")
                 .build();
-        boardMapper.insert(boardVO);
+        boardMapper.register(boardVO);
     }
 
     /*게시판 데이터 넣은 테스트 코드*/
@@ -35,23 +34,24 @@ public class BoardMapperTests {
         for (int i = 1; i <= 100; i++){
             BoardVO boardVO = BoardVO.builder()
                     .id("TestString" + (i % 10))
+                    .writer("User1" + (i % 10))
                     .hit(11 + i)
                     .content("Insert...Content..TEST...")
                     .title("TitleTest")
                     .build();
-            boardMapper.insert(boardVO);
+            boardMapper.save(boardVO);
         }
     }
 
     @Test
-    public void testModify(){
-        BoardDTO boardDTO = BoardDTO.builder()
-                .boardNo(10L)
-                .title("Modify")
-                .content("Modify...Test")
-                .build();
-        boardService.modify(boardDTO);
+    void deleteOneTest(){
+        Long boardNo = 710L;
+        boardService.deleteOne(boardNo);
     }
+
+
+
+
 
 
 

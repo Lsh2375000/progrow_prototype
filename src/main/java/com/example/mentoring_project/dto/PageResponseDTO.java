@@ -13,6 +13,7 @@ public class PageResponseDTO<E> {
     private int page; // 현재페이지
     private int size; // 페이징블럭 사이즈
     private int total; // 전체 게시물 숫자
+    private int sno; // 페이지당 시작 번호
 
     // 시작 페이지 번호 ex)1
     private int start;
@@ -29,6 +30,7 @@ public class PageResponseDTO<E> {
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total) {
         this.page = pageRequestDTO.getPage();   // 현재페이지
         this.size = pageRequestDTO.getSize(); // page당 게시물 개수
+        this.sno = (total - (this.page-1) * this.size); //페이지당 시작 번호
 
         this.total = total;
         this.dtoList = dtoList;

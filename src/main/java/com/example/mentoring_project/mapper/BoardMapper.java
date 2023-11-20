@@ -10,20 +10,29 @@ import java.util.Optional;
 
 @Mapper
 public interface BoardMapper {
-
-    void insert(BoardVO boardVO); //게시글 생성 메서드
-
-    Optional<BoardVO> modify(Long boardVO); //게시글 수정 메서드
+    
+    void register(BoardVO boardVO); //게시글 생성 메서드
 
     void delete(BoardVO boardVO);
 
+    void deleteOne(Long boardVO);
+
     List<BoardVO> selectAll();
 
-    List<BoardVO> list(PageRequestDTO pageRequestDTO); // 검색 매핑
+
+
 
     Optional<BoardVO> selectOne(Long boarNo);
 
-//    int getCount(PageRequestDTO pageRequestDTO);
+   Long save(BoardVO boardVO);
 
+    void modify(BoardVO boardVO);
+
+    void count(BoardVO boardVO); //게시물 총 갯수
+
+     int getCount(PageRequestDTO pageRequestDTO); //페이징
+    List<BoardVO> getList(PageRequestDTO pageRequestDTO);
+
+    List<BoardVO> selectList(PageRequestDTO pageRequestDTO);
 
 }

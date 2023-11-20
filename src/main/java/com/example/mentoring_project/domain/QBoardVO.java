@@ -11,6 +11,7 @@ import javax.persistence.*;
 @ToString
 @Entity
 public class QBoardVO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long qBoardNo;

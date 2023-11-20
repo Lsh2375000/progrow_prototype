@@ -25,13 +25,19 @@ public class BoardServiceImpl implements BoardService {
     private final ModelMapper modelMapper;
     private final BoardMapper boardMapper;
 
-    @Override
-    public void add(BoardDTO boardDTO) {
-        BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
 
-        boardMapper.insert(boardVO);
+
+    @Override
+    public Long register(BoardDTO boardDTO) {
+        log.info(boardDTO);
+        BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
+        Long boardNo = boardVO.getBoardNo();
+        log.info("register...");
+        boardMapper.save(boardVO);
+        return boardNo;
     }
 
+    /*게시물 전체 삭제*/
     @Override
     public void delete(Long boardDTO) {
         BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
@@ -39,10 +45,11 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.delete(boardVO);
     }
 
+
     /*게시물 하나 선택해서 삭제*/
     @Override
-    public void deleteOne(Long boardDTO) {
-
+    public void deleteOne(Long boardNo) {
+        boardMapper.deleteOne(boardNo);
     }
 
     @Override
@@ -55,15 +62,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void modify(BoardDTO boardDTO) {
-        Optional<BoardVO> result = boardMapper.modify(boardDTO.getBoardNo());
-        BoardVO boardVO = result.orElseThrow();
-        boardVO.change(boardVO.getTitle(), boardVO.getContent());
-        boardMapper.modify(boardVO.getBoardNo());
+        BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
+        boardVO.change(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.getWriter());
+        boardMapper.modify(boardVO);
 
     }
 
     @Override
     public BoardDTO readOne(Long boardNo) {
+
         return null;
     }
 
@@ -76,24 +83,32 @@ public class BoardServiceImpl implements BoardService {
         return boardDTOList;
     }
 
-    /*검색 기능*/
     @Override
-    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
-        String[] types = pageRequestDTO.getTypes();
-        String keyword = pageRequestDTO.getKeyword();
+    public int getCount(PageRequestDTO pageRequestDTO) {
+        return 0;
+    }
 
-       List<BoardVO> boardVOList = boardMapper.list(pageRequestDTO);
+    /*페이징 기능*/
+    @Override
+    public PageResponseDTO<BoardDTO> getList(PageRequestDTO pageRequestDTO) {
+       List<BoardVO> boardVOList = boardMapper.selectList(pageRequestDTO);
         List<BoardDTO> boardDTOList = new ArrayList<>();
-        for (BoardVO boardVO : boardVOList){
-            boardDTOList.add(modelMapper.map(boardVO, BoardDTO.class));
-        }
-        int total = 0;
-        return PageResponseDTO.<BoardDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
+       boardVOList.forEach(boardVO -> boardDTOList.add(modelMapper.map(boardVO, BoardDTO.class)));
+
+       int total = boardMapper.getCount(pageRequestDTO);
+
+
+        PageResponseDTO<BoardDTO> pageResponseDTO = PageResponseDTO.<BoardDTO>withAll()
                 .dtoList(boardDTOList)
                 .total(total)
+                .pageRequestDTO(pageRequestDTO)
                 .build();
+
+        return pageResponseDTO;
     }
+
+    /*페이징*/
+
 
 
 }

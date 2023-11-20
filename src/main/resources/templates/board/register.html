@@ -6,11 +6,6 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <div class="row mt-3">
         <div class="col">
             <div class="card">
@@ -18,45 +13,102 @@
                     Board Register
                 </div>
                 <div class="card-body">
-                    <form action="/board/register" method="post">
+                    <form name="frmAdd" action="/board/register" method="post" class="form-horizontal">
+                        <!--제목-->
                         <div class="input-group mb-3">
                             <span class="input-group-text">Title</span>
                             <input type="text" name="title" class="form-control" placeholder="Title">
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Context</span>
-                            <textarea class="form-control col-sm-5" rows="5" name="content"></textarea>
+                            <span class="input-group-text">id</span>
+                            <input type="text" name="id" class="form-control" placeholder="id">
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Writer</span>
-                            <input type="text" name="writer" class="form-control" placeholder="Writer">
+                            <span class="input-group-text">Content</span>
+                                <textarea name="content" id="content" cols="50" rows="5" class="form-control" placeholder="content"
+                                style="width: 700px; height: 500px;"></textarea>
                         </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">writer</span>
+                            <input type="text" name="writer" class="form-control" placeholder="writer">
+                        </div>
+
+
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="submit" class="btn btn-primary">전송</button>
+                                <button type="submit" class="btn btn-primary">올리기</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div>
+
                     </form>
+
+                    <script layout:fragment="script" th:inline="javascript">
+
+                        const errors = [[${errors}]];
+                        console.log(errors);
+
+                        let errorMsg = '';
+
+                        if(errors){
+                            for(let i = 0; i < errors.length; i++){
+                                errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`;
+                            }
+                            alert(errorMsg);
+                        }
+                    </script>
+                    <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="UTF-8"></script>
+                    <script> // 네이버 에디터 추가
+                    let oEditors = []; // 전역으로 설정 하기 위해 위치 변경
+                    document.addEventListener("DOMContentLoaded", function () {
+                        nhn.husky.EZCreator.createInIFrame({
+                            oAppRef: oEditors,
+                            elPlaceHolder: "content", // id가 content인 요소를 지정
+                            sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
+                            fCreator: "createSEditor2"
+                        });
+                    });
+                    </script>
                 </div> <!-- end card body-->
+                <script layout:fragment="script" th:inline="javascript">
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const btnSubmit = document.querySelector('.btn-submit');
+                        const frmAdd = document.querySelector('form[name=frmAdd]');
+
+
+                        console.log(oEditors);
+                        btnSubmit.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            oEditors.getById['content'].exec("UPDATE_CONTENTS_FIELD", []); // 에디터에 있던 내용을 원 경로로 컴파일
+                            if (!frmAdd.name.value) {
+                                alert("이름을 입력하세요.");
+                                return;
+                            }
+                            if (!frmAdd.title.value) {
+                                alert("제목을 입력하세요.");
+                                return;
+                            }
+                            if (!frmAdd.content.value) {
+                                alert("내용을 입력하세요.");
+                                return;
+                            }
+                            console.log(oEditors);
+                            frmAdd.submit();
+                        });
+                    });
+                </script>
             </div> <!-- end card -->
         </div><!-- end col -->
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
     </div><!-- end row-->
 </div>
 
-<script layout:fragment="script" th:inline="javascript">
 
-</script>
 
-</html>
+
+
+

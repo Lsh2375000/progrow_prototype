@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BoardService {
 
-    void add(BoardDTO boardDTO); //게시글 추가
+    Long register(BoardDTO boardDTO); // 게시글 업로드
 
     void delete(Long boardNo); //게시글 전체 삭제
 
@@ -23,7 +23,13 @@ public interface BoardService {
 
     List<BoardDTO> getAll(); //게시글 목록 불러옴
 
-    PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO); //list()라는 이름으로 목록/ 검색 기능
+    int getCount(PageRequestDTO pageRequestDTO); //페이징
+
+
+    PageResponseDTO<BoardDTO> getList(PageRequestDTO pageRequestDTO); //list()라는 이름으로 목록/ 검색 기능
+
+
+
 
 
 

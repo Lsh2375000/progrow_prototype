@@ -13,6 +13,7 @@ public class BoardDTO {
     private Integer hit;
     private String content;
     private String title;
+    private String writer;
 
 
 }

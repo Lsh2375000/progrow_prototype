@@ -5,7 +5,7 @@
 <mapper namespace="com.example.mentoring_project.mapper.ReplyMapper">
 
     <insert id="insertReply">
-        insert into progrow_project.reply(replyText, replyWriter, boardNo)
+        insert into reply(replyText, replyWriter, boardNo)
         values (#{replyText}, #{replyWriter}, #{boardNo})
     </insert>
 
