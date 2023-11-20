@@ -12,14 +12,12 @@ import java.util.List;
 @Mapper
 public interface QReplyMapper {
 
-    void insert(QReplyVO qReplyVO);
-    QReplyVO selectOne(Long qRno);
-    static void update(QReplyVO qReplyVO)
-    {};
-    static void delete(Long qRno)
-    {};
-    List<ReplyVO> selectListOfBoard(@Param("qBoardNo") Long qBoardNo, @Param("skip") int skip, @Param("size") int size);
-    int getCount(Long qBoardNo);
+    void insertQR(QReplyVO qReplyVO);
+    QReplyVO selectOneQR(Long qRno);
+    void updateQR(QReplyVO qReplyVO);
+    void deleteQR(Long qRno);
+    List<ReplyVO> selectListOfBoardQR(@Param("qBoardNo") Long qBoardNo, @Param("skip") int skip, @Param("size") int size);
+    int getCountQR(Long qBoardNo);
 
 
 }

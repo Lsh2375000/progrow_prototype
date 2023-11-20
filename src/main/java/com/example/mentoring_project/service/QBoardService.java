@@ -15,7 +15,7 @@ public interface QBoardService {
 
     void deleteOne(Long qBoardNo); //게시글 하나 선택해서 삭제
 
-    void selectOne(Long qBoardNo); //게시물 하나 선택해서 읽음
+    QBoardDTO selectOne(Long qBoardNo); //게시물 하나 선택해서 읽음
 
     void modify(QBoardDTO qBoardDTO); // 게시글 수정
 

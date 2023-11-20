@@ -19,9 +19,9 @@
     <form name="frmMod" method="post" class="form-horizontal">
         <input type="hidden" name="qBoardNo" th:value="${dto.qBoardNo}">
         <div class="form-group row">
-            <label class="col-sm-2 control-label" >이름</label>
+            <label class="col-sm-2 control-label">번호</label>
             <div class="col-sm-3">
-                <input name="name" type="text" class="form-control" th:value="${dto.name}">
+                <input name="qBoardNo" type="text" class="form-control" th:value="${dto.qBoardNo}">
             </div>
         </div>
         <div class="form-group row">
@@ -72,7 +72,7 @@
             e.preventDefault();
             e.stopPropagation();
             oEditors.getById['content'].exec("UPDATE_CONTENTS_FIELD", []); // 에디터에 있던 내용을 원 경로로 컴파일
-            frmMod.action = '/qboard/modify';
+            frmMod.action = `/qboard/list?${link}`;
             frmMod.method = 'post';
             frmMod.submit();
 
@@ -83,7 +83,7 @@
             e.stopPropagation();
 
             if (confirm("정말 삭제하시겠습니까?")) {
-                frmMod.action = '/qboard/remove';
+                frmMod.action = `/qboard/remove`;
                 frmMod.method = 'post';
                 frmMod.submit();
             }

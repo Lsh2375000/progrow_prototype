@@ -58,7 +58,7 @@
             <tbody th:with="link = ${pageRequestDTO.getLink()}">
             <tr th:each="dto:${responseDTO.dtoList}">
                 <td>[[${dto.qBoardNo}]]</td>
-                <td><a th:href="|@{/qboard/view(qBoardNo =${dto.qBoardNo})}&${link}|">[[${dto.title}]]</a></td>
+                <td><a th:href="|@{/qboard/read(qBoardNo =${dto.qBoardNo})}&${link}|">[[${dto.title}]]</a></td>
                 <td>[[${dto.content}]]</td>
                 <td>[[${dto.hit}]]</td>
             </tr>
@@ -81,9 +81,49 @@
                 <a class="page-link" th:data-num="${responseDTO.end + 1}">Next</a>
             </li>
         </ul>
+        <div class="my-4">
+            <a href="/qboard/register" onclick="checkForm(); return false;" class="btn btn-primary">글쓰기</a>
+        </div>
     </div>
     <!--/* 페이징 end */-->
 </div>
+<script layout:fragment="script" th:inline="javascript">
+    console.log('script...')
 
+    document.querySelector(".pagination").addEventListener("click", function (e) { // 페이지 이동 버튼 자바스크립트
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = e.target;
+        if (target.tagName !== 'A') {
+            return;
+        }
+        const num = target.getAttribute("data-num");
+
+        const formObj = document.querySelector("form");
+
+        formObj.innerHTML += `<input type='hidden' name='page' value ='${num}'>`;
+
+        formObj.submit();
+    }, false)
+
+    document.querySelector(".clearBtn").addEventListener("click", function (e) { // 초기화 버튼 동작 자바스크립트
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.location = `/board/list`;
+    }, false)
+    console.log("modal start.")
+
+    // show modal
+    const result = [[${result}]];
+    console.log(result);
+    const modal = new bootstrap.Modal(document.querySelector(".modal"));
+    console.log("modal 2");
+    if (result) {
+        modal.show();
+        console.log("modal 3");
+    }
+</script>
 </body>
 </html>

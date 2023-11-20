@@ -24,7 +24,7 @@ public class QReplyServiceImpl implements QReplyService {
     @Override
     public Long register(QReplyDTO qReplyDTO) {
         QReplyVO qReplyVO = modelMapper.map(qReplyDTO, QReplyVO.class);
-        qReplyMapper.insert(qReplyVO);
+        qReplyMapper.insertQR(qReplyVO);
         return qReplyVO.getQRno();
     }
 
@@ -36,26 +36,25 @@ public class QReplyServiceImpl implements QReplyService {
 //    }
     @Override
     public QReplyDTO read(Long qRno) {
-        QReplyVO qReplyVO = qReplyMapper.selectOne(qRno);
-
+        QReplyVO qReplyVO = qReplyMapper.selectOneQR(qRno);
         return modelMapper.map(qReplyVO, QReplyDTO.class);
     }
 
     @Override
     public void modify(QReplyDTO qReplyDTO) {
-        QReplyVO qReplyVO = qReplyMapper.selectOne(qReplyDTO.getQRno());
-        qReplyVO.changeQnaText(qReplyVO.getContent());
-        QReplyMapper.update(qReplyVO);
+        QReplyVO qReplyVO = qReplyMapper.selectOneQR(qReplyDTO.getQRno());
+        qReplyVO.changeQnaText(qReplyVO.getQReply());
+        qReplyMapper.updateQR(qReplyVO);
     }
 
     @Override
     public void remove(Long qRno) {
-        QReplyMapper.delete(qRno);
+        qReplyMapper.deleteQR(qRno);
     }
 
     @Override
     public PageResponseDTO<QReplyDTO> getListOfBoard(Long qBoardNo, PageRequestDTO pageRequestDTO) {
-        List<ReplyVO> voList = qReplyMapper.selectListOfBoard(qBoardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
+        List<ReplyVO> voList = qReplyMapper.selectListOfBoardQR(qBoardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
         List<QReplyDTO> dtoList = new ArrayList<>();
 
         voList.forEach(qReplyVO -> dtoList.add(modelMapper.map(qReplyVO, QReplyDTO.class)));
@@ -63,7 +62,7 @@ public class QReplyServiceImpl implements QReplyService {
         return PageResponseDTO.<QReplyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
-                .total(qReplyMapper.getCount(qBoardNo))
+                .total(qReplyMapper.getCountQR(qBoardNo))
                 .build();
     }
 }
