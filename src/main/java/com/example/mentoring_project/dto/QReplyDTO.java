@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 public class QReplyDTO {
     private Long qRno; // Q&A 게시판의 리플 고유번호
     private Long qBoardNo; // Q&A 게시판의 글 고유번호
-    private String qReplyText; // Q&A 게시판의 리플 내용
-    private String qReplyWriter; // Q&A 게시판의 리플 작성자
-    private LocalDateTime regDate; // 등록일
-    private LocalDateTime modDate; // 수정일
+    private String qReply; // Q&A 게시판의 리플 내용
+    private String nickName; // Q&A 게시판의 리플 작성자 닉네임
+    private String id; // Q&A 게시판의 리플 작성자 ID
 }

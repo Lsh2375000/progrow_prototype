@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mentoring_project.mapper.QReplyMapper">
+
+    <insert id="insertQR" parameterType="com.example.mentoring_project.domain.QReplyVO" useGeneratedKeys="true" keyProperty="qRno">
+        INSERT INTO qnacomment (qRno, qBoardNo, id, qReply, nickName)
+        VALUES (#{qRno}, #{qBoardNo}, #{id}, #{qReply}, #{nickName})
+    </insert>
+
+    <select id="selectListOfBoardQR" resultType="com.example.mentoring_project.domain.QReplyVO">
+        SELECT * FROM qnacomment WHERE qBoardNo = #{qBoardNo} ORDER BY qRno ASC limit #{skip}, #{size}
+    </select>
+
+    <select id="getCountQR" resultType="int">
+        SELECT COUNT(*) FROM qnacomment where qRno = #{qRno}
+    </select>
+
+    <select id="selectOneQR" resultType="com.example.mentoring_project.domain.QReplyVO">
+        SELECT * FROM qnacomment WHERE qRno = #{qRno}
+    </select>
+
+    <update id="updateQR">
+        UPDATE qnacomment SET qReply = #{qReply} where qRno = #{qRno}
+    </update>
+
+    <delete id="deleteQR">
+        DELETE FROM qnacomment WHERE qRno = #{qRno}
+    </delete>
+
+</mapper>

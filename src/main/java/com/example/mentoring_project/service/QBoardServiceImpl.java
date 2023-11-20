@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -62,20 +61,17 @@ public class QBoardServiceImpl implements QBoardService{
     }
 
     @Override
-    public void selectOne(Long qBoardNo){
-        Optional<QBoardVO> optionalBoardVO = qBoardMapper.selectOne(qBoardNo);
-        QBoardVO qBoardVO = optionalBoardVO.orElseThrow();
-        QBoardDTO qBoardDTO = new QBoardDTO();
+    public QBoardDTO selectOne(Long qBoardNo){
+        QBoardVO qBoardVO = qBoardMapper.selectOne(qBoardNo);
+        QBoardDTO qBoardDTO = modelMapper.map(qBoardVO, QBoardDTO.class);
+        return qBoardDTO;
 
     }
 
     @Override
     public void modify(QBoardDTO qBoardDTO){
-        Optional<QBoardVO> optionalQBoardVO = qBoardMapper.modify(qBoardDTO.getQBoardNo());
-        QBoardVO qBoardVO = optionalQBoardVO.orElseThrow();
-        qBoardVO.change(qBoardVO.getTitle(), qBoardVO.getContent());
-        qBoardMapper.modify(qBoardVO.getQBoardNo());
-
+        QBoardVO qBoardVO = modelMapper.map(qBoardDTO, QBoardVO.class);
+        qBoardMapper.update(qBoardVO);
     }
 
     @Override
