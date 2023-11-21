@@ -43,19 +43,20 @@
             </div>
         </div>
     </form>
-    <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="UTF-8"></script>
-    <script> // 네이버 에디터 추가
-    let oEditors = []; // 전역으로 설정 하기 위해 위치 변경
-    document.addEventListener("DOMContentLoaded", function () {
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "qnaContent", // id가 content인 요소를 지정
-            sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
-            fCreator: "createSEditor2"
-        });
-    });
-    </script>
 </div>
+
+<script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="UTF-8"></script>
+<script> // 네이버 에디터 추가
+let oEditors = []; // 전역으로 설정 하기 위해 위치 변경
+document.addEventListener("DOMContentLoaded", function () {
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "qnaContent", // id가 content인 요소를 지정
+        sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+    });
+});
+</script>
 
 <script layout:fragment="script" th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function () {

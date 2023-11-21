@@ -88,21 +88,21 @@
 <!--    </div>-->
 <!--  </div>-->
   <!-- register Qreply -->
-  <form name="frmReplyQregister" method="post" class="comment-form">
-    <input type="hidden" name="qBoardNo" th:value="${dto.qBoardNo}">
-    <div class="reply-nick">
-      <input type="text" name="nickName" th:value="${dto.nickName}" readonly>
-    </div>
-    <div class="qna-reply">
-     <textarea name="qReply" id="qReply" cols="50" rows="5" class="form-control" placeholder="replycontent"
-               style="width:700px; height:500px;"></textarea>
-    </div>
-    <div class="qReply-submit">
-      <div class="col-sm-4">
-        <a href="/qboard/read" onclick="checkForm(); return false;" class="btn btn-primary">등록</a>
+  <form name="frmReplyQregister" method="get" class="comment-form" action="/qReplies">
+      <input type="hidden" name="qBoardNo" th:value="${dto.qBoardNo}">
+      <div class="reply-nick">
+        <input type="text" name="nickName" th:value="${dto.nickName}" readonly>
       </div>
-    </div>
+      <div class="qna-reply">
+       <textarea name="qReply" id="qReply" cols="50" rows="5" class="form-control" placeholder="replycontent"></textarea>
+      </div>
+      <div class="qReply-submit">
+        <div class="my-4">
+          <a href="/qReplies" onclick="checkForm(); return false;" class="btn btn-primary">등록</a>
+        </div>
+      </div>
   </form>
+
   <script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="UTF-8"></script>
   <script> // 네이버 에디터 추가
   let oEditors = []; // 전역으로 설정 하기 위해 위치 변경

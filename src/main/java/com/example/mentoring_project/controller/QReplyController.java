@@ -33,7 +33,7 @@ public class QReplyController {
         }
 
         Map<String, Long> resultMap = new HashMap<>();
-        Long qRno = qReplyService.register(qReplyDTO);
+        Long qRno = qReplyService.addReplyQ(qReplyDTO);
         resultMap.put("qRno", qRno);
 
         return resultMap;
@@ -58,7 +58,7 @@ public class QReplyController {
     @ApiOperation(value = "Delete QReply", notes = "DELETE 방식으로 특정 댓글 삭제")
     @DeleteMapping("/{qRno}")
     public Map<String, Long> remove(@PathVariable("qRno") Long qRno) {
-        qReplyService.remove(qRno);
+        qReplyService.removeOne(qRno);
         Map<String, Long> resultMap = new HashMap<>();
         resultMap.put("qRno", qRno);
         return resultMap;
@@ -69,7 +69,7 @@ public class QReplyController {
     public Map<String, Long> modify(@PathVariable("qRno") Long qRno, @RequestBody QReplyDTO qReplyDTO) {
         qReplyDTO.setQRno(qRno);
 
-        qReplyService.modify(qReplyDTO);
+        qReplyService.modifyOne(qReplyDTO);
         Map<String, Long> resultMap = new HashMap<>();
         resultMap.put("qRno", qRno);
 
