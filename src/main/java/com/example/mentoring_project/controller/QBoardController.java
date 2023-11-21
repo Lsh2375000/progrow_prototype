@@ -82,7 +82,7 @@ public class QBoardController {
     }
 
 
-    @PostMapping("/delete")
+    @PostMapping("/remove")
     public String remove(QBoardDTO qBoardDTO, RedirectAttributes redirectAttributes){
         Long qBoardNo = qBoardDTO.getQBoardNo();
         log.info("qBoard remove post" + qBoardNo);

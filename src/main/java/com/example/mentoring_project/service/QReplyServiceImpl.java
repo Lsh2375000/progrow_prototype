@@ -54,7 +54,7 @@ public class QReplyServiceImpl implements QReplyService {
 
     @Override
     public PageResponseDTO<QReplyDTO> getListOfBoardQ(Long qBoardNo, PageRequestDTO pageRequestDTO) {
-        List<ReplyVO> voList = qReplyMapper.selectListOfBoardQR(qBoardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
+        List<QReplyVO> voList = qReplyMapper.selectListOfBoardQR(qBoardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
         List<QReplyDTO> dtoList = new ArrayList<>();
 
         voList.forEach(qReplyVO -> dtoList.add(modelMapper.map(qReplyVO, QReplyDTO.class)));
