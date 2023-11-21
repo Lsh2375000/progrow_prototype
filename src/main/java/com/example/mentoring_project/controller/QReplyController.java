@@ -23,7 +23,7 @@ import java.util.Map;
 public class QReplyController {
     private final QReplyService qReplyService;
 
-    @ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
+    @ApiOperation(value = "QReplies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> register(@Valid @RequestBody QReplyDTO qReplyDTO, BindingResult bindingResult) throws BindException {
         log.info(qReplyDTO);
@@ -39,11 +39,11 @@ public class QReplyController {
         return resultMap;
     }
 
-    @ApiOperation(value = "Replies of QBoard", notes = "GET 방식으로 특정 게시물의 댓글 목록")
+    @ApiOperation(value = "QReplies of QBoard", notes = "GET 방식으로 특정 게시물의 댓글 목록")
     @GetMapping(value = "/list/{qBoardNo}")
-    public PageResponseDTO<QReplyDTO> getList(@PathVariable("qBoardNo") Long qBoardNo, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<QReplyDTO> getListQ(@PathVariable("qBoardNo") Long qBoardNo, PageRequestDTO pageRequestDTO) {
         // @PathVariable 경로에 있는 값 사용
-        PageResponseDTO<QReplyDTO> responseDTO = qReplyService.getListOfBoard(qBoardNo, pageRequestDTO);
+        PageResponseDTO<QReplyDTO> responseDTO = qReplyService.getListOfBoardQ(qBoardNo, pageRequestDTO);
 
         return responseDTO;
     }

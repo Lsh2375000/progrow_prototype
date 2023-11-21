@@ -12,5 +12,5 @@ public interface QReplyService {
     QReplyDTO read(Long qRno);
     void modifyOne(QReplyDTO qReplyDTO);
     void removeOne(Long qRno);
-    PageResponseDTO<QReplyDTO> getListOfBoard(Long qBoardNo, PageRequestDTO pageRequestDTO);
+    PageResponseDTO<QReplyDTO> getListOfBoardQ(Long qBoardNo, PageRequestDTO pageRequestDTO);
 }

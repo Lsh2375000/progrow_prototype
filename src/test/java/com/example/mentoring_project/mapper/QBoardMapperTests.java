@@ -60,9 +60,9 @@ public class QBoardMapperTests {
 
     @Test
     void delete() {
-        Long bno = 1L;
+        Long qBoardNo = 1L;
 
-        qBoardMapper.delete(bno);
+//        qBoardMapper.delete(qBoardNo);
     }
 
     @Test

@@ -45,7 +45,7 @@ class QReplyServiceImplTests {
     }
 
     @Test
-    public void testGetListOfBoard() {
-        qReplyService.getListOfBoard(105L, PageRequestDTO.builder().build());
+    public void testGetListOfBoardQ() {
+        qReplyService.getListOfBoardQ(105L, PageRequestDTO.builder().build());
     }
 }

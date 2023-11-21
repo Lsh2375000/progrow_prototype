@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class QBoardListReplyDTO {
     private Long qBoardNo;
     private String title;
-    private String writer;
+    private String nickName;
     private LocalDateTime regDate;
     private Long replyCount;
 }

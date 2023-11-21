@@ -17,9 +17,10 @@ public class QBoardVO {
     private String content;
     private String title;
 
-    public void change(String title, String content){
+    public void change(String title, String content, String nickName){
         this.title = title;
         this.content = content;
+        this.nickName = nickName;
     }
 
 }
