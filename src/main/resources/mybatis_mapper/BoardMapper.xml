@@ -10,6 +10,12 @@
         values(#{boardNo}, #{id}, #{hit}, #{content}, #{title}, #{writer})
     </insert>
 
+    <!-- 이미지 -->
+    <insert id="register">
+        insert into board_image(uuid, file_name, ord, boardNo)
+        values(#{uuid}, #{file_name}, #{ord}, #{boardNo})
+    </insert>
+
 
     <!--update mapper-->
     <update id="modify">
@@ -25,13 +31,15 @@
         delete from board where boardNo = #{boardNo};
     </delete>
 
-    <!-- select mapper -->
-    <select id="selectAll">
-        select * from board;
-    </select>
 
     <select id="selectOne">
         select *  from  board  where boardNo = #{boardNo};
+    </select>
+
+    <select id="selectList" resultType="com.example.mentoring_project.domain.BoardVO">
+        select * from board
+        <include refid="search" />
+        order by boardNo DESC limit #{skip}, #{size}
     </select>
 
 
@@ -61,16 +69,12 @@
         </where>
     </sql>
 
-    <!--페이징-->
+    <!--게시물 갯수-->
     <select id="getCount" resultType="int">
         select count(*) from board
         <include refid="search" />
     </select>
 
-    <select id="selectList" resultType="com.example.mentoring_project.domain.BoardVO">
-        select * from board
-        <include refid="search" />
-        order by boardNo DESC limit #{skip}, #{size}
-    </select>
+
 
 </mapper>

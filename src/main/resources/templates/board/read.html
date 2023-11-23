@@ -54,6 +54,15 @@
                             </div>
                         </div>
                     </div> <!--end card body-->
+                    <!-- 이미지 섬네일 -->
+                    <div class="col">
+                        <div class="card" th:if="${dto.fileNames != null && dto.fileNames.size() > 0}">
+                            <img class="card-img-top"
+                            th:each="fileName: ${dto.fileName}"
+                            th:src="|/view/${fileName}|">
+                        </div>
+                    </div>
+                    <!-- 이미지 섬네일 -->
                 </form>
             </div> <!--end card-->
         </div><!--end col-->

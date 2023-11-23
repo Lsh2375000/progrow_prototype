@@ -55,6 +55,9 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 소셜 로그인 연동
 
+    //이미지 작업
+    implementation 'net.coobird:thumbnailator:0.4.19'
+
 }
 tasks.named('test') {
     useJUnitPlatform()

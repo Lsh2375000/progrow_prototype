@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 @SpringBootTest
 @Log4j2
 public class BoardMapperTests {
@@ -49,10 +51,20 @@ public class BoardMapperTests {
         boardService.deleteOne(boardNo);
     }
 
-
-
-
-
+    /*첨부파일이 있는 게시물 등록 서비스(성공)*/
+    @Test
+    public void insertWithImages(){
+        BoardVO boardVO = BoardVO.builder()
+                .title("Image test")
+                .content("첨부파일 테스트")
+                .id("user00")
+                .writer("tester").
+                build();
+        for (int i = 0; i < 3; i++){
+            boardVO.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
+        }
+        boardMapper.save(boardVO);
+    }
 
 
 

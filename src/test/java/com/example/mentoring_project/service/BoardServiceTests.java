@@ -1,16 +1,23 @@
 package com.example.mentoring_project.service;
 
+import com.example.mentoring_project.domain.BoardVO;
 import com.example.mentoring_project.dto.BoardDTO;
+import com.example.mentoring_project.mapper.BoardMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 @Log4j2
 @SpringBootTest
-public class BoardServiceImplTests {
+public class BoardServiceTests {
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private BoardMapper boardMapper;
 
     @Test
     public void addTest(){
@@ -42,21 +49,6 @@ public class BoardServiceImplTests {
                 .build();
     }
 
-    @Test
-    public void testRegister(){
-        log.info(boardService.getClass().getName());
-
-        BoardDTO boardDTO = BoardDTO.builder()
-                .title("Java Test...")
-                .content("Test..")
-                .id("user00")
-                .writer("Hello")
-                .build();
-        Long boardNo = boardService.register(boardDTO);
-
-        log.info("boardNo: " + boardNo);
-    }
-
-
 
 }
+

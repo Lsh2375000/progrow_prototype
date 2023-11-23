@@ -5,7 +5,6 @@ import com.example.mentoring_project.dto.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Mapper
@@ -13,16 +12,13 @@ public interface BoardMapper {
     
     void register(BoardVO boardVO); //게시글 생성 메서드
 
+
     void delete(BoardVO boardVO);
 
     void deleteOne(Long boardVO);
 
-    List<BoardVO> selectAll();
 
-
-
-
-    Optional<BoardVO> selectOne(Long boarNo);
+    BoardVO selectOne(Long boarNo);
 
    Long save(BoardVO boardVO);
 

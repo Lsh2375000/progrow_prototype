@@ -3,6 +3,7 @@ package com.example.mentoring_project.service;
 
 import com.example.mentoring_project.domain.BoardVO;
 import com.example.mentoring_project.dto.BoardDTO;
+import com.example.mentoring_project.dto.BoardListAllDTO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.mapper.BoardMapper;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -30,10 +30,12 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Long register(BoardDTO boardDTO) {
         log.info(boardDTO);
-        BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
-        Long boardNo = boardVO.getBoardNo();
+       BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
+        BoardVO boardVO1 = dtoToEntity(boardDTO);
+        Long boardNo = boardDTO.getBoardNo();
         log.info("register...");
         boardMapper.save(boardVO);
+        boardMapper.register(boardVO1);
         return boardNo;
     }
 
@@ -54,9 +56,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardDTO selectOne(Long boardNo) {
-        Optional<BoardVO> optionalBoardVO = boardMapper.selectOne(boardNo);
-        BoardVO boardVO = optionalBoardVO.orElseThrow();
-        return modelMapper.map(boardVO, BoardDTO.class);
+        BoardVO boardVO = boardMapper.selectOne(boardNo);
+        BoardDTO boardDTO = dtoToEntity(boardVO);
+        return boardDTO;
     }
 
 
@@ -64,24 +66,22 @@ public class BoardServiceImpl implements BoardService {
     public void modify(BoardDTO boardDTO) {
         BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
         boardVO.change(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.getWriter());
+
+        //첨부파일의 처리
+        //1. 기존 정보 삭제
+        boardVO.clearImages();
+
+        //2. 기존파일, 새로 추가된 파일을 등록
+        if (boardDTO.getFileNames() != null){
+            for(String fileName : boardDTO.getFileNames()){
+                String[] arr = fileName.split("_");
+                boardVO.addImage(arr[0], arr[1]);
+            }
+        }
         boardMapper.modify(boardVO);
 
     }
 
-    @Override
-    public BoardDTO readOne(Long boardNo) {
-
-        return null;
-    }
-
-    //목록 가져오기
-    @Override
-    public List<BoardDTO> getAll() {
-        List<BoardVO> boardVOList = boardMapper.selectAll();
-        List<BoardDTO> boardDTOList = new ArrayList<>();
-        boardVOList.forEach(boardVO -> boardDTOList.add(modelMapper.map(boardVO, BoardDTO.class)));
-        return boardDTOList;
-    }
 
     @Override
     public int getCount(PageRequestDTO pageRequestDTO) {
@@ -107,7 +107,18 @@ public class BoardServiceImpl implements BoardService {
         return pageResponseDTO;
     }
 
-    /*페이징*/
+   @Override
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO){
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+
+
+
+
+        return PageResponseDTO.<BoardListAllDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .build();
+   }
 
 
 
