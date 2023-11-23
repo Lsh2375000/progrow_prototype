@@ -12,11 +12,13 @@ public interface MenteeMapper {
 
     List<MenteeVO> selectAll(); // 전체 멘티 회원조회
 
-    MenteeVO selectOne(Long memberNo); // 특정 멘티 회원 가져오기
+    MenteeVO selectOne(String mentee_id); // 특정 멘티 회원 정보 가져오기
 
-    void update(MenteeVO memberVO); // 멘티 회원 수정
+    void update(MenteeVO menteeVO); // 멘티 회원 수정
 
 
-    void delete(Long memberNo); // 멘티 회원 삭제
+    void delete(String mentee_id); // 멘티 회원 삭제
+
+    void updatePw(String passwd ,String mentee_id); // 비밀번호 수정
 
 }

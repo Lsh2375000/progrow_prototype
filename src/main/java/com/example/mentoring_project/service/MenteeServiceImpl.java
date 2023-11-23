@@ -1,9 +1,7 @@
 package com.example.mentoring_project.service;
 
 import com.example.mentoring_project.domain.MenteeVO;
-import com.example.mentoring_project.domain.MentoringVO;
 import com.example.mentoring_project.dto.MenteeDTO;
-import com.example.mentoring_project.dto.MentoringDTO;
 import com.example.mentoring_project.mapper.MenteeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -45,9 +43,9 @@ public class MenteeServiceImpl implements MenteeService{
 
 
     @Override
-    public MenteeDTO getOne(Long menteeNo) {
+    public MenteeDTO getOne(String mentee_id) {
         log.info("service getOne()...");
-        MenteeVO menteeVO = menteeMapper.selectOne(menteeNo);
+        MenteeVO menteeVO = menteeMapper.selectOne(mentee_id);
         MenteeDTO menteeDTO = modelMapper.map(menteeVO, MenteeDTO.class);
         return menteeDTO;
     }
@@ -64,11 +62,16 @@ public class MenteeServiceImpl implements MenteeService{
 
 
     @Override
-    public void remove(Long menteeNo) {
+    public void remove(String mentee_id) {
         log.info("service remove()....");
-        menteeMapper.delete(menteeNo);
+        menteeMapper.delete(mentee_id);
     }
 
+    @Override
+    public void modifyPw(String passwd, String mentee_id) {
+        log.info("service modifyPw() ....");
+        menteeMapper.updatePw(passwd, mentee_id);
+    }
 
 
 }

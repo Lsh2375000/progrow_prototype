@@ -2,6 +2,7 @@ package com.example.mentoring_project.service;
 
 import com.example.mentoring_project.domain.SMemberVO;
 import com.example.mentoring_project.dto.MemberJoinDTO;
+import com.example.mentoring_project.dto.MemberSecurityDTO;
 import com.example.mentoring_project.mapper.SMemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,9 +24,6 @@ public class SMemberServiceImpl implements SMemberService {
     @Override
     public void add(MemberJoinDTO memberJoinDTO) { // 회원 가입
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        memberJoinDTO.setMpw(passwordEncoder.encode(memberJoinDTO.getMpw())); // 비밀번호 암호화
-
         SMemberVO memberVO = modelMapper.map(memberJoinDTO, SMemberVO.class);
 
         log.info("memberVO : " + memberVO);
@@ -35,20 +33,40 @@ public class SMemberServiceImpl implements SMemberService {
         sMemberMapper.addMemberRole(memberJoinDTO.getMid(), role_set);
 
     }
-
+    // --------------------------------------------------------------------------------
+    // 해당 아이디 조회
     @Override
     public SMemberVO getMemberId(String mid) {
         return sMemberMapper.getMemberId(mid);
     }
-
+    // --------------------------------------------------------------------------------
+    // 닉네임 중복 확인
+    @Override
+    public SMemberVO getMemberNickname(String nickname) {
+        return sMemberMapper.getMemberNickname(nickname);
+    }
+    // --------------------------------------------------------------------------------
+    // 해당 회원의 비밀번호 변경
     @Override
     public void modifyPassword(String mpw, String mid) { // 회원 비밀번호 수정
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        String updateMpw = passwordEncoder.encode(mpw);
-
-        sMemberMapper.updatePassword(updateMpw, mid);
+        sMemberMapper.updatePassword(mpw, mid);
     }
+
+    @Override
+    public void modifyMember(MemberJoinDTO memberJoinDTO) {
+
+        SMemberVO sMemberVO = modelMapper.map(memberJoinDTO, SMemberVO.class);
+        log.info(sMemberVO);
+        sMemberMapper.updateMember(sMemberVO.getMpw(), sMemberVO.getNickname(), sMemberVO.getMid());
+    }
+
+    @Override
+    public void removeMember(String mid) {
+        sMemberMapper.deleteMember(mid);
+    }
+    // --------------------------------------------------------------------------------
+    //
 
 
 }

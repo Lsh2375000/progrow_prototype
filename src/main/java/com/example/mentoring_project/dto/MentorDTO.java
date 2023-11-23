@@ -15,7 +15,6 @@ public class MentorDTO {
     private String passwd; // 비밀번호
     private String name; // 이름
     private String region; // 지역
-    private int age; // 나이
     private String nickname; // 닉네임
     private String lngName; // 멘토전공 언어
     private String portfolio; // 멘토 포트폴리오

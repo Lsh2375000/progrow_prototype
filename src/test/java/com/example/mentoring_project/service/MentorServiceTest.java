@@ -42,7 +42,7 @@ public class MentorServiceTest {
 
     @Test
     public void getOne() {
-        log.info(mentorService.getOne(56L));
+        log.info(mentorService.getOne("56L"));
     }
 
 }

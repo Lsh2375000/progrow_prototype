@@ -13,11 +13,12 @@ public interface MentorMapper {
 
     List<MentorVO> selectAll(); // 전체 멘토 회원조회
 
-    MentorVO selectOne(Long mentorNo); // 특정 멘토 회원 가져오기
+    MentorVO selectOne(String mentor_id); // 특정 멘토 회원 정보 가져오기
 
     void update(MentorVO mentorVO); // 멘토 회원 수정
 
 
-    void delete(Long mentorNo); // 멘토 회원 삭제
+    void delete(String mentor_id); // 멘토 회원 삭제
 
+    void updatePw(String passwd ,String mentor_id); // 비밀번호 수정
 }

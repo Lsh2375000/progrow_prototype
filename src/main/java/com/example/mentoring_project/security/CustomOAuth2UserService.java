@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,27 +81,29 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private MemberSecurityDTO generateDTO(String email, Map<String, Object> params) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        SMemberVO member = sMemberService.getMemberId(email);
+        SMemberVO member = sMemberMapper.getMemberId(email);
         log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         log.info(member);
         // 데이터베이스에 해당 이메일의 사용자가 없다면
+
+
         if(member == null) {
             log.info("social member");
             // 회원 추가 -- mid는 이메일주소 / 패스워드는 1111
 //            Set<MemberRole> role = MemberRole.values()[0];
-            SMemberVO sMemberVO = SMemberVO.builder()
-                    .mid(email)
-                    .mpw(passwordEncoder.encode("1111"))
-//                    .email(email)
-                    .social(true)
-                    .build();
-            sMemberMapper.addMember(sMemberVO);
-
+            // 소셜로그인은 멘티만 가능
+//            SMemberVO sMemberVO = SMemberVO.builder()
+//                    .mid(email)
+//                    .mpw(passwordEncoder.encode("1111"))
+//                    .del(false)
+//                    .social(true)
+//                    .type("tee")
+//                    .build();
+//            sMemberMapper.addMember(sMemberVO);
 
             MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
-//                    email, "1111", email, false, true
-                    sMemberVO.getMid(), "1111", false, sMemberVO.isSocial(), sMemberVO.getType(),
-                    Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))
+                    email, "1111", false, true, "tee", "",
+                    Arrays.asList(new SimpleGrantedAuthority("ROLE_"))
             );
             memberSecurityDTO.setProps(params);
 
@@ -119,10 +122,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
                     member.getMid(),
                     member.getMpw(),
-//                    member.getEmail(),
                     member.isDel(),
                     member.isSocial(),
                     member.getType(),
+                    member.getNickname(),
                     member.getRoleSet().stream()
                             .map(memberRole -> new SimpleGrantedAuthority("ROLE_" + memberRole.name()))
                             .collect(Collectors.toList())

@@ -17,11 +17,13 @@ public class SMemberVO {
     @Id
     private String mid;
     private String mpw;
-//    private String email;
+
     private boolean del;
     private boolean social;
 
     private String type;
+
+    private String nickname;
 
     //    @ElementCollection : Entity가 아닌 단순한 영태의 객체 집합을 정의하고 관리
     @Builder.Default
@@ -35,9 +37,7 @@ public class SMemberVO {
         this.mpw = mpw;
     }
 
-//    public void changeEmail(String email) {
-//        this.email = email;
-//    }
+    public void changeNickname(String nickname) {this.nickname = nickname;}
 
     public void changeDel(boolean del) {
         this.del = del;

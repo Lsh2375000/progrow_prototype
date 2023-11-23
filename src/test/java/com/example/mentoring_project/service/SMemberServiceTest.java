@@ -22,7 +22,6 @@ public class SMemberServiceTest {
 
     private PasswordEncoder passwordEncoder;
 
-    private SMemberMapper sMemberMapper;
 
     @Test
     public void addMemberTest() {
@@ -39,19 +38,12 @@ public class SMemberServiceTest {
 
 
     @Test
-    public void getMember() {
-        String mid = "member1";
-        SMemberVO sMemberVO = sMemberService.getMemberId(mid);
-//        String member_mid = "member1";
-//        memberVO.setRoleSet(memberService.getMemberRole(member_mid));
-        log.info(sMemberVO);
+    public void getOneTest() {
+        String email = "zaqxsw3276@naver.com";
+        log.info(sMemberService.getMemberId(email).getType());
 
     }
 
-//    @Test
-//    public void getMemberEmail() {
-//        String email = "mem@ber.com";
-//        sMemberMapper.findByEmail(email);
-//
-//    }
+
+
 }

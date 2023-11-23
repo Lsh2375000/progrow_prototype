@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 @Log4j2
@@ -12,6 +14,9 @@ public class SMemberMapperTests {
 
     @Autowired
     private SMemberMapper sMemberMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void addMemberTest() { // 일반 회원가입
@@ -36,18 +41,25 @@ public class SMemberMapperTests {
     @Test
     public void updatePassword() { // 비밀번호 변경
 
-        log.info(sMemberMapper.getMemberId("test1"));
+        log.info(sMemberMapper.getMemberId("zaqxsw3275@naver.com"));
+        passwordEncoder = new BCryptPasswordEncoder();
+        sMemberMapper.updatePassword(passwordEncoder.encode("qwdfwe159*"), "zaqxsw3275@naver.com");
 
-        sMemberMapper.updatePassword("5555", "test1");
-
-        log.info(sMemberMapper.getMemberId("test1"));
+        log.info(sMemberMapper.getMemberId("zaqxsw3275@naver.com"));
 
 
     }
 
+    @Test
+    public void getMemberId() {
+        log.info(sMemberMapper.getMemberId("member1"));
+    }
 
-//    @Test
-//    public void findByEmail() {
-//        log.info(sMemberMapper.findByEmail("mem@ber.com"));
-//    }
+    @Test
+    public void getMemberNickname() {
+        log.info(sMemberMapper.getMemberNickname("test1"));
+    }
+
+
+
 }

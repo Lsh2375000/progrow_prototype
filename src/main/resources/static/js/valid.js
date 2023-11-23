@@ -1,3 +1,9 @@
+// 이메일을 입력 받는 input 태그의 id : email
+// 인증받기 버튼 태그의 id : emailAuth
+// 인증 번호를 입력 받는 input 태그의 id : authCode
+// 입력한 인증 번호와 이메일로 받은 인증 번호가 일치하는지 여부를 보여주는 span 태그의 id : emailAuthWarn
+// 이메일 정규식 검사
+
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('span.btnFindZipcode').addEventListener('click', execDaumPostcode);
 
@@ -32,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     // 건물명이 있을 경우 추가한다.
                     if (data.buildingName !== '') {
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        extraAddr += (extraAddr !== '' ? ' / ' + data.buildingName : data.buildingName);
                     }
                     // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
                     fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
@@ -48,59 +54,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }).open();
     }
 
-    const btnSubmit = document.querySelector('.btn-submit');
+    $("#email").on("keyup", function () {
+        console.log("이메일 인식함")
+        let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        //console.log("email : "+$memail.val());
+        if (!regExp.test($("#email").val())) {
+            // console.log("형식 미확인");
+            emchk = false;
 
-    btnSubmit.addEventListener('click', function (e) {
-        // 필수 요소 유효성 검사
+            $("#mailTxt").html("<span id='chkmail'>이메일 형식이 맞지 않습니다</span>");
 
-        const mentee_id = document.querySelector('.mentee_id').value;
-        const passwd = document.querySelector('.passwd').value;
-        const passwdChk = document.querySelector('.passwdChk').value;
-        const age = document.querySelector('.age').value;
-        const nickname = document.querySelector('.nickname').value;
+            $("#chkmail").css({
+                "color": "#FA3E3E",
+                "font-weight": "bold",
+                "font-size": "15px",
+                "position": "absolute",
+                "padding-top": "25px",
+                "z-index" : "-1"
+            });
 
-        if (mentee_id === '') {
-            alert('이메일 인증을 해주세요')
-            e.preventDefault();
-            return;
-        }
-        if (passwd === '') {
-            alert('비밀번호를 입력해 주세요')
-            e.preventDefault();
-            return;
-        }
-        validatePassword();
-        if (age === '') {
-            alert('나이를 입력해 주세요')
-            e.preventDefault();
-            return;
-        }
-        if (nickname === '') {
-            alert('닉네임을 입력해 주세요')
-            e.preventDefault();
-            return;
+        } else {
+            emchk = true;
+
+            console.log("형식 확인");
+            $("#mailTxt").html("<span id='chkmail'>이메일 형식을 확인했습니다</span>")
+
+            $("#chkmail").css({
+                "color": "#0D6EFD",
+                "font-weight": "bold",
+                "font-size": "15px",
+                "position": "absolute",
+                "padding-top": "25px",
+                "z-index" : "-1"
+            })
         }
     });
 
-
-
-
-
-    // function validatePassword() {
-    //     const password = document.getElementsByName("passwd")[0].value;
-    //     const confirmPassword = document.getElementsByName("passwdChk")[0].value;
-    //     const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    //
-    //     // if (password != confirmPassword) {
-    //     //     alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-    //     //     return false;
-    //     // }
-    //
-    //     if (!pattern.test(password)) {
-    //         alert("비밀번호는 8자 이상이며, 영문 대/소문자, 숫자, 특수문자가 각각 하나 이상 포함되어야 합니다.");
-    //         return false;
-    //     }
-    //
-    //     return true;
-    // }
 });

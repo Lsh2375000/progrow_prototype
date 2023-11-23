@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mentoring_project.mapper.MenteeMapper">
     <insert id="insert">
-        INSERT into user_mentee (mentee_id, passwd, name, region, age, nickname, lngName, mNo, mNum)
-        values (#{mentee_id}, #{passwd}, #{name}, #{region}, #{age}, #{nickname}, #{lngName}, #{mNo}, #{mNum})
+        INSERT into user_mentee (mentee_id, passwd, name, region,  nickname, lngName, mNo, mNum)
+        values (#{mentee_id}, #{passwd}, #{name}, #{region},  #{nickname}, #{lngName}, #{mNo}, #{mNum})
     </insert>
     
     <select id="selectAll" resultType="com.example.mentoring_project.domain.MenteeVO">
@@ -13,16 +13,24 @@
     </select>
 
     <select id="selectOne" resultType="com.example.mentoring_project.domain.MenteeVO">
-        select * from user_mentee where menteeNo = #{menteeNo};
+        select * from user_mentee where mentee_id = #{mentee_id};
     </select>
 
     <update id="update">
-        update user_mentee set passwd = #{passwd}, name = #{name}, region = #{region}, nickname = #{nickname}, lngName = #{lngName} where menteeNo = #{menteeNo}
+        update user_mentee
+        set name = #{name}, region = #{region},
+            nickname = #{nickname}, lngName = #{lngName}
+        where mentee_id = #{mentee_id}
     </update>
 
     <delete id="delete">
-        delete from user_mentee where menteeNo = #{menteeNo}
+        delete from user_mentee where mentee_id = #{mentee_id}
     </delete>
+
+
+    <update id="updatePw">
+        update user_mentee set passwd = #{passwd} where mentee_id = #{mentee_id}
+    </update>
 
 
 </mapper>

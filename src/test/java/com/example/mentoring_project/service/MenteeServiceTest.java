@@ -38,7 +38,7 @@ public class MenteeServiceTest {
 
     @Test
     public void getOne() {
-        log.info(menteeService.getOne(60L));
+        log.info(menteeService.getOne("60L"));
     }
 
 }

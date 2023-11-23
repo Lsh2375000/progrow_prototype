@@ -10,6 +10,7 @@
             <result property="del" column="del"></result>
             <result property="social" column="social"></result>
             <result property="type" column="type"></result>
+            <result property="nickname" column="nickname"></result>
             <collection property="roleSet" javaType="java.util.HashSet" ofType="int">
                 <result property="role_set" column="role_set"></result>
             </collection>
@@ -19,8 +20,8 @@
 
 
     <insert id="addMember">
-        insert into smember (mid, mpw, moddate, regdate, del, social, type)
-        VALUES (#{mid}, #{mpw}, now(), now(), 0, 0, #{type})
+        insert into smember (mid, mpw, moddate, regdate, del, social, type, nickname)
+        VALUES (#{mid}, #{mpw}, now(), now(), 0, #{social}, #{type}, #{nickname})
     </insert>
 
     <insert id="addMemberRole">
@@ -34,12 +35,25 @@
         from smember m
             left join member_role_set mrs
                 on m.mid = mrs.member_mid
-        where m.mid = #{mid};
+        where m.mid = #{mid}
 
     </select>
+
+    <update id="updateMember">
+        update smember set moddate = now(), nickname = #{nickname} where mid = #{mid}
+    </update>
 
     <update id="updatePassword">
         update smember m set m.mpw = #{mpw} where m.mid = #{mid}
     </update>
+
+    <select id="getMemberNickname" resultType="com.example.mentoring_project.domain.SMemberVO">
+        select * from smember where nickname = #{nickname}
+    </select>
+
+    <delete id="deleteMember">
+        delete from smember where mid = #{mid}
+    </delete>
+
 
 </mapper>

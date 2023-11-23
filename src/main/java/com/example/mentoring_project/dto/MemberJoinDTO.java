@@ -17,5 +17,6 @@ public class MemberJoinDTO {
     private boolean del; // 공통 회원 탈퇴여부(당장 사용하진 않음)
     private boolean social; // 회원 소셜 로그인 여부
     private String type; // 회원 타입
+    private String nickname;
 
 }

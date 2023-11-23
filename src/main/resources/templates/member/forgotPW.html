@@ -1,0 +1,101 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/inc.html}">
+
+<body class="align-middle" >
+<div layout:fragment="content">
+    <div class="container-fluid d-flex justify-content-center" style="height: 100vh;">
+        <div class="card align-self-center">
+            <div class="card-header">
+                비밀번호 재설정
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">이메일 입력</span>
+                    <input type="text" name="email" class="form-control" id="email" placeholder="Email">
+                    <button type="button" class="btn btn-primary" id="sendConfirmKeyBtn">이메일 인증하기</button>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">인증 확인</span>
+                    <input type="text" name="confirmKey" class="form-control" id="confirmKey" placeholder="인증 문자 입력">
+                    <button type="button" class="btn btn-primary" id="confirmKeyChk">인증 문자 확인</button>
+                </div>
+                <div class="my-4">
+                    <div class="float-end">
+                        <button class="btn btn-success" id="resetPw" disabled>비밀번호 재설정하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/checkAxios.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/axios@0.26.0/dist/axios.min.js"></script>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    const email = document.getElementById('email'); // 아이디 입력폼
+    const sendConfirmKeyBtn = document.getElementById('sendConfirmKeyBtn'); // 아이디 인증버튼
+    const confirmKey = document.getElementById('confirmKey'); // 인증키 입력폼
+    const confirmKeyChkBtn = document.getElementById('confirmKeyChk'); // 인증키 확인 버튼
+    const resetPw = document.getElementById('resetPw'); // 비밀번호 재설정 화면이동 버튼
+
+    sendConfirmKeyBtn.addEventListener('click', async function (e) {
+        const emailVal = email.value;
+        const result =  await isEmail(emailVal);
+        if (result) {
+            alert('아이디가 확인 되었습니다.');
+            await sendConfirmMail(emailVal);
+            alert('인증문자가 전송되었습니다.');
+        } else {
+            alert('존재하지 않는 아이디 입니다.');
+            resetPw.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        }
+    });
+
+    confirmKeyChkBtn.addEventListener('click', async function (e) {
+        const confirmKeyVal = confirmKey.value;
+        const result = await matchConfirmKey(confirmKeyVal);
+        console.log(typeof result);
+        if (result) {
+            alert('인증되었습니다.');
+            email.disabled = true;
+            sendConfirmKeyBtn.disabled = true;
+            resetPw.disabled = false;
+
+        } else {
+            alert('잘못된 인증문자 입니다.');
+            resetPw.addEventListener('click', function (e) {
+                e.preventDefault()
+                e.stopPropagation();
+            });
+        }
+    });
+
+    resetPw.addEventListener('click',async function (e){
+        const emailVal = email.value;
+        const confirmKeyVal = confirmKey.value;
+        const result = await matchConfirmKey(confirmKeyVal);
+        console.log(typeof result);
+
+        if (emailVal === ''.trim()) {
+            alert('이메일 인증을 진행해 주세요');
+            e.preventDefault();
+            e.stopPropagation();
+        } else if (confirmKeyVal === ''.trim()) {
+            alert('인증문자를 입력해 주세요.');
+            e.preventDefault();
+            e.stopPropagation();
+        } else if (result === false) {
+            alert('인증이 완료 되지 않았습니다.');
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        self.location.href = '/member/resetPassword';
+    });
+
+
+</script>
+</body>
