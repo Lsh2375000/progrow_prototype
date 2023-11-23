@@ -16,7 +16,7 @@ public interface QReplyMapper {
     QReplyVO selectOneQR(Long qRno);
     void updateQR(QReplyVO qReplyVO);
     void deleteQR(Long qRno);
-    List<ReplyVO> selectListOfBoardQR(@Param("qBoardNo") Long qBoardNo, @Param("skip") int skip, @Param("size") int size);
+    List<QReplyVO> selectListOfBoardQR(@Param("qBoardNo") Long qBoardNo, @Param("skip") int skip, @Param("size") int size);
     int getCountQR(Long qBoardNo);
 
 

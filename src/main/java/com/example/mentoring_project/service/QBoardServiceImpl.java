@@ -48,16 +48,16 @@ public class QBoardServiceImpl implements QBoardService{
 
 
     @Override
-    public void delete(Long qBoardNo) {
-        QBoardVO qBoardVO = modelMapper.map(qBoardNo, QBoardVO.class);
+    public void delete(Long QBoardDTO) {
+        QBoardVO qBoardVO = modelMapper.map(QBoardDTO, QBoardVO.class);
 
-        qBoardMapper.delete(qBoardVO.getQBoardNo());
+        qBoardMapper.delete(qBoardVO);
     }
 
     /*게시물 하나 선택해서 삭제*/
     @Override
-    public void deleteOne(Long qBoardDTO){
-
+    public void deleteOne(Long qBoardNo){
+        qBoardMapper.deleteOne(qBoardNo);
     }
 
     @Override

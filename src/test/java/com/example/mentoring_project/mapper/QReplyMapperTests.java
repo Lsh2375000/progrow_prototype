@@ -15,7 +15,7 @@ public class QReplyMapperTests {
 
     /*게시글 추가 테스트 코드(완)*/
     @Test
-    public void insertTest(){
+    public void insertQnaTest(){
         QReplyVO qReplyVO = QReplyVO.builder()
                 .qBoardNo(600L)
                 .id("qReTest")
@@ -27,7 +27,7 @@ public class QReplyMapperTests {
 
     /*댓글 데이터 넣은 테스트 코드*/
     @Test
-    void insert(){
+    void insertQnaRoop(){
         for (int i = 1; i <= 200; i++){
             QReplyVO qReplyVO = QReplyVO.builder()
                     .qBoardNo(600L)

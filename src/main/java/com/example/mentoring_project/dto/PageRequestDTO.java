@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.constraints.Max;
@@ -15,6 +16,7 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 
 @Builder
+@Log4j2
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -73,6 +75,7 @@ public class PageRequestDTO {
         }
 
         link = builder.toString();
+        log.info(link);
         return link;
     }
 

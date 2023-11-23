@@ -16,7 +16,9 @@ public interface QBoardMapper {
 
     QBoardVO modify(Long qBoardVO); //게시글 수정 메서드
 
-    void delete(Long qBoardVO);
+    void delete(QBoardVO qBoardVO);
+
+    void deleteOne(Long qBoardVO);
 
     void update(QBoardVO qBoardVO); // 수정
 
@@ -29,4 +31,6 @@ public interface QBoardMapper {
     List<QBoardVO> selectList(PageRequestDTO pageRequestDTO);
 
     int getCount(PageRequestDTO pageRequestDTO);
+
+
 }

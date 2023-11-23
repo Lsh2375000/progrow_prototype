@@ -14,7 +14,7 @@ class QReplyServiceImplTests {
     private QReplyService qReplyService;
 
     @Test
-    public void testRegister() {
+    public void testAddReplyQ() {
         QReplyDTO qReplyDTO = QReplyDTO.builder()
                 .id("qReplytt")
                 .qBoardNo(1L)
@@ -22,7 +22,7 @@ class QReplyServiceImplTests {
                 .qReply("댓글내용")
                 .qRno(202L)
                 .build();
-        log.info(qReplyService.register(qReplyDTO));
+        log.info(qReplyService.addReplyQ(qReplyDTO));
     }
 
     @Test
@@ -36,16 +36,16 @@ class QReplyServiceImplTests {
                 .qRno(2L)
                 .qReply("댓글수정")
                 .build();
-        qReplyService.modify(qReplyDTO);
+        qReplyService.modifyOne(qReplyDTO);
     }
 
     @Test
     public void testDelete() {
-        qReplyService.remove(200L);
+        qReplyService.removeOne(200L);
     }
 
     @Test
-    public void testGetListOfBoard() {
-        qReplyService.getListOfBoard(105L, PageRequestDTO.builder().build());
+    public void testGetListOfBoardQ() {
+        qReplyService.getListOfBoardQ(105L, PageRequestDTO.builder().build());
     }
 }

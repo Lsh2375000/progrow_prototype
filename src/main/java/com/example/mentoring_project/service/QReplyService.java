@@ -5,12 +5,12 @@ import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.dto.QReplyDTO;
 
 public interface QReplyService {
-    Long register(QReplyDTO qReplyDTO);
+    Long addReplyQ(QReplyDTO qReplyDTO);
 
 //    Long registerReQ(QReplyDTO qReplyDTO);
 
     QReplyDTO read(Long qRno);
-    void modify(QReplyDTO qReplyDTO);
-    void remove(Long qRno);
-    PageResponseDTO<QReplyDTO> getListOfBoard(Long qBoardNo, PageRequestDTO pageRequestDTO);
+    void modifyOne(QReplyDTO qReplyDTO);
+    void removeOne(Long qRno);
+    PageResponseDTO<QReplyDTO> getListOfBoardQ(Long qBoardNo, PageRequestDTO pageRequestDTO);
 }
