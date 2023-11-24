@@ -1,16 +1,14 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.dto.MemberJoinDTO;
-import com.example.mentoring_project.dto.MentorDTO;
+import com.example.mentoring_project.dto.memberDTO.MentorDTO;
+import com.example.mentoring_project.service.memberService.MentorService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Log4j2
 public class MentorServiceTest {

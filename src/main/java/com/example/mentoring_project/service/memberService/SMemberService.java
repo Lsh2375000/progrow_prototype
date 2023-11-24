@@ -1,10 +1,7 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.memberService;
 
-import com.example.mentoring_project.domain.SMemberVO;
-import com.example.mentoring_project.dto.MemberJoinDTO;
-import com.example.mentoring_project.dto.MemberSecurityDTO;
-
-import java.util.List;
+import com.example.mentoring_project.domain.memberVO.SMemberVO;
+import com.example.mentoring_project.dto.memberDTO.MemberJoinDTO;
 
 public interface SMemberService {
 

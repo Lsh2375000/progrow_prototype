@@ -1,6 +1,6 @@
-package com.example.mentoring_project.mapper;
+package com.example.mentoring_project.mapper.memberMapper;
 
-import com.example.mentoring_project.domain.MenteeVO;
+import com.example.mentoring_project.domain.memberVO.MenteeVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

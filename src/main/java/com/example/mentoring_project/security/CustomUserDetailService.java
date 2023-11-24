@@ -1,10 +1,10 @@
 package com.example.mentoring_project.security;
 
 import com.example.mentoring_project.domain.MemberRole;
-import com.example.mentoring_project.domain.SMemberVO;
-import com.example.mentoring_project.dto.MemberSecurityDTO;
-import com.example.mentoring_project.mapper.SMemberMapper;
-import com.example.mentoring_project.service.SMemberService;
+import com.example.mentoring_project.domain.memberVO.SMemberVO;
+import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
+import com.example.mentoring_project.mapper.memberMapper.SMemberMapper;
+import com.example.mentoring_project.service.memberService.SMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

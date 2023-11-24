@@ -1,8 +1,10 @@
-package com.example.mentoring_project.controller;
+package com.example.mentoring_project.controller.memberController;
 
-import com.example.mentoring_project.dto.MemberSecurityDTO;
-import com.example.mentoring_project.service.MailSenderService;
-import com.example.mentoring_project.service.SMemberService;
+import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
+import com.example.mentoring_project.dto.memberDTO.MenteeDTO;
+import com.example.mentoring_project.dto.memberDTO.MentorDTO;
+import com.example.mentoring_project.service.mailService.MailSenderService;
+import com.example.mentoring_project.service.memberService.SMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -28,6 +29,7 @@ public class MemberValidationController {
         if (mailSenderService.sendMailByAddMember(mailTo)) {
             String confirmKey = mailSenderService.getConfirmKey(); // 인증키를 변수에 저장
             session.setAttribute("confirmKey", confirmKey); // 변수를 세션에 저장
+            session.setAttribute("inputEmail", mailTo); // 입력한 이메일을 세션에 저장
             log.info("입력한 이메일 : "+ mailTo);
             log.info("인증키 :" + confirmKey); // 변수를 로그에 출력
 
@@ -42,7 +44,7 @@ public class MemberValidationController {
     @ResponseBody
     public String  matchConfirmKey(HttpSession session, String confirmKey) throws Exception { // 입력한 인증키 확인
         log.info("matchConfirmKey......");
-        String matchConfirmKey =  (String) session.getAttribute("confirmKey"); // 변수를 세션에 저장
+        String matchConfirmKey =  (String) session.getAttribute("confirmKey"); // 변수에 세션값을 저장
         log.info(matchConfirmKey);
         log.info(confirmKey);
         if (confirmKey.equals(matchConfirmKey)) {
@@ -67,7 +69,6 @@ public class MemberValidationController {
         log.info(email);
         if (sMemberService.getMemberId(email) != null) {
             log.info("null.....");
-            session.setAttribute("email", email); // 입력한 이메일이 존재 한다면 이메일을 세션에 담아준다.
             return "ture";
         }
         return "false";
@@ -75,7 +76,7 @@ public class MemberValidationController {
 
     @PostMapping("/idCheck")
     @ResponseBody
-    public String idCheck(@RequestParam String mentee_id) { // 아이디 중복 체크
+    public String idCheck(@RequestParam String mentee_id, HttpSession session) { // 아이디 중복 체크
         log.info("idCheck......");
         log.info(mentee_id);
         if (sMemberService.getMemberId(mentee_id) == null) {
@@ -87,10 +88,10 @@ public class MemberValidationController {
 
     @PostMapping("/nicknameCheck")
     @ResponseBody
-    public String nicknameCheck(@RequestParam String nickname) { // 비밀번호 중복 체크
+    public String nicknameCheck(@RequestParam String nickname, HttpSession session) { // 닉네임 중복 체크
         log.info("nicknameCheck......");
-        log.info(nickname);
-
+        log.info("입력한 이메일 : " + nickname);
+        session.setAttribute("inputNickname", nickname); // 닉네임을 세션에 담는다
         if (sMemberService.getMemberNickname(nickname) == null) {
             log.info("null.....");
             return "true";
@@ -109,5 +110,56 @@ public class MemberValidationController {
             return "true";
         }
         return "false";
+    }
+
+    // 회원가입전 마지막 체크
+    @PostMapping("/lastCheck")
+    @ResponseBody
+    public String lastCheck(HttpSession session, String inputEmail, String inputNickname) {
+
+        String okInputEmail = (String) session.getAttribute("inputEmail");
+        String okInputNickname = (String) session.getAttribute("inputNickname");
+
+        log.info("중복 검사로 확인된 값 : " + okInputNickname + ", " + okInputEmail);
+        log.info("마지막에 버튼 눌렀을 때 확인 된 값 : " + inputEmail + ", " + inputNickname);
+
+        if (!okInputEmail.equals(inputEmail) ||
+                sMemberService.getMemberId(inputEmail ) != null) {
+            // 1. 중복검사할 때 아이디 값과 회원가입 눌렀을 때 아이디 값이 다르거나
+            // 2. 회원가입 버튼눌렀을 때 입력된 아이디의 정보가 이미 존재한다면
+
+            log.info("이메일 중복검사 재실행!!");
+            session.removeAttribute("inputEmail");
+            // 세션에 담긴 값과 입력한값이 다르면
+            return "emailFalse";
+
+        } else if (!okInputNickname.equals(inputNickname) ||
+                sMemberService.getMemberNickname(inputNickname) != null) {
+            // 1. 중복검사할 때 닉네임 값과 회원가입 눌렀을 때 아이디 값이 다르거나
+            // 2. 회원가입 버튼눌렀을 때 입력된 닉네임의 정보가 이미 존재한다면
+
+            log.info("닉네임 중복 검사 재실행!!");
+            session.removeAttribute("inputNickname");
+            return "nicknameFalse";
+        }
+
+        return "true";
+    }
+
+
+    @PostMapping("/lastModifyCheck")
+    @ResponseBody
+    public String lastModifyCheck(HttpSession session, String inputNickname) { // 회원 수정전 마지막 체크
+        String okInputNickname = (String) session.getAttribute("inputNickname");
+
+        log.info("중복 검사로 확인된 값 : " + okInputNickname);
+        log.info("마지막에 버튼 눌렀을 때 확인 된 값 : " + inputNickname);
+
+        if (!okInputNickname.equals(inputNickname) ||
+                sMemberService.getMemberNickname(inputNickname) != null) {
+            log.info("닉네임 중복 검사 재실행!!");
+            return "false";
+        }
+        return "ture";
     }
 }

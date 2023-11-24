@@ -1,12 +1,12 @@
-package com.example.mentoring_project.controller;
+package com.example.mentoring_project.controller.memberController;
 
-import com.example.mentoring_project.dto.MemberJoinDTO;
-import com.example.mentoring_project.dto.MemberSecurityDTO;
-import com.example.mentoring_project.dto.MenteeDTO;
-import com.example.mentoring_project.dto.MentorDTO;
-import com.example.mentoring_project.service.MenteeService;
-import com.example.mentoring_project.service.MentorService;
-import com.example.mentoring_project.service.SMemberService;
+import com.example.mentoring_project.dto.memberDTO.MemberJoinDTO;
+import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
+import com.example.mentoring_project.dto.memberDTO.MenteeDTO;
+import com.example.mentoring_project.dto.memberDTO.MentorDTO;
+import com.example.mentoring_project.service.memberService.MenteeService;
+import com.example.mentoring_project.service.memberService.MentorService;
+import com.example.mentoring_project.service.memberService.SMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Set;
 
 
 @Controller
@@ -65,7 +64,7 @@ public class SMemberController {
     // ----------------------------------------------------
     // 일반 회원 가입 시작
     @PostMapping("/register")
-    public String addMentor(MentorDTO mentorDTO, MenteeDTO menteeDTO, HttpServletRequest request) {
+    public String addMentor(MentorDTO mentorDTO, MenteeDTO menteeDTO, HttpServletRequest request, HttpSession session) {
         log.info("/register...");
 
         String referer = (String) request.getHeader("REFERER"); // 이전의 URL경로를 들고 온다
@@ -74,20 +73,25 @@ public class SMemberController {
         String torRegisterURL = "http://localhost:8080/member/mentorRegister"; // 멘토 회원가입 주소
         String teeRegisterURL = "http://localhost:8080/member/menteeRegister"; // 멘티 회원가입 주소
 
+        String inputEmail = (String) session.getAttribute("inputEmail");
+        String inputNickname = (String) session.getAttribute("inputNickname");
+
         if (referer.equals(torRegisterURL)) { // URL : /member/mentorRegister
-            log.info("TYPE : TOR.....");
-            mentorDTO.setType("tor");
-            mentorService.add(mentorDTO);
-            MemberJoinDTO memberJoinDTO = MemberJoinDTO.builder()
-                    .mid(mentorDTO.getMentor_id())
-                    .mpw(mentorDTO.getPasswd())
-                    .del(false)
-                    .social(false)
-                    .nickname(menteeDTO.getNickname())
-                    .type(mentorDTO.getType())
-                    .build();
-            log.info(mentorDTO);
-            sMemberService.add(memberJoinDTO);
+
+                log.info("TYPE : TOR.....");
+                mentorDTO.setType("tor");
+                mentorService.add(mentorDTO);
+                MemberJoinDTO memberJoinDTO = MemberJoinDTO.builder()
+                        .mid(mentorDTO.getMentor_id())
+                        .mpw(mentorDTO.getPasswd())
+                        .del(false)
+                        .social(false)
+                        .nickname(menteeDTO.getNickname())
+                        .type(mentorDTO.getType())
+                        .build();
+                log.info(mentorDTO);
+                sMemberService.add(memberJoinDTO);
+
         } else if (referer.equals(teeRegisterURL)) { // URL : /member/menteeRegister
             log.info("TYPE : TEE.....");
             menteeDTO.setType("tee");
@@ -127,7 +131,7 @@ public class SMemberController {
                 .mpw(menteeDTO.getPasswd())
                 .social(true)
                 .del(false)
-                .type(memberSecurityDTO.getType())
+                .type("tee")
                 .nickname(menteeDTO.getNickname()).build();
         sMemberService.add(memberJoinDTO);
 

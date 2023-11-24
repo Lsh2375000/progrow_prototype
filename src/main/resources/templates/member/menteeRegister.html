@@ -152,24 +152,45 @@
 
         emailAuthBtn.addEventListener('click', async function (e) { // 이메일 인증 버튼 이벤트
             const emailVal = document.getElementById('email').value;
-            await sendConfirmMail(emailVal);
-            alert('인증번호가 전송되었습니다.')
-            authCode.disabled = false;
-            keyChkBtn.disabled = false;
+            const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+            if (emailVal === ''.trim()) {
+                alert('이메일을 입력해 주세요.');
+
+            } else if (!regExp.test(emailVal)) {
+                alert('이메일 양식을 확인해 주세요');
+
+            } else {
+                await sendConfirmMail(emailVal);
+                alert('인증번호가 전송되었습니다.');
+                authCode.disabled = false;
+                keyChkBtn.disabled = false;
+            }
+
         });
+
 
 
         keyChkBtn.addEventListener('click', async function (e) { // 인증키 확인 버튼 이벤트
             const confirmKey = authCode.value;
             const result = await matchConfirmKey(confirmKey);
-            if (result) {
+            if (confirmKey === ''.trim()) {
+                alert('인증번호를 입력해 주세요');
+                btnSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            } else if (!result) {
+                alert('인증번호가 일치하지 않습니다.');
+                btnSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            } else if (result) {
                 alert('인증되었습니다.');
                 authCode.disabled = true;
                 keyChkBtn.disabled = true;
-            } else {
-                alert('인증번호가 일치하지 않습니다.');
             }
-
         });
 
 
@@ -177,34 +198,56 @@
 
             const mentee_id = document.getElementById('email').value;
             const result = await checkId(mentee_id);
+            const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-            if (result) {
-                console.log('사용가능')
-                alert('사용 가능한 이메일 입니다.');
-                emailAuthBtn.disabled = false;
-            } else {
+            if (mentee_id === ''.trim()) {
+                alert('이메일을 입력해 주세요.');
+                btnSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            } else if (!result) {
                 alert('이미 사용중인 이메일 입니다.');
                 btnSubmit.addEventListener('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
                 });
+            }else if (!regExp.test(mentor_id)) {
+                alert('이메일 양식을 확인해 주세요');
+                btnSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            } else if (result) {
+                console.log('사용가능');
+                alert('사용 가능한 이메일 입니다.');
+                emailAuthBtn.disabled = false;
             }
-         });
+        });
 
         dupNicknameBtn.addEventListener('click', async function () { // 닉네임 중복 검사
             const nickname = document.getElementById('nickname').value;
             const result = await checkNickname(nickname);
 
-            if (result) {
-                alert('사용 가능한 닉네임 입니다.')
-            } else {
+            if (!result) {
                 alert('이미 사용중인 닉네임 입니다.')
                 btnSubmit.addEventListener('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
                 });
+            } else if(nickname === ''.trim()) {
+                alert('닉네임을 입력해 주세요');
+                btnSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            } else if (result) {
+
+                alert('사용 가능한 닉네임 입니다.');
+
             }
         });
+
 
         passwd.addEventListener('focusout', function() {
             const passwdChk = document.querySelector('.passwdChk').value;
@@ -241,6 +284,7 @@
             const passwdChkVal = document.querySelector('.passwdChk').value;
             const passwdVal = document.querySelector('.passwd').value;
             const chkTxt = document.querySelector('#chkTxt');
+            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,12}$/;
 
             if (passwdVal !== passwdChkVal) {
                 chkTxt.innerHTML = '비밀번호가 일치하지 않습니다.';
@@ -250,6 +294,15 @@
                 chkTxt.style.position = 'absolute';
                 chkTxt.style.paddingTop = '40px';
                 chkTxt.style.zIndex = '-1';
+            } else if (!passwordRegex.test(passwdVal) || !passwordRegex.test(passwdChkVal)) {
+                chkTxt.innerHTML = '비밀번호 양식을 확인해주세요.';
+                chkTxt.style.color = '#FA3E3E';
+                chkTxt.style.fontWeight = 'bold';
+                chkTxt.style.fontSize = '15px';
+                chkTxt.style.position = 'absolute';
+                chkTxt.style.paddingTop = '40px';
+                chkTxt.style.zIndex = '-1';
+
             } else if (passwdVal === passwdChkVal && passwdVal !== '') {
                 chkTxt.innerHTML = '비밀번호가 일치합니다';
                 chkTxt.style.color = '#0D6EFD';
@@ -261,45 +314,85 @@
             }
         });
 
-        btnSubmit.addEventListener('click', function (e) { // 필수 요소 유효성 검사
-            const passwd = document.getElementById('passwd').value;
-            const zipcode = document.getElementById('zipcode').value;
-            const nickname = document.getElementById('nickname').value;
-            const name = document.getElementById('name').value;
+        btnSubmit.addEventListener('click', async function (e) { // 필수 요소 유효성 검사
+            const passwdVal = document.getElementById('passwd').value; // 비밀번호
+            const zipcodeVal = document.getElementById('zipcode').value; // 주소
+            const nicknameVal = document.getElementById('nickname').value; // 닉네임
+            const nameVal = document.getElementById('name').value; // 이름
             const authCodeVal = authCode.value;
-            if (passwd === ''.trim()) {
+            const emailVal = document.getElementById('email').value;
+            const result = await lastCheck(emailVal, nicknameVal);
+            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,12}$/;
+            const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+
+            // 회원 가입 유효성 검사
+            if (!regExp.test(emailVal)) {
+                alert('이메일 양식을 확인해 주세요');
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+
+            } else if (passwdVal === ''.trim()) { // 비밀번호 비어있으면
 
                 alert('비밀번호를 입력해 주세요');
                 e.preventDefault();
                 e.stopPropagation();
                 return;
-            } else if (authCodeVal === ''.trim()) {
 
-                alert('이메일 인증을 진행해 주세요');
+            } else if (!passwdVal === passwdChk.value || !passwordRegex.test(passwdVal)) {
+                // 비밀번호와 재확인이 같지 않거나 양식에 맞지 않게 했다면
+
+                alert('비밀번호 재확인 해주세요.');
                 e.preventDefault();
                 e.stopPropagation();
                 return;
 
-            } else if (zipcode === ''.trim()) {
+            } else if (zipcodeVal === ''.trim()) { // 주소가 비어 있으면
 
                 alert('주소를 입력해 주세요');
                 e.preventDefault();
                 e.stopPropagation();
                 return;
-            } else if (nickname === ''.trim()) {
+
+            } else if (nicknameVal === ''.trim()) { // 닉네임이 비어 있으면
 
                 alert('닉네임을 입력해 주세요');
                 e.preventDefault();
                 e.stopPropagation();
                 return;
-            } else if (name === ''.trim()) {
+
+            } else if (nameVal === ''.trim()) { // 이름이 비어 있으면
 
                 alert('이름을 입력해 주세요');
                 e.preventDefault();
                 e.stopPropagation();
                 return;
+
+            } else if (authCodeVal === ''.trim()) { // 인증키가 비어 있으면
+
+                alert('이메일 인증을 진행해 주세요.');
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+
+            } else if (result === 'emailFalse') { // 회원가입전에 이메일 값이 변경되면
+                alert('아이디값이 변경되었습니다. 다시 이메일 인증해주세요.');
+                e.stopPropagation();
+                e.preventDefault();
+                return;
+
+            } else if (result === 'nicknameFalse') { // 회원가입전에 닉네임이 변경
+                alert('닉네임값이 변경되었습니다. 다시 중복확인 해주세요');
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+
             }
-            frmAdd.submit();
+            if (result) {
+                frmAdd.submit();
+            }
+
         });
 
 </script>

@@ -2,17 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mentoring_project.mapper.MentorMapper">
+<mapper namespace="com.example.mentoring_project.mapper.memberMapper.MentorMapper">
     <insert id="insert">
         INSERT INTO user_mentor (mentor_id, passwd, name, region, nickname, lngName, portfolio, intro, mNo, gradeByMNum)
         VALUES (#{mentor_id}, #{passwd}, #{name}, #{region},  #{nickname}, #{lngName}, #{portfolio}, #{intro}, #{mNo}, #{gradeByMNum})
     </insert>
     
-    <select id="selectAll" resultType="com.example.mentoring_project.domain.MentorVO">
+    <select id="selectAll" resultType="com.example.mentoring_project.domain.memberVO.MentorVO">
         SELECT * FROM user_mentor ORDER BY mentorNo DESC;
     </select>
 
-    <select id="selectOne" resultType="com.example.mentoring_project.domain.MentorVO">
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.memberVO.MentorVO">
         SELECT * FROM user_mentor WHERE mentor_id = #{mentor_id};
     </select>
 

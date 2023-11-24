@@ -1,4 +1,4 @@
-package com.example.mentoring_project.dto;
+package com.example.mentoring_project.dto.memberDTO;
 
 import lombok.Getter;
 import lombok.Setter;

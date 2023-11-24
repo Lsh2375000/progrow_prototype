@@ -1,7 +1,7 @@
 //package com.example.mentoring_project.controller;
 //
 //
-//import com.example.mentoring_project.service.MailSenderService;
+//import com.example.mentoring_project.service.mailService.MailSenderService;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.log4j.Log4j2;
 //import org.springframework.stereotype.Controller;
