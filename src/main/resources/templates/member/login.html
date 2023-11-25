@@ -89,7 +89,7 @@
                 </span>
                 <span style="font-size: 8pt; display: flex; align-items: center; color: #8f8f8f">
                     회원이 아니신가요? &nbsp
-                    <a class="" href="/member/forgotPW" style="font-size: 8pt; color: black"> 회원 가입 </a>
+                    <a class="" href="/member/agreement" style="font-size: 8pt; color: black"> 회원 가입 </a>
                 </span>
             </div>
             </form>
@@ -111,7 +111,13 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
         <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-44fe83e49b63affec96918c9af88c0d80b209a862cf87ac46bc933074b8c557d.js"></script>
     </div>
-
+    <script layout:fragment="script" th:inline="javascript">
+        const resetBtn = document.getElementById('reset');
+        const loginForm = document.getElementById('loginForm')
+        resetBtn.addEventListener('click', function (e) {
+            loginForm.reset();
+        });
+    </script>
 </body>
 
 
