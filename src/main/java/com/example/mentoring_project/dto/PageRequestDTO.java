@@ -5,46 +5,30 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Pageable;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Positive;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 
 @Builder
-@Log4j2
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageRequestDTO {
-    public static Pageable of; // 페이지 이동 정보 - Model로 자동 전달
+
     @Builder.Default
-    @Min(value=1)
-    @Positive // 양수
     private int page=1;
-    // Min, Max로 외부 조작 대비
+
     @Builder.Default
-    @Min(value = 10) // 페이지당 게시물 최소값
-    @Max(value = 100)
-    @Positive
-    private int size = 10; // sql limit 뒤 숫자. 페이지당 게시물 개수!
+    private int size=10;
 
-    private String link;
-
-    private String type; // 검색의 종류 s,c
-    // 검색 기능을 위한 추가
-    private String[] types; //
-    private String keyword; // 제목,작성자 검색에 사용하는 문자열
-
-
-
-    public int getSkip() { // limit에서 사용하는 건너뛰기skip의 수
-        return (page - 1) * size;
+    public int getSkip() {
+        return (page-1)*size;
     }
+
+    // 검색 관련
+    private String type; // 검색의 종류
+
+    private String keyword;
 
     public String[] getTypes() { // 검색
         if(this.type==null || type.isEmpty()) {
@@ -53,39 +37,23 @@ public class PageRequestDTO {
         return this.type.split("");
     }
 
+    private String link; // 상세페이지 누른 후 뒤로가기나 list 버튼 누르면 1 페이지로 돌아가는 걸 막기 위해서 상세페이지에 전달해줌
+
     public String getLink() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("page=" + this.page);
-        builder.append("&size=" + this.size);
-//        if (link == null) {
-//
-//        }
+        if(link==null) {
+            StringBuilder stringBuilder=new StringBuilder();
+            stringBuilder.append("page=").append(this.page);
+            stringBuilder.append("&size=").append(this.size);
 
-        if (this.types != null && this.types.length > 0) {
-            for (int i = 0; i < this.types.length; i++) {
-                builder.append("&types=" + types[i]);
+            if(type!=null && type.length()>0) {
+                stringBuilder.append("&type=").append(this.type);
             }
-        }
-        if (this.keyword != null) {
-            try {
-                builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            if(keyword!=null) {
+                stringBuilder.append("&keyword=").append(URLEncoder.encode(this.keyword, StandardCharsets.UTF_8));
             }
+            link=stringBuilder.toString();
         }
-
-        link = builder.toString();
-        log.info(link);
         return link;
     }
 
-
-    // 화면에 검색조건 표시
-    public boolean checkType(String type) {
-        if (this.types == null || this.types.length == 0) {
-            return false;
-        } else {
-            return Arrays.asList(this.types).contains(type);
-        }
-    }
 }

@@ -6,7 +6,7 @@ import com.example.mentoring_project.dto.ReplyDTO;
 
 public interface ReplyService {
 
-    Long insertReply(ReplyDTO replyDTO); //댓글 추가
+    Long register(ReplyDTO replyDTO); //댓글 추가
 
     ReplyDTO read(Long rno);
 
@@ -14,8 +14,10 @@ public interface ReplyService {
 
     void remove(Long rno);
 
-    PageResponseDTO<ReplyDTO> getListOfBoard(Long boardNo, PageRequestDTO pageRequestDTO);
+    //페이지 별 리플 목록
+    PageResponseDTO<ReplyDTO> getList(int boardNo, PageRequestDTO pageRequestDTO);
 
+    int getCount(int boardNo); //전체 리플 갯수
 
 
 

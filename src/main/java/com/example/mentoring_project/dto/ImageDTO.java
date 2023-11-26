@@ -5,16 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardListAllDTO {
-    private Long boardNo;
-    private String title;
-    private String writer;
-    private Long replyCount;
-    private List<BoardImageDTO> boardImages;
+public class ImageDTO {
+    private String uuid;
+    private String fileNames;
+    private int ord;
+    private int boardNo;
 }

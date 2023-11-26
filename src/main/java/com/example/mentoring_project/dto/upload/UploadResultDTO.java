@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UploadResultDTO {
     private String uuid;
-    private String fileName;
+    private String files;
     private boolean isImage; // 이미지 파일 여부
 
     public String getLink() {
         if (isImage) { // 이미지 파일의 경우 섬네일 리턴.
-            return "s_" + uuid + "_" + fileName; // 이미지 파일의 경우
+            return files; // 이미지 파일의 경우
         } else {
-            return uuid + "_" + fileName;
+            return files;
         }
     }
 }

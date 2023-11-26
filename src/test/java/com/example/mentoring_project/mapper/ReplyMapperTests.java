@@ -18,11 +18,11 @@ public class ReplyMapperTests {
     @Test
     public void addTest(){
         ReplyDTO replyDTO = ReplyDTO.builder()
-                .boardNo(1L)
+                .boardNo(149L)
                 .replyText("TEST")
                 .replyWriter("User")
                 .build();
-        replyService.insertReply(replyDTO);
+        replyService.register(replyDTO);
     }
 
 

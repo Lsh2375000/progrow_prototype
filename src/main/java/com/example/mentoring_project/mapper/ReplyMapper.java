@@ -2,21 +2,21 @@ package com.example.mentoring_project.mapper;
 
 import com.example.mentoring_project.domain.ReplyVO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import java.util.List;
 
 @Mapper
 public interface ReplyMapper {
 
-   void insertReply(ReplyVO replyVO); //댓글 작성
+   void register(ReplyVO replyVO); //댓글 작성
 
-   Page<ReplyVO> listOfBoard(Long boardNo, Pageable pageable);
+   ReplyVO read(Long rno);
 
-   Optional<ReplyVO> findById(Long rno);
+   List<ReplyVO> selectList(int boardNo, int skip, int size); // 페이지 별 리플 목록
 
-   void save(ReplyVO replyVO);
+   int getCount(int boardNo);
+
+   void modify(ReplyVO replyVO);
 
    void delete(Long rno);
 }

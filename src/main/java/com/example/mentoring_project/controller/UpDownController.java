@@ -27,52 +27,64 @@ public class UpDownController {
     @Value("${com.example.upload.path}")
     private String uploadPath;
 
+    @Value("${com.example.uploadTmp.path}")
+    private String uploadTmpPath;
+
+    @Value("${com.example.uploadReal.path}")
+    private String uploadRealPath;
+
+
     @ApiOperation(value = "Upload Post", notes = "POST 방식으로 파일 등록")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<UploadResultDTO> upload(UploadFileDTO uploadFileDTO){
         log.info(uploadFileDTO);
         if(uploadFileDTO.getFiles() != null){
-            List<UploadResultDTO> list = new ArrayList<>(); //upload()는 List<UploadResultDTO>를 반환하도록 수정
+            List<UploadResultDTO> list = new ArrayList<>();
             for (MultipartFile multipartFile : uploadFileDTO.getFiles()){
                 String originalName = multipartFile.getOriginalFilename();
-                log.info(multipartFile.getOriginalFilename());
-
+                log.info(originalName);
                 String uuid = UUID.randomUUID().toString();
-
-                Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
-                boolean isImage = true;
+                Path savePath = Paths.get(uploadTmpPath, originalName);
+                boolean image = false;
                 try {
                     multipartFile.transferTo(savePath); //실제 파일 저장
-
-                    //이미지 파일이면 섬네일 생성
-                    if (Files.probeContentType(savePath).startsWith("image")){
-                        log.info(Files.probeContentType(savePath));
-                        isImage = true;
-                        File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+                    //ㅇㅣ미지 파일이면 섬네일을 생성한다.
+                    if(Files.probeContentType(savePath).startsWith("image")){
+                        image = true;
+                        File thumbFile = new File(uploadRealPath, originalName);
                         Thumbnailator.createThumbnail(savePath.toFile(), thumbFile, 200, 200);
+
                     }
                 } catch (IOException e){
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
                 list.add(UploadResultDTO.builder()
                         .uuid(uuid)
-                        .fileName(originalName)
-                        .isImage(isImage)
-                        .build());
+                        .files(originalName)
+                        .isImage(image).build());
             }
             return list;
         }
         return null;
     }
 
+
     //viewFileGet() 메서드를 추가
+    //임시 파일 저장을 도와주는 메서드
     @ApiOperation(value = "view 파일", notes = "GET방식으로 첨부파일 조회")
-    @GetMapping("/view/{fileName}")
-    public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
-        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+    @GetMapping("/viewTmp/{fileNames}")
+    public ResponseEntity<Resource> viewFileGet(@PathVariable String fileNames){
+        Resource resource = new FileSystemResource(uploadTmpPath + File.separator + fileNames);
+        log.info("resource : " + resource);
+        // resource : file [/Users/ieunseo/Desktop/upload/s_91d55099-99cc-4298-918b-7dc3b35b36d1_푸바오.jpeg
 
         String resourceName = resource.getFilename();
+        log.info("resourceName :" + resourceName);
+        //resourceName :s_91d55099-99cc-4298-918b-7dc3b35b36d1_푸바오.jpeg
+
+
         HttpHeaders headers = new HttpHeaders();
+        log.info("headers : " + headers);
 
         try {
             headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
@@ -82,10 +94,36 @@ public class UpDownController {
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 
+    //viewFileGet() 메서드를 추가
+    // real 파일에 저장을 도와주는 메서드!
+    @ApiOperation(value = "view 파일", notes = "GET방식으로 첨부파일 조회")
+    @GetMapping("/viewReal/{fileNames}")
+    public ResponseEntity<Resource> viewRealFileGet(@PathVariable String fileNames){
+        Resource resource = new FileSystemResource(uploadRealPath + File.separator + fileNames);
+        log.info("resource : " + resource);
+        // resource : file [/Users/ieunseo/Desktop/upload/s_91d55099-99cc-4298-918b-7dc3b35b36d1_푸바오.jpeg
+
+        String resourceName = resource.getFilename();
+        log.info("resourceName :" + resourceName);
+        //resourceName :s_91d55099-99cc-4298-918b-7dc3b35b36d1_푸바오.jpeg
+
+
+        HttpHeaders headers = new HttpHeaders();
+        log.info("headers : " + headers);
+
+        try {
+            headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
+        } catch (IOException e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+
     @ApiOperation(value = "remove 파일", notes = "DELETE 방식으로 파일 삭제")
-    @DeleteMapping("/remove/{fileName}")
-    public Map<String, Boolean> removeFile(@PathVariable String fileName){
-        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+    @DeleteMapping("/remove/{fileNames}")
+    public Map<String, Boolean> removeFile(@PathVariable String fileNames){
+        Resource resource = new FileSystemResource(uploadTmpPath + File.separator + fileNames);
         String resourceName = resource.getFilename();
 
         Map<String, Boolean> resultMap = new HashMap<>();
@@ -95,8 +133,10 @@ public class UpDownController {
             remove = resource.getFile().delete();
 
             //섬네일이 존재한다면
-            if (contentType.startsWith("image")){
-                File thumbFile = new File(uploadPath + File.separator + "s_" + fileName);
+            // contentType이 null인지 확인한 후 null이 아닌 경우에만 startWith 메서드를 호출!
+            // 이렇게 하면 null인 경우에는 startsWith 메서드를 호출하지 않으므로 오류가 발생하지 않는다!!
+            if (contentType!= null && contentType.startsWith("fileNames")){
+                File thumbFile = new File(uploadTmpPath + File.separator + "s_" + fileNames);
                 thumbFile.delete();
             }
         } catch (IOException e){

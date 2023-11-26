@@ -13,7 +13,7 @@
                     Board Register
                 </div>
                 <div class="card-body">
-                    <form name="frmRegister" action="/board/register" method="post" class="form-horizontal">
+                    <form name="frmRegister" id="formRegister" action="/board/register" method="post" class="form-horizontal">
                         <!--제목-->
                         <div class="input-group mb-3">
                             <span class="input-group-text">Title</span>
@@ -33,7 +33,7 @@
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">nickname</span>
-                            <input type="text" name="nickname" class="form-control" placeholder="writer">
+                            <input type="text" name="nickName" class="form-control" placeholder="nickName">
                         </div>
 
                         <div class="input-group mb-3">
@@ -45,12 +45,45 @@
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="submit" class="btn btn-primary">올리기</button>
+                                <button type="button" class="btn btn-primary btn-submit">올리기</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div>
                     </form>
                 </div> <!-- end card body-->
+
+                <script layout:fragment="script" th:inline="javascript">
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const btnSubmit = document.querySelector('.btn-submit');
+                        const frmRegister = document.querySelector('form[name=frmRegister]');
+
+
+                        btnSubmit.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            if (!frmRegister.id.value) {
+                                alert("이름을 입력하세요.");
+                                return;
+                            }
+                            if (!frmRegister.title.value) {
+                                alert("제목을 입력하세요.");
+                                return;
+                            }
+                            if (!frmRegister.content.value) {
+                                alert("내용을 입력하세요.");
+                                return;
+                            }
+                            if(!frmRegister.nickName.value){
+                                alert("닉네임을 입력하세요");
+                                return;
+                            }
+                            alert("게시물 등록이 완료되었습니다.");
+                            console.log(frmRegister);
+                            frmRegister.submit();
+                        });
+                    });
+                </script>
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row-->
@@ -85,7 +118,6 @@
             </div>
         </div>
     </div> <!-- register modal -->
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="/js/upload.js"></script>
@@ -140,14 +172,14 @@
         // 업로드 된 이미지의 섬네일을 보여줌
         const uploadResult = document.querySelector(`.uploadResult`);
 
-        function showUploadFile({uuid, fileName, link}) {
+        function showUploadFile({uuid, fileNames, link}) {
             const str = `<div class="card col-4">
                     <div class="card-header d-flex justify-content-center">
-                        ${fileName}
-                        <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}','${fileName}', this)">X</button>
+                        ${fileNames}
+                        <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}','${fileNames}', this)">X</button>
         </div>
         <div class="card-body">
-            <img src="/view/${link}" data-src="${uuid + "_" + fileName}">
+            <img src="/viewTmp/${link}" data-src="${link}">
         </div>
     </div><!-- card -->`;
             uploadResult.innerHTML += str;
@@ -167,7 +199,7 @@
         }
 
         //게시물 등록 처리
-        document.querySelector('.submitBtn').addEventListener('click', function (e){
+        document.querySelector('.btn-submit').addEventListener('click', function (e){
             e.preventDefault();
             e.stopPropagation();
 
@@ -176,7 +208,7 @@
             let str = '';
             for (let i = 0; i < uploadFiles.length; i++){
                 const uploadFile = uploadFiles[i];
-                const imgLink = uploadFiles.getAttribute('data-src');
+                const imgLink = uploadFile.getAttribute('data-src');
 
                 str += `<input type='hidden' name='fileNames' value="${imgLink}">`;
             }
@@ -185,13 +217,11 @@
             target.innerHTML = str;
 
             //3. submit()처리
-            const formObj = document.querySelector('form');
+            const formObj = document.getElementById('formRegister');
+            console.log(uploadFiles);
             formObj.submit();
         });
     </script>
-
-
-
 </div><!-- layout fragment end -->
 
 

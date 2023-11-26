@@ -1,6 +1,6 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.dto.BoardListAllDTO;
+import com.example.mentoring_project.dto.BoardAllDTO;
 import com.example.mentoring_project.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,7 +20,7 @@ public class BoardSearchImpl implements BoardSearch{
     private final BoardMapper boardMapper;
 
     @Override
-    public Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+    public Page<BoardAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
 
         return null;
     }

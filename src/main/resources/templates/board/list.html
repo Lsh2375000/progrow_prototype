@@ -9,13 +9,6 @@
 <body>
 <div layout:fragment="content">
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <!--/* 검색 폼 start */-->
     <div class="row mt-3">
         <form action="/board/list" method="get">
@@ -46,7 +39,7 @@
     <div style="padding-top: 50px">
         <table class="table table-hover">
             <h5 class="card-title">Board List</h5>
-            <h5 class="card-title">Total : [[${responseDTO.total}]]</h5>
+            <h5 class="card-title">Total : [[${responseDTO.total}]] 개</h5>
             <thead>
             <tr>
                 <th>번호</th>
@@ -54,21 +47,27 @@
                 <th>아이디</th>
                 <th>작성자</th>
                 <th>조회수</th>
+                <th>작성일</th>
             </tr>
             </thead>
             <tbody th:with="link = ${pageRequestDTO.getLink()}, no = ${responseDTO.sno}">
             <tr th:each="dto, status:${responseDTO.dtoList}">
                 <td>[[${dto.boardNo}]]</td>
-                <td><a th:href="|@{/board/read(boardNo =${dto.boardNo})}&${link}|">[[${dto.title}]]</a></td>
-<!--                &lt;!&ndash; 이미지 나오는 부분&ndash;&gt;-->
-<!--                <div th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">-->
-<!--                    <img style="width: 100px;" th:each="boardImage: ${dto.boardImages}"-->
-<!--                        th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|">-->
-<!--                </div>-->
-<!--                &lt;!&ndash; 이미지 나오는 부분&ndash;&gt;-->
+                <td><a th:href="|@{/board/view(boardNo =${dto.boardNo})}&${link}|">[[${dto.title}]]</a>
+                    <!-- 댓글 -->
+                    <span class="badge progress-bar-success" style="background-color: #0a53be">[[${dto.replyCount}]]</span>
+                    <!-- 이미지 나오는 부분-->
+                    <div th:if="${dto.fileNames != null && dto.fileNames.length() > 0}">
+                        <img style="width: 30px;"
+                             th:each="fileNames: ${dto.fileNames}"
+                             th:src="|@{/viewReal}/${dto.fileNames}|">
+                    </div>
+                </td>
+                <!-- 이미지 나오는 부분-->
                 <td>[[${dto.id}]]</td>
-                <td>[[${dto.nickname}]]</td>
+                <td>[[${dto.nickName}]]</td>
                 <td>[[${dto.hit}]]</td>
+                <td>[[${#temporals.format(dto.addDate, 'yyyy-MM-dd')}]]</td>
             </tr>
             </tbody>
         </table>
@@ -89,6 +88,10 @@
             </ul>
         </div>
         <!--/* 페이징 end */-->
+        <div class="float-left" th:with="link = ${pageRequestDTO.getLink()}">
+            <a th:href="|@{/board/register}?${link}|" class="text-decoration-none">
+                <button type="button" class="btn btn-primary">글쓰기</button>
+            </a>
     </div>
 
 
@@ -127,6 +130,6 @@
     }
 
 </script>
-
+</div>
 </body>
 </html>

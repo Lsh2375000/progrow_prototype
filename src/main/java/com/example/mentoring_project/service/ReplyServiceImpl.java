@@ -8,70 +8,74 @@ import com.example.mentoring_project.mapper.ReplyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Log4j2
-@Transactional
 public class ReplyServiceImpl implements ReplyService{
+
     private final ModelMapper modelMapper;
     private final ReplyMapper replyMapper;
 
 
 
     @Override
-    public Long insertReply(ReplyDTO replyDTO) {
+    public Long register(ReplyDTO replyDTO) { //댓글 작성
+        log.info("Reply...regisert...");
+        log.info(replyDTO);
         ReplyVO replyVO = modelMapper.map(replyDTO, ReplyVO.class);
-
-        replyMapper.insertReply(replyVO);
-        return null;
+        log.info(replyVO);
+        replyMapper.register(replyVO);
+        return replyVO.getRno();
     }
-
-    @Override
-    public PageResponseDTO<ReplyDTO> getListOfBoard(Long boardNo, PageRequestDTO pageRequestDTO) {
-        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() -1,
-                pageRequestDTO.getSize(), Sort.by("rno").ascending());
-        Page<ReplyVO> result = replyMapper.listOfBoard(boardNo, pageable);
-        List<ReplyDTO> dtoList = result.getContent().stream().map(replyVO ->
-                modelMapper.map(replyVO, ReplyDTO.class)).collect(Collectors.toList());
-        return PageResponseDTO.<ReplyDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total((int) result.getTotalElements())
-                .build();
-    }
-
-
 
     @Override
     public ReplyDTO read(Long rno) {
-        Optional<ReplyVO> replyVOOptional = replyMapper.findById(rno);
-        ReplyVO replyVO = replyVOOptional.orElseThrow();
-        return modelMapper.map(replyVO, ReplyDTO.class);
+        log.info("board..rno :" + rno);
+        ReplyVO replyVO = replyMapper.read(rno);
+        log.info(replyVO);
+        ReplyDTO replyDTO = modelMapper.map(replyVO, ReplyDTO.class);
+        log.info(replyDTO);
+        return replyDTO;
     }
 
     @Override
     public void modify(ReplyDTO replyDTO) {
-        Optional<ReplyVO> replyVOOptional = replyMapper.findById(replyDTO.getRno());
-        ReplyVO replyVO = replyVOOptional.orElseThrow();
-        replyVO.changeText(replyDTO.getReplyText());
-       replyMapper.save(replyVO);
+      log.info("Reply..modify");
+      ReplyVO replyVO = modelMapper.map(replyDTO, ReplyVO.class);
+       replyMapper.modify(replyVO);
     }
 
     @Override
     public void remove(Long rno) {
+        log.info("Reply..delete");
         replyMapper.delete(rno);
+    }
 
+    @Override
+    public PageResponseDTO<ReplyDTO> getList(int boardNo, PageRequestDTO pageRequestDTO) {
+
+        List<ReplyVO> replyVOList = replyMapper.selectList(boardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
+        List<ReplyDTO> dtoList = new ArrayList<>();
+        for (ReplyVO replyVO : replyVOList){
+            dtoList.add(modelMapper.map(replyVO, ReplyDTO.class));
+        }
+        int total = replyMapper.getCount(boardNo);
+
+        return PageResponseDTO.<ReplyDTO>withAll()
+                .dtoList(dtoList)
+                .total(total)
+                .pageRequestDTO(pageRequestDTO)
+                .build();
+    }
+
+    @Override
+    public int getCount(int boardNo) {
+        return replyMapper.getCount(boardNo);
     }
 
 

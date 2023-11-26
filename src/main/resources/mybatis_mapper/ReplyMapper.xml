@@ -4,13 +4,31 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mentoring_project.mapper.ReplyMapper">
 
-    <insert id="insertReply">
-        insert into reply(replyText, replyWriter, boardNo)
-        values (#{replyText}, #{replyWriter}, #{boardNo})
+    <insert id="register" parameterType="com.example.mentoring_project.domain.ReplyVO">
+        insert into reply(rno, replyText, replyWriter, boardNo)
+        values (#{rno}, #{replyText}, #{replyWriter}, #{boardNo})
     </insert>
 
-    <select id="listOfBoard">
-        select * from progrow_project.reply;
+    <select id="selectList" resultType="com.example.mentoring_project.domain.ReplyVO">
+        select * from reply where boardNo = #{boardNo}
+        order by rno asc limit #{skip}, #{size}
     </select>
+
+    <select id="read" resultType="com.example.mentoring_project.domain.ReplyVO">
+        select * from reply where rno = #{rno}
+    </select>
+
+    <update id="modify">
+        update reply set replyText=#{replyText}, where rno=#{rno}
+    </update>
+
+    <delete id="remove">
+        delete from reply where rno=#{rno}
+    </delete>
+
+    <select id="getCount" resultType="int">
+        select count(*) from reply where boardNo = #{boardNo}
+    </select>
+
 
 </mapper>

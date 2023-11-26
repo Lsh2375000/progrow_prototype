@@ -2,33 +2,19 @@ package com.example.mentoring_project.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-import java.util.List;
+import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class BoardDTO {
-    private Long boardNo;
+    private Integer boardNo;
     private String id;
-    private Integer hit;
-
-    @NotEmpty
-    private String content;
-
-    @NotEmpty
-    @Size(min = 3, max = 100)
+    private String nickName;
     private String title;
-
-    @NotEmpty
-    private String writer;
-
-    //첨부파일의 이름들
-    private List<String> fileNames;
-
-
+    private String content;
+    private Integer hit;
+    private LocalDateTime addDate;
+    private String fileNames;
 }
