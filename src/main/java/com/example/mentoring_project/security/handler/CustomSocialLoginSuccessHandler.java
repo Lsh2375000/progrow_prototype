@@ -1,6 +1,6 @@
 package com.example.mentoring_project.security.handler;
 
-import com.example.mentoring_project.dto.MemberSecurityDTO;
+import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;

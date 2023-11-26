@@ -1,6 +1,7 @@
 package com.example.mentoring_project.mapper;
 
-import com.example.mentoring_project.domain.SMemberVO;
+import com.example.mentoring_project.domain.memberVO.SMemberVO;
+import com.example.mentoring_project.mapper.memberMapper.SMemberMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

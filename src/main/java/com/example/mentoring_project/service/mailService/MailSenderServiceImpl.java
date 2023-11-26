@@ -1,4 +1,4 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.mailService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +12,6 @@ import org.thymeleaf.context.Context;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpSession;
 import java.util.Random;
 
 @Service

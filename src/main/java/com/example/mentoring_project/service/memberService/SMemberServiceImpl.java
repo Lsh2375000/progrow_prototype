@@ -1,17 +1,12 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.memberService;
 
-import com.example.mentoring_project.domain.SMemberVO;
-import com.example.mentoring_project.dto.MemberJoinDTO;
-import com.example.mentoring_project.dto.MemberSecurityDTO;
-import com.example.mentoring_project.mapper.SMemberMapper;
+import com.example.mentoring_project.domain.memberVO.SMemberVO;
+import com.example.mentoring_project.dto.memberDTO.MemberJoinDTO;
+import com.example.mentoring_project.mapper.memberMapper.SMemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Log4j2

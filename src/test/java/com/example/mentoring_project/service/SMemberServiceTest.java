@@ -1,17 +1,13 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.domain.SMemberVO;
-import com.example.mentoring_project.dto.MemberJoinDTO;
-import com.example.mentoring_project.mapper.SMemberMapper;
+import com.example.mentoring_project.dto.memberDTO.MemberJoinDTO;
+import com.example.mentoring_project.service.memberService.SMemberService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 @Log4j2

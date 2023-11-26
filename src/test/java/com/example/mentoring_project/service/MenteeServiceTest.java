@@ -1,7 +1,7 @@
 package com.example.mentoring_project.service;
 
-import com.example.mentoring_project.dto.MenteeDTO;
-import com.example.mentoring_project.dto.MentorDTO;
+import com.example.mentoring_project.dto.memberDTO.MenteeDTO;
+import com.example.mentoring_project.service.memberService.MenteeService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

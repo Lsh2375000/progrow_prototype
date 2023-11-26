@@ -1,10 +1,10 @@
 package com.example.mentoring_project.security;
 
 import com.example.mentoring_project.domain.MemberRole;
-import com.example.mentoring_project.domain.SMemberVO;
-import com.example.mentoring_project.dto.MemberSecurityDTO;
-import com.example.mentoring_project.mapper.SMemberMapper;
-import com.example.mentoring_project.service.SMemberService;
+import com.example.mentoring_project.domain.memberVO.SMemberVO;
+import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
+import com.example.mentoring_project.mapper.memberMapper.SMemberMapper;
+import com.example.mentoring_project.service.memberService.SMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -102,7 +101,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 //            sMemberMapper.addMember(sMemberVO);
 
             MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
-                    email, "1111", false, true, "tee", "",
+                    email, "1111", false, true, "", "",
                     Arrays.asList(new SimpleGrantedAuthority("ROLE_"))
             );
             memberSecurityDTO.setProps(params);

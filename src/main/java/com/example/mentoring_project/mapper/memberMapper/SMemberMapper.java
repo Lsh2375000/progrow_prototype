@@ -1,7 +1,6 @@
-package com.example.mentoring_project.mapper;
+package com.example.mentoring_project.mapper.memberMapper;
 
-import com.example.mentoring_project.domain.SMemberVO;
-import com.example.mentoring_project.dto.MemberSecurityDTO;
+import com.example.mentoring_project.domain.memberVO.SMemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

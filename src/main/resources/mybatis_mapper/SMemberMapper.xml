@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mentoring_project.mapper.SMemberMapper">
+<mapper namespace="com.example.mentoring_project.mapper.memberMapper.SMemberMapper">
 
-        <resultMap id="getMember" type="com.example.mentoring_project.domain.SMemberVO">
+        <resultMap id="getMember" type="com.example.mentoring_project.domain.memberVO.SMemberVO">
             <id property="mid" column="mid"></id>
             <result property="mpw" column="mpw"></result>
             <result property="del" column="del"></result>
@@ -47,7 +47,7 @@
         update smember m set m.mpw = #{mpw} where m.mid = #{mid}
     </update>
 
-    <select id="getMemberNickname" resultType="com.example.mentoring_project.domain.SMemberVO">
+    <select id="getMemberNickname" resultType="com.example.mentoring_project.domain.memberVO.SMemberVO">
         select * from smember where nickname = #{nickname}
     </select>
 

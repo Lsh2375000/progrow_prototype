@@ -1,6 +1,6 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.memberService;
 
-import com.example.mentoring_project.dto.MentorDTO;
+import com.example.mentoring_project.dto.memberDTO.MentorDTO;
 
 import java.util.List;
 

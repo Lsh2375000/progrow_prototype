@@ -1,9 +1,9 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.memberService;
 
 
-import com.example.mentoring_project.domain.MentorVO;
-import com.example.mentoring_project.dto.MentorDTO;
-import com.example.mentoring_project.mapper.MentorMapper;
+import com.example.mentoring_project.domain.memberVO.MentorVO;
+import com.example.mentoring_project.dto.memberDTO.MentorDTO;
+import com.example.mentoring_project.mapper.memberMapper.MentorMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

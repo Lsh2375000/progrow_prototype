@@ -67,3 +67,21 @@
 
         return request.data;
     }
+
+    async function lastCheck(inputEmail, inputNickname) {
+        const request = await axios.post('/member/lastCheck', null,{
+            params: {inputEmail: inputEmail,
+            inputNickname: inputNickname},
+            responseType:'text'
+        });
+
+        return request.data;
+    }
+    async function lastModifyCheck(inputNickname) {
+        const request = await axios.post('/member/lastModifyCheck', null,{
+            params: {inputNickname: inputNickname},
+            responseType:'text'
+        });
+
+        return request.data;
+    }

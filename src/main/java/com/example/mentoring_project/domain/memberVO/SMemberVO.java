@@ -1,5 +1,6 @@
-package com.example.mentoring_project.domain;
+package com.example.mentoring_project.domain.memberVO;
 
+import com.example.mentoring_project.domain.MemberRole;
 import lombok.*;
 import nonapi.io.github.classgraph.json.Id;
 
