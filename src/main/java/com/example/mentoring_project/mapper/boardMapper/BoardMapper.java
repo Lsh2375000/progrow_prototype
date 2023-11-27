@@ -1,6 +1,6 @@
-package com.example.mentoring_project.mapper;
+package com.example.mentoring_project.mapper.boardMapper;
 
-import com.example.mentoring_project.domain.BoardVO;
+import com.example.mentoring_project.domain.boardVO.BoardVO;
 import com.example.mentoring_project.dto.BoardListReplyCountDTO;
 import com.example.mentoring_project.dto.ImageDTO;
 import com.example.mentoring_project.dto.PageRequestDTO;

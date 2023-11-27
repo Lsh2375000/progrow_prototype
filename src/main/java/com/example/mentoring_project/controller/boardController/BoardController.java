@@ -1,10 +1,10 @@
-package com.example.mentoring_project.controller;
+package com.example.mentoring_project.controller.boardController;
 
 import com.example.mentoring_project.dto.BoardDTO;
 import com.example.mentoring_project.dto.BoardListReplyCountDTO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
-import com.example.mentoring_project.service.BoardService;
+import com.example.mentoring_project.service.boardService.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -93,7 +93,7 @@ public class BoardController {
         model.addAttribute("dto", boardDTO);
     }
 
-    @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO id가 같다면 수정 가능
+    @PreAuthorize("principal.id == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO id가 같다면 수정 가능
     @PostMapping("/modify")
     public String modify(PageRequestDTO pageRequestDTO,
                          @Valid BoardDTO boardDTO,

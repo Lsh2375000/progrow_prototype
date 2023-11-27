@@ -1,4 +1,4 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.boardService;
 
 import com.example.mentoring_project.dto.BoardAllDTO;
 import org.springframework.data.domain.Page;

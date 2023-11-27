@@ -2,7 +2,6 @@ package com.example.mentoring_project.mapper;
 
 
 import com.example.mentoring_project.domain.QReplyVO;
-import com.example.mentoring_project.domain.ReplyVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

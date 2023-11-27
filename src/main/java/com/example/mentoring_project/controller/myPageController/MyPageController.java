@@ -1,9 +1,9 @@
 package com.example.mentoring_project.controller.myPageController;
 
-import com.example.mentoring_project.dto.boardDTO.BoardDTO;
+import com.example.mentoring_project.dto.BoardDTO;
 import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
-import com.example.mentoring_project.dto.mentoringDTO.MentoringDTO;
-import com.example.mentoring_project.dto.qBoardDTO.QBoardDTO;
+import com.example.mentoring_project.dto.MentoringDTO;
+import com.example.mentoring_project.dto.QBoardDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

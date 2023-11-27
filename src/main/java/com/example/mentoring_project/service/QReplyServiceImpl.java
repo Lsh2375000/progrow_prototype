@@ -1,7 +1,6 @@
 package com.example.mentoring_project.service;
 
 import com.example.mentoring_project.domain.QReplyVO;
-import com.example.mentoring_project.domain.ReplyVO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.dto.QReplyDTO;

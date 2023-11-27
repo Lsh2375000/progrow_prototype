@@ -1,10 +1,11 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.boardService;
 
 
-import com.example.mentoring_project.domain.BoardVO;
+import com.example.mentoring_project.domain.boardVO.BoardVO;
 import com.example.mentoring_project.domain.ImageVO;
 import com.example.mentoring_project.dto.*;
-import com.example.mentoring_project.mapper.BoardMapper;
+import com.example.mentoring_project.mapper.boardMapper.BoardMapper;
+import com.example.mentoring_project.service.boardService.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

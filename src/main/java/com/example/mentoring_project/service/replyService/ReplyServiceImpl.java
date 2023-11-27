@@ -1,10 +1,10 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.replyService;
 
-import com.example.mentoring_project.domain.ReplyVO;
+import com.example.mentoring_project.domain.replyVO.ReplyVO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.dto.ReplyDTO;
-import com.example.mentoring_project.mapper.ReplyMapper;
+import com.example.mentoring_project.mapper.replyMapper.ReplyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class ReplyServiceImpl implements ReplyService{
+public class ReplyServiceImpl implements ReplyService {
 
     private final ModelMapper modelMapper;
     private final ReplyMapper replyMapper;

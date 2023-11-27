@@ -1,6 +1,6 @@
-package com.example.mentoring_project.mapper;
+package com.example.mentoring_project.mapper.replyMapper;
 
-import com.example.mentoring_project.domain.ReplyVO;
+import com.example.mentoring_project.domain.replyVO.ReplyVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

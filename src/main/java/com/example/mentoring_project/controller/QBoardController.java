@@ -1,10 +1,8 @@
 package com.example.mentoring_project.controller;
 
-import com.example.mentoring_project.dto.BoardDTO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.dto.QBoardDTO;
-import com.example.mentoring_project.service.BoardService;
 import com.example.mentoring_project.service.QBoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Controller

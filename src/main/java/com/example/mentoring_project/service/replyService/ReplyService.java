@@ -1,4 +1,4 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.replyService;
 
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;

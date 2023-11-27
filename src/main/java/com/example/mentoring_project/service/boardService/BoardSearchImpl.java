@@ -1,7 +1,8 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.boardService;
 
 import com.example.mentoring_project.dto.BoardAllDTO;
-import com.example.mentoring_project.mapper.BoardMapper;
+import com.example.mentoring_project.mapper.boardMapper.BoardMapper;
+import com.example.mentoring_project.service.boardService.BoardSearch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -15,7 +16,7 @@ import java.awt.print.Pageable;
 @RequiredArgsConstructor
 @Log4j2
 @Transactional
-public class BoardSearchImpl implements BoardSearch{
+public class BoardSearchImpl implements BoardSearch {
     private final ModelMapper modelMapper;
     private final BoardMapper boardMapper;
 

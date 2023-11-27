@@ -1,9 +1,9 @@
-package com.example.mentoring_project.controller;
+package com.example.mentoring_project.controller.ReplyController;
 
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.dto.ReplyDTO;
-import com.example.mentoring_project.service.ReplyService;
+import com.example.mentoring_project.service.replyService.ReplyService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
