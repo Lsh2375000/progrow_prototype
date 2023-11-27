@@ -1,7 +1,7 @@
 package com.example.mentoring_project.controller.boardController;
 
-import com.example.mentoring_project.dto.BoardDTO;
-import com.example.mentoring_project.dto.BoardListReplyCountDTO;
+import com.example.mentoring_project.dto.boardDTO.BoardDTO;
+import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.service.boardService.BoardService;

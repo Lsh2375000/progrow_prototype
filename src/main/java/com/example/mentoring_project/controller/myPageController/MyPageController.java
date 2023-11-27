@@ -1,6 +1,6 @@
 package com.example.mentoring_project.controller.myPageController;
 
-import com.example.mentoring_project.dto.BoardDTO;
+import com.example.mentoring_project.dto.boardDTO.BoardDTO;
 import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
 import com.example.mentoring_project.dto.MentoringDTO;
 import com.example.mentoring_project.dto.QBoardDTO;

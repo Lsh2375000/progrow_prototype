@@ -59,8 +59,7 @@
                     <!-- 이미지 나오는 부분-->
                     <div th:if="${dto.fileNames != null && dto.fileNames.length() > 0}">
                         <img style="width: 30px;"
-                             th:each="fileNames: ${dto.fileNames}"
-                             th:src="|@{/viewReal}/${dto.fileNames}|">
+                             th:src="|@{/viewReal}/${dto.fileNames.split(',')[0]}|">
                     </div>
                 </td>
                 <!-- 이미지 나오는 부분-->

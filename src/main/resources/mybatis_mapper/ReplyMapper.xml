@@ -2,27 +2,27 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mentoring_project.mapper.ReplyMapper">
+<mapper namespace="com.example.mentoring_project.mapper.replyMapper.ReplyMapper">
 
-    <insert id="register" parameterType="com.example.mentoring_project.domain.ReplyVO">
+    <insert id="register" parameterType="com.example.mentoring_project.domain.replyVO.ReplyVO">
         insert into reply(rno, replyText, replyWriter, boardNo)
         values (#{rno}, #{replyText}, #{replyWriter}, #{boardNo})
     </insert>
 
-    <select id="selectList" resultType="com.example.mentoring_project.domain.ReplyVO">
+    <select id="selectList" resultType="com.example.mentoring_project.domain.replyVO.ReplyVO">
         select * from reply where boardNo = #{boardNo}
         order by rno asc limit #{skip}, #{size}
     </select>
 
-    <select id="read" resultType="com.example.mentoring_project.domain.ReplyVO">
+    <select id="read" resultType="com.example.mentoring_project.domain.replyVO.ReplyVO">
         select * from reply where rno = #{rno}
     </select>
 
     <update id="modify">
-        update reply set replyText=#{replyText}, where rno=#{rno}
+        update reply set replyText=#{replyText} where rno=#{rno}
     </update>
 
-    <delete id="remove">
+    <delete id="delete">
         delete from reply where rno=#{rno}
     </delete>
 

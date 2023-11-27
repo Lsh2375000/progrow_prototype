@@ -2,7 +2,7 @@ package com.example.mentoring_project.controller.ReplyController;
 
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
-import com.example.mentoring_project.dto.ReplyDTO;
+import com.example.mentoring_project.dto.replyDTO.ReplyDTO;
 import com.example.mentoring_project.service.replyService.ReplyService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
+    //댓글 등록
     @ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> register(@Valid @RequestBody ReplyDTO replyDTO, BindingResult bindingResult) throws BindException {
@@ -39,7 +40,7 @@ public class ReplyController {
         resultMap.put("rno", rno);
         return resultMap;
     }
-
+    // 특정 게시물의 댓글 목록
     @ApiOperation(value = "boardReply", notes = "GET 방식으로 게시물의 댓글 목록을 보여줌")
     @GetMapping(value = "/list/{boardNo}")
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("boardNo")int boardNo, PageRequestDTO pageRequestDTO){
@@ -47,15 +48,16 @@ public class ReplyController {
         return responseDTO;
     }
 
-    @ApiOperation(value = "read Reply", notes = "GET 방식으로 특정 댓글 조회")
-    @GetMapping(value = "{/rno}")
+    //특정 댓글 조회
+    @ApiOperation(value = "Read reply", notes = "GET 방식으로 특정 댓글 조회")
+    @GetMapping(value = "/{rno}")
     public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno){
         ReplyDTO replyDTO = replyService.read(rno);
         return replyDTO;
     }
 
-    @ApiOperation(value = "Reply Modify", notes = "PUT 방식으로 댓글 수정")
-    @PutMapping(value = "{/rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Reply Modify", notes = "GET 방식으로 댓글 수정")
+    @PutMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> modify(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO){
         replyDTO.setRno(rno);
         replyService.modify(replyDTO);
@@ -64,7 +66,8 @@ public class ReplyController {
         return resultMap;
     }
 
-    @ApiOperation(value = "reply delete", notes = "Delete 방식으로 댓글 삭제")
+
+    @ApiOperation(value = "Delete reply", notes = "Delete 방식으로 댓글 삭제")
     @DeleteMapping(value = "/{rno}")
     public Map<String, Long> remove(@PathVariable("rno") Long rno){
         replyService.remove(rno);

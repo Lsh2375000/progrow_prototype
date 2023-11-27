@@ -1,6 +1,8 @@
 package com.example.mentoring_project.service.boardService;
 
 import com.example.mentoring_project.dto.*;
+import com.example.mentoring_project.dto.boardDTO.BoardDTO;
+import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
 
 
 public interface BoardService {

@@ -1,8 +1,7 @@
 package com.example.mentoring_project.service.boardService;
 
-import com.example.mentoring_project.dto.BoardAllDTO;
+import com.example.mentoring_project.dto.boardDTO.BoardAllDTO;
 import com.example.mentoring_project.mapper.boardMapper.BoardMapper;
-import com.example.mentoring_project.service.boardService.BoardSearch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
