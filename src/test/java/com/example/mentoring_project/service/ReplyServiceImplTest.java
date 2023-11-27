@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Log4j2
 class ReplyServiceImplTests {
     @Autowired
-    private ReplyService ReplyService;
+    private com.example.mentoring_project.service.replyService.ReplyService ReplyService;
 
 //    @Test
 //    public void addTest() {
