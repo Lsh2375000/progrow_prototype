@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class BoardVO {
     private Integer boardNo;
     private String id;
-    private String nickName;
+    private String nickname;
     private String title;
     private String content;
     private Integer hit;
@@ -24,7 +24,7 @@ public class BoardVO {
         return "BoardVO{" +
                 "boardNo=" + boardNo +
                 ", id='" + id + '\'' +
-                ", nickName='" + nickName + '\'' +
+                ", nickName='" + nickname + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", hit=" + hit +

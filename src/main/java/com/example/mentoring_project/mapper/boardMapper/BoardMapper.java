@@ -1,9 +1,8 @@
 package com.example.mentoring_project.mapper.boardMapper;
 
 import com.example.mentoring_project.domain.boardVO.BoardVO;
-import com.example.mentoring_project.dto.ImageDTO;
-import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -21,7 +20,6 @@ public interface BoardMapper {
 
     void modify(BoardVO boardVO);
 
-    void save(ImageDTO imageDTO); //이미지 저장
 
     void count(BoardVO boardVO); //게시물 총 갯수
 

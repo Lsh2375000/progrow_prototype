@@ -1,9 +1,9 @@
 package com.example.mentoring_project.controller.boardController;
 
-import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
-import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.service.boardService.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -45,12 +45,10 @@ public class BoardController {
     public void list(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.getList(pageRequestDTO);
         log.info(responseDTO);
-
-      model.addAttribute("responseDTO", responseDTO);
-
-
+        model.addAttribute("responseDTO", responseDTO);
     }
 
+    @PreAuthorize("isAuthenticated()") //로그인한 시용자만
     @GetMapping("/register")
     public void addGet(){
         log.info("/board/add..HI");
@@ -93,7 +91,8 @@ public class BoardController {
         model.addAttribute("dto", boardDTO);
     }
 
-    @PreAuthorize("principal.id == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO id가 같다면 수정 가능
+
+    @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO nickname가 같다면 수정 가능
     @PostMapping("/modify")
     public String modify(PageRequestDTO pageRequestDTO,
                          @Valid BoardDTO boardDTO,
@@ -119,18 +118,16 @@ public class BoardController {
 
     }
 
-    @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO id가 같다면 삭제 가능
+    @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO nickname 가 같다면 삭제 가능
     @PostMapping("/remove")
     public String removeOne(BoardDTO boardDTO, RedirectAttributes redirectAttributes){
-        Integer boardNo = boardDTO.getBoardNo();
+        int boardNo = boardDTO.getBoardNo();
         log.info("remove post" + boardNo);
 
         boardService.removeOne(boardNo);
 
         //게시물이 삭제되었다면 첨부파일 삭제
         log.info(boardDTO.getFileNames());
-
-
         return "redirect:/board/list";
     }
 

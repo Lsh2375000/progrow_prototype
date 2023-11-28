@@ -1,4 +1,4 @@
-package com.example.mentoring_project.controller;
+package com.example.mentoring_project.controller.updownController;
 
 import com.example.mentoring_project.dto.upload.UploadFileDTO;
 import com.example.mentoring_project.dto.upload.UploadResultDTO;
@@ -72,9 +72,9 @@ public class UpDownController {
     //viewFileGet() 메서드를 추가
     //임시 파일 저장을 도와주는 메서드
     @ApiOperation(value = "view 파일", notes = "GET방식으로 첨부파일 조회")
-    @GetMapping("/viewTmp/{fileName}")
-    public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
-        Resource resource = new FileSystemResource(uploadTmpPath + File.separator + fileName);
+    @GetMapping("/viewTmp/{fileNames}")
+    public ResponseEntity<Resource> viewFileGet(@PathVariable String fileNames){
+        Resource resource = new FileSystemResource(uploadTmpPath + File.separator + fileNames);
         log.info("resource : " + resource);
         // resource : file [/Users/ieunseo/Desktop/upload/s_91d55099-99cc-4298-918b-7dc3b35b36d1_푸바오.jpeg
 

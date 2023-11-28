@@ -15,7 +15,7 @@ public class BoardAllDTO {
     private Long boardNo;
     private String title;
     private String content;
-    private String nickNames;
+    private String nickname;
     private LocalDate addDate;
     private Integer hit;
     private String fileNames;

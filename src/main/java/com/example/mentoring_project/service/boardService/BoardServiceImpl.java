@@ -1,13 +1,11 @@
 package com.example.mentoring_project.service.boardService;
 
 
-import com.example.mentoring_project.domain.ImageVO;
 import com.example.mentoring_project.domain.boardVO.BoardVO;
-import com.example.mentoring_project.dto.ImageDTO;
-import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
-import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.mapper.boardMapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -39,13 +37,6 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.insert(boardVO);
     }
 
-    @Override
-    public void save(ImageDTO imageDTO) {
-        log.info(imageDTO);
-        ImageVO imageVO = modelMapper.map(imageDTO, ImageVO.class);
-        boardMapper.save(imageDTO);
-        log.info(imageVO);
-    }
 
 
     /*게시물 하나 선택해서 삭제*/

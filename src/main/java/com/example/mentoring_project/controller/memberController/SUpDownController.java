@@ -7,7 +7,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @Log4j2
@@ -49,29 +46,29 @@ public class SUpDownController {
 
 
 
-    @ApiOperation(value = "remove 파일", notes = "DELETE 방식으로 파일 삭제")
-    @DeleteMapping("/remove/{fileName}")
-    public Map<String, Boolean> removeFile(@PathVariable String fileName) {
-        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
-        String resourceName = resource.getFilename();
-
-        Map<String, Boolean> resultMap = new HashMap<>();
-        boolean removed = false;
-        try {
-            String contentType = Files.probeContentType(resource.getFile().toPath());
-            removed = resource.getFile().delete();
-
-            // 섬네일이 존재 한다면 섬네일도 같이 삭제
-            if (contentType.startsWith("image")) {
-                File thumbFile = new File(uploadPath + File.separator + "s_" + fileName);
-                thumbFile.delete();
-            }
-        } catch (IOException e) {
-            log.info(e.getMessage());
-        }
-        resultMap.put("result", removed);
-        return resultMap;
-    }
+//    @ApiOperation(value = "remove 파일", notes = "DELETE 방식으로 파일 삭제")
+//    @DeleteMapping("/remove/{fileName}")
+//    public Map<String, Boolean> removeFile(@PathVariable String fileName) {
+//        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+//        String resourceName = resource.getFilename();
+//
+//        Map<String, Boolean> resultMap = new HashMap<>();
+//        boolean removed = false;
+//        try {
+//            String contentType = Files.probeContentType(resource.getFile().toPath());
+//            removed = resource.getFile().delete();
+//
+//            // 섬네일이 존재 한다면 섬네일도 같이 삭제
+//            if (contentType.startsWith("image")) {
+//                File thumbFile = new File(uploadPath + File.separator + "s_" + fileName);
+//                thumbFile.delete();
+//            }
+//        } catch (IOException e) {
+//            log.info(e.getMessage());
+//        }
+//        resultMap.put("result", removed);
+//        return resultMap;
+//    }
 
 
 }
