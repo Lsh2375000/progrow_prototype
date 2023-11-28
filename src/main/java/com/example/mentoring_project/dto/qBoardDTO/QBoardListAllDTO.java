@@ -1,7 +1,6 @@
 package com.example.mentoring_project.dto.qBoardDTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,14 +8,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class QBoardListAllDTO {
-    private Long qBoardNo;
+    private Long qnaBoardNo;
     private String title;
-    private String writer;
+    private String content;
+    private String nickName;
+    private Integer hit; // 조회수
     private LocalDateTime regDate;
-    private Long replyCount;
+    private Long qReplyCount;
     private List<QBoardImageDTO> qBoardImages;
 }

@@ -1,5 +1,6 @@
 package com.example.mentoring_project.mapper.qBoardMapper;
 
+import com.example.mentoring_project.domain.qBoardVO.QBoardListAllVO;
 import com.example.mentoring_project.domain.qBoardVO.QBoardVO;
 import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,21 +15,18 @@ public interface QBoardMapper {
 
     QBoardVO modify(Long qBoardVO); //게시글 수정 메서드
 
-    void delete(QBoardVO qBoardVO);
+    void deleteOne(Long qBoardVO); // 게시글 하나 삭제
 
-    void deleteOne(Long qBoardVO);
+    void update(QBoardVO qBoardVO); // 게시글 하나 수정
 
-    void update(QBoardVO qBoardVO); // 수정
+    QBoardVO selectOne(Long qnaBoardNo); //게시글 하나 선택해서 읽기
 
-    QBoardVO selectOne(Long qBoardNo); //게시글 하나 선택해서 읽기
+    void updateHit(Long qnaBoardNo); // 게시글 조회수 수정
 
-    List<QBoardVO> selectAll();
+    List<QBoardListAllVO> selectList(PageRequestDTO pageRequestDTO); // 게시글 전체 리스트 형태로 조회
 
-    void updateHit(Long qBoardNo);
 
-    List<QBoardVO> selectList(PageRequestDTO pageRequestDTO);
-
-    int getCount(PageRequestDTO pageRequestDTO);
+    int getCount(PageRequestDTO pageRequestDTO); // 게시글 수 카운팅
 
 
 }

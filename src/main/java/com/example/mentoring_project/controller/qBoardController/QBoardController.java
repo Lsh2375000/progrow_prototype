@@ -1,4 +1,4 @@
-package com.example.mentoring_project.controller.qBoardcontroller;
+package com.example.mentoring_project.controller.qBoardController;
 
 import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;

@@ -1,38 +1,37 @@
-// qna 게시판
-async function getQ1(qBoardNo) {
-    const result = await axios.get(`/qReplies/list/${qBoardNo}`);
+// Qna 게시판 JavaScript
+async function getQ1(qnaBoardNo) { // 댓글 달린 글 조회
+    const result = await axios.get(`/qnaReplies/list/${qnaBoardNo}`);
     // console.log(result);
     return result.data;
 }
 
-async function getQList({qBoardNo, page, size, goLast}) {
-    const result = await axios.get(`/qReplies/list/${qBoardNo}?=page${page}`, {params: {page, size}});
+async function getQList({qnaBoardNo, page, size, goLast}) { // 댓글 전체 리스트 조회
+    const result = await axios.get(`/qnaReplies/list/${qnaBoardNo}?page=${page}`, {params: {page, size}});
     if (goLast) {
         const total = result.data.total;
         const lastPage = parseInt(Math.ceil(total/size));
 
-        return getQList({qBoardNo:qBoardNo, page:lastPage, size:size})
+        return getQList({qnaBoardNo:qnaBoardNo, page:lastPage, size:size});
     }
-    // console.log(result);
     return result.data;
 }
 
-async function addQReply(replyObj) {
-    const response = await axios.post(`/qReplies/`, replyObj);
+async function addQReply(replyObj) { // 댓글 추가
+    const response = await axios.post(`/qnaReplies/`, replyObj);
     return response;
 }
 
-async function getQReply(qRno) {
-    const response = await axios.get(`/qReplies/${qRno}`);
+async function getQReply(qnaRno) { // 특정 댓글 조회
+    const response = await axios.get(`/qnaReplies/${qnaRno}`);
     return response.data;
 }
 
-async function modifyQReply(replyObj) {
-    const response = await axios.put(`/qReplies/${replyObj.qRno}`, replyObj);
+async function modifyQReply(replyObj) { // 댓글 수정
+    const response = await axios.put(`/qnaReplies/${replyObj.qnaRno}`, replyObj);
     return response.data;
 }
 
-async function removeQReply(qRno) {
-    const response = await axios.delete(`/qReplies/${qRno}`);
+async function removeQReply(qnaRno) { // 댓글 삭제
+    const response = await axios.delete(`/qReplies/${qnaRno}`);
     return response.data;
 }

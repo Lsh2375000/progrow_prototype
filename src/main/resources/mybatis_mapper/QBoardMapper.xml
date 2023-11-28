@@ -5,55 +5,56 @@
 <mapper namespace="com.example.mentoring_project.mapper.qBoardMapper.QBoardMapper">
     <!--insert mapper-->
     <insert id="insert">
-        insert into qnaboard (id, hit, nickName, content, title)
-        values(#{id}, #{hit}, #{nickName}, #{content}, #{title})
+        insert into qboard (id, hit, nickName, content, title, regDate, modDate)
+        values(#{id}, #{hit}, #{nickName}, #{content}, #{title}, NOW(), NOW())
     </insert>
     <!--update mapper-->
     <update id="update">
-        update qnaboard  set title = #{title}, content = #{content}
-        where qBoardNo = #{qBoardNo}
+        update qboard  set title = #{title}, content = #{content}, modDate = #{modDate}
+        where qnaBoardNo = #{qnaBoardNo}
     </update>
 
     <!--updateHit mapper-->
     <update id="updateHit">
-        UPDATE board SET hit = hit + 1 WHERE bno = #{bno}
+        UPDATE qboard SET hit = hit + 1 WHERE qnaBoardNo = #{qnaBoardNo}
     </update>
 
     <!-- delete mapper-->
-    <delete id="delete">
-        delete from qnaboard where qBoardNo
-    </delete>
-
     <delete id="deleteOne">
         delete
-        from qnaboard
-        where qBoardNo;
+        from qboard
+        where qnaBoardNo;
     </delete>
 
-    <!-- select mapper -->
-    <select id="selectAll">
-        select qBoardNo, id, hit, nickName, content, title from qnaboard where qBoardNo;
-    </select>
-
     <!-- selectList mapper -->
-    <select id="selectList" resultType="com.example.mentoring_project.domain.qBoardVO.QBoardVO">
-        SELECT * FROM qnaboard
-        <include refid="search"/>
-        ORDER BY qBoardNo DESC limit #{skip}, #{size}
+    <select id="selectList" resultType="com.example.mentoring_project.domain.qBoardVO.QBoardListAllVO">
+        select qb.qnaBoardNo, qb.title, qb.content, qb.regDate, qb.nickname, qb.hit, count(qr.qnaRno) AS 'qReplyCount' from qboard qb LEFT JOIN qreply qr on qb.qnaBoardNo = qr.qnaBoardNo
+        <include refid="search"></include>
+        group by qb.qnaBoardNo order by qr.qnaBoardNo desc limit #{skip}, #{size}
     </select>
 
+    <!--    qb.fileNames,-->
 
+    <!--    &lt;!&ndash; selectList mapper &ndash;&gt;-->
+    <!--    <select id="selectList" resultType="com.example.mentoring_project.domain.QBoardVO">-->
+    <!--        SELECT * FROM qboard-->
+    <!--        <include refid="search"/>-->
+    <!--        ORDER BY qnaBoardNo DESC limit #{skip}, #{size}-->
+    <!--    </select>-->
+
+    <!-- selectOne mapper -->
     <select id="selectOne" resultType="com.example.mentoring_project.domain.qBoardVO.QBoardVO">
-        SELECT * FROM qnaboard WHERE qBoardNo = #{qBoardNo}
+        SELECT * FROM qboard WHERE qnaBoardNo = #{qnaBoardNo}
     </select>
 
+    <!-- getCount mapper-->
     <select id="getCount" resultType="int">
-        select count(*) from qnaboard
+        select count(*) from qboard
         <include refid="search"/>
     </select>
 
 
-
+    <!-- search sql-->
     <sql id="search">
         <where>
             <if test="types != null and types.length > 0">
@@ -71,8 +72,5 @@
             </if>
         </where>
     </sql>
-
-
-
 
 </mapper>

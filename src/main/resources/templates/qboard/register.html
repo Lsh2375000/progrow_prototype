@@ -32,7 +32,7 @@
         <div class="form-group row">
             <label class="col-sm-2 control-label">내용</label>
             <div class="col-sm-8">
-                <textarea name="qnaContent" id="qnaContent" cols="50" rows="5" class="form-control" placeholder="content"
+                <textarea name="content" id="content" cols="50" rows="5" class="form-control" placeholder="content"
                           style="width:700px; height:500px;"></textarea>
             </div>
         </div>
@@ -45,29 +45,29 @@
     </form>
 </div>
 
-<script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="UTF-8"></script>
-<script> // 네이버 에디터 추가
-let oEditors = []; // 전역으로 설정 하기 위해 위치 변경
-document.addEventListener("DOMContentLoaded", function () {
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: oEditors,
-        elPlaceHolder: "qnaContent", // id가 content인 요소를 지정
-        sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
-        fCreator: "createSEditor2"
-    });
-});
-</script>
+<!--<script type="text/javascript" src="/smarteditor2/js/HuskyEZCreator.js" charset="UTF-8"></script>-->
+<!--<script> // 네이버 에디터 추가-->
+<!--let oEditors = []; // 전역으로 설정 하기 위해 위치 변경-->
+<!--document.addEventListener("DOMContentLoaded", function () {-->
+<!--    nhn.husky.EZCreator.createInIFrame({-->
+<!--        oAppRef: oEditors,-->
+<!--        elPlaceHolder: "qnaContent", // id가 content인 요소를 지정-->
+<!--        sSkinURI: "/smarteditor2/SmartEditor2Skin.html",-->
+<!--        fCreator: "createSEditor2"-->
+<!--    });-->
+<!--});-->
+<!--</script>-->
 
 <script layout:fragment="script" th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function () {
         const btnSubmitQ = document.querySelector('.btn-submit-Q');
         const frmQregister = document.querySelector('form[name=frmQregister]');
 
-        console.log(oEditors);
+        // console.log(oEditors);
         btnSubmitQ.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            oEditors.getById['qnaContent'].exec("UPDATE_CONTENTS_FIELD", []); // 에디터에 있던 내용을 원 경로로 컴파일
+            // oEditors.getById['qnaContent'].exec("UPDATE_CONTENTS_FIELD", []); // 에디터에 있던 내용을 원 경로로 컴파일
             if (!frmQregister.name.value) {
                 alert("이름을 입력하세요.");
                 return;
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("내용을 입력하세요.");
                 return;
             }
-            console.log(oEditors);
+            // console.log(oEditors);
             console.log(frmQregister);
             frmQregister.submit();
         });

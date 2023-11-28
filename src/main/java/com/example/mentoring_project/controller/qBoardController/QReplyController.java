@@ -17,13 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/qReplies")
+@RequestMapping("/qnaReplies")
 @Log4j2
 @RequiredArgsConstructor // 의존성 주입을 위해
 public class QReplyController {
     private final QReplyService qReplyService;
 
-    @ApiOperation(value = "QReplies POST", notes = "POST 방식으로 댓글 등록")
+    @ApiOperation(value = "qnaReplies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> register(@Valid @RequestBody QReplyDTO qReplyDTO, BindingResult bindingResult) throws BindException {
         log.info(qReplyDTO);
@@ -33,46 +33,58 @@ public class QReplyController {
         }
 
         Map<String, Long> resultMap = new HashMap<>();
-        Long qRno = qReplyService.addReplyQ(qReplyDTO);
-        resultMap.put("qRno", qRno);
+        Long qnaRno = qReplyService.addReplyQ(qReplyDTO);
+        resultMap.put("qnaRno", qnaRno);
 
         return resultMap;
     }
 
-    @ApiOperation(value = "QReplies of QBoard", notes = "GET 방식으로 특정 게시물의 댓글 목록")
-    @GetMapping(value = "/list/{qBoardNo}")
-    public PageResponseDTO<QReplyDTO> getListQ(@PathVariable("qBoardNo") Long qBoardNo, PageRequestDTO pageRequestDTO) {
-        // @PathVariable 경로에 있는 값 사용
-        PageResponseDTO<QReplyDTO> responseDTO = qReplyService.getListOfBoardQ(qBoardNo, pageRequestDTO);
+    @ApiOperation(value = "qnaReplies of QBoard", notes = "GET 방식으로 특정 Qna 게시물의 댓글 목록")
+    @GetMapping(value = "/list/{qnaBoardNo}")
+    public PageResponseDTO<QReplyDTO> getListQ(@PathVariable("qnaBoardNo") Long qnaBoardNo, @Valid PageRequestDTO pageRequestDTO,
+                                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // 유효성 검사 오류가 있는 경우, 페이지를 1로 설정 (또는 필요에 따라 다른 기본값으로 설정)
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
 
-        return responseDTO;
+        // @PathVariable 경로에 있는 값 사용
+        PageResponseDTO<QReplyDTO> pageResponseDTO = qReplyService.getListOfBoardQR(qnaBoardNo, pageRequestDTO);
+
+        return pageResponseDTO;
     }
 
+
+
     @ApiOperation(value = "Read QReply", notes = "GET 방식으로 특정 댓글 조회")
-    @GetMapping(value = "/{qRno}")
-    public QReplyDTO getReplyDTO(@PathVariable("qRno") Long qRno) {
-        QReplyDTO qReplyDTO = qReplyService.read(qRno);
+    @GetMapping(value = "/{qnaRno}")
+    public QReplyDTO getReplyDTO(@PathVariable("qnaRno") Long qnaRno) {
+        QReplyDTO qReplyDTO = qReplyService.read(qnaRno);
         return qReplyDTO;
     }
 
     @ApiOperation(value = "Delete QReply", notes = "DELETE 방식으로 특정 댓글 삭제")
-    @DeleteMapping("/{qRno}")
-    public Map<String, Long> remove(@PathVariable("qRno") Long qRno) {
-        qReplyService.removeOne(qRno);
+    @DeleteMapping("/{qnaRno}")
+    public Map<String, Long> remove(@PathVariable("qnaRno") Long qnaRno) {
+        qReplyService.removeOne(qnaRno);
         Map<String, Long> resultMap = new HashMap<>();
-        resultMap.put("qRno", qRno);
+        resultMap.put("qnaRno", qnaRno);
         return resultMap;
     }
 
-    @ApiOperation(value = "QReplies PUT", notes = "PUT 방식으로 댓글 수정")
-    @PutMapping(value = "/{qRno}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Long> modify(@PathVariable("qRno") Long qRno, @RequestBody QReplyDTO qReplyDTO) {
-        qReplyDTO.setQRno(qRno);
+    @ApiOperation(value = "qnaReplies PUT", notes = "PUT 방식으로 댓글 수정")
+    @PutMapping(value = "/{qnaRno}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Long> modify(@PathVariable("qnaRno") Long qnaRno, @RequestBody QReplyDTO qReplyDTO) {
+        qReplyDTO.setQnaRno(qnaRno);
 
         qReplyService.modifyOne(qReplyDTO);
         Map<String, Long> resultMap = new HashMap<>();
-        resultMap.put("qRno", qRno);
+        log.info(resultMap);
+        resultMap.put("qnaRno", qnaRno);
 
         return resultMap;
     }
+
+
+
 }

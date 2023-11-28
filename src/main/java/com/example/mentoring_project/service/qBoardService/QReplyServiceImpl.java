@@ -24,7 +24,7 @@ public class QReplyServiceImpl implements QReplyService {
     public Long addReplyQ(QReplyDTO qReplyDTO) {
         QReplyVO qReplyVO = modelMapper.map(qReplyDTO, QReplyVO.class);
         qReplyMapper.insertQR(qReplyVO);
-        return qReplyVO.getQRno();
+        return qReplyVO.getQnaRno();
     }
 
 //    @Override
@@ -41,19 +41,19 @@ public class QReplyServiceImpl implements QReplyService {
 
     @Override
     public void modifyOne(QReplyDTO qReplyDTO) {
-        QReplyVO qReplyVO = qReplyMapper.selectOneQR(qReplyDTO.getQRno());
-        qReplyVO.changeQnaText(qReplyVO.getQReply());
-        qReplyMapper.updateQR(qReplyVO);
+        QReplyVO qReplyVO = qReplyMapper.selectOneQR(qReplyDTO.getQnaRno());
+        qReplyVO.changeQnaText(qReplyVO.getContent());
+        qReplyMapper.updateOneQR(qReplyVO);
     }
 
     @Override
     public void removeOne(Long qRno) {
-        qReplyMapper.deleteQR(qRno);
+        qReplyMapper.deleteOneQR(qRno);
     }
 
     @Override
-    public PageResponseDTO<QReplyDTO> getListOfBoardQ(Long qBoardNo, PageRequestDTO pageRequestDTO) {
-        List<QReplyVO> voList = qReplyMapper.selectListOfBoardQR(qBoardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
+    public PageResponseDTO<QReplyDTO> getListOfBoardQR(long qnaBoardNo, PageRequestDTO pageRequestDTO) {
+        List<QReplyVO> voList = qReplyMapper.selectListOfBoardQR(qnaBoardNo, pageRequestDTO.getSkip(), pageRequestDTO.getSize());
         List<QReplyDTO> dtoList = new ArrayList<>();
 
         voList.forEach(qReplyVO -> dtoList.add(modelMapper.map(qReplyVO, QReplyDTO.class)));
@@ -61,7 +61,9 @@ public class QReplyServiceImpl implements QReplyService {
         return PageResponseDTO.<QReplyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
-                .total(qReplyMapper.getCountQR(qBoardNo))
+                .total(qReplyMapper.getCountQR(qnaBoardNo))
                 .build();
+
     }
+
 }
