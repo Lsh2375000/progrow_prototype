@@ -33,7 +33,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">nickName</span>
-                            <input type="text" class="form-control" name="nickName" th:value="${dto.nickName}" readonly>
+                            <input type="text" class="form-control" name="nickname" th:value="${dto.nickname}"  readonly>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Content</span>
@@ -45,7 +45,7 @@
                                 <a th:href="|@{/board/list}?${link}|" class="text-decoration-none">
                                     <button type="button" class="btn btn-primary">List</button>
                                 </a>
-                                <a th:href="|@{/board/modify(boardNo=${dto.boardNo})}&${link}|" class="text-decoration-none">
+                                <a th:href="|@{/board/modify(boardNo=${dto.boardNo})}&${link}|"  class="text-decoration-none">
                                     <button type="button" class="btn btn-secondary">Modify</button>
                                 </a>
 <!--                                <a th:href="|@{/board/remove(boardNo=${dto.boardNo})}&${link}|" class="text-decoration-none">-->
@@ -57,8 +57,10 @@
                     <!-- 이미지 섬네일 -->
                     <div class="col">
                         <div class="card" th:if="${dto.fileNames != null && dto.fileNames.length() > 0}">
-                            <img style="width: 30%;" class="card-img-top"
-                                 th:src="|@{/viewReal}/${dto.fileNames.split(',')[0]}|">
+                            <img style="width: 30%; text-align: center"
+                                 class="card-img-top"
+                                 th:each="fileNames : ${dto.fileNames.split(',')}"
+                                 th:src="|@{/viewReal}/${dto.fileNames}|">
                         </div>
                     </div>
                     <!-- 이미지 섬네일 end -->

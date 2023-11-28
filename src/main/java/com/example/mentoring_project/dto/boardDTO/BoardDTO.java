@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class BoardDTO {
     private Integer boardNo;
     private String id;
-    private String nickName;
+    private String nickname;
     private String title;
     private String content;
     private Integer hit;

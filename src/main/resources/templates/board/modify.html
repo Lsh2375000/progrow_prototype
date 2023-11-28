@@ -38,7 +38,7 @@
 
                         <div class="input-group-text">
                             <span class="input-group-text">NickName</span>
-                            <input type="text" class="form-control" th:value="${dto.nickName}" name="nickName" readonly>
+                            <input type="text" class="form-control" th:value="${dto.nickname}" name="nickname" readonly>
                         </div>
 
                         <!--이미지 추가 버튼-->
@@ -77,9 +77,9 @@
                 <th:block th:each="fileName:${dto.fileNames}">
                     <div class="card col-4" th:with="arr = ${dto.fileNames}">
                         <div class="card-header d-flex justify-content-center">
-                           [[${arr[1]}]]
+                           [[${arr[0]}]]
                             <button class="btn-sm btn-danger"
-                                    th:onclick="removeFile([[${arr[0]}]], [[${arr[1]}]], this)">X</button>
+                                    onclick="javascript:remove([[${arr[1]}]], [[${arr[2]}]], this)">X</button>
                         </div>
                         <div class="card-body">
                             <img th:src="|/viewReal/${dto.fileNames}|" th:data-src="${fileNames}">
@@ -165,20 +165,21 @@
     //1. 파일 삭제 처리
     const removeFileList = []; //최종적으로 삭제될 파일들의 목록
 
-    function removeFile(uuid, fileName, obj){
-        if(!confirm('파일을 삭제하시겠습니까?')){
+    function removeFile(uuid, fileNames, obj) {
+        if (!confirm('파일을 삭제하시겠습니까?')) {
             return;
         }
-
         console.log(uuid);
-        console.log(fileName);
+        console.log(fileNames);
         console.log(obj);
 
-        removeFileList.push({uuid, fileName});
-
         const targetDiv = obj.closest('.card');
-        targetDiv.remove();
+
+        removeFileToServer(uuid, fileNames).then(data => {
+             targetDiv.remove();
+        })
     }
+
 
     //2. 새로운 첨부파일 추가
     //업로드 모달
@@ -210,6 +211,7 @@
             uploadModal.hide();
         })
     });
+
     const uploadResult = document.querySelector('.uploadResult');
 
     function showUploadFile({uuid, fileNames, link}){
@@ -218,10 +220,9 @@
                             <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileNames}', this)">X</button>
                      </div>
                      <div class="card-body">
-                            <img src="/viewReal/${link}" data-src="${link}" >
+                            <img style="width: 30%" src="/viewReal/${link}" data-src="${link}" >
                     </div>
-</div><!-- card -->`
-
+</div><!-- card -->`;
         uploadResult.innerHTML += str;
     }
     //3. submit 이벤트 처리
@@ -274,7 +275,7 @@
 
         formObj.action = `/board/remove`;
         formObj.method = 'post';
-       //formObj.submit(); //테스트 이후에 주석 해체
+       // formObj.submit(); //테스트 이후에 주석 해체
     });
 
     function appendNotShownData(){

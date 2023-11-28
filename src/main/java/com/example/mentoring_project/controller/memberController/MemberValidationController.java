@@ -1,8 +1,6 @@
 package com.example.mentoring_project.controller.memberController;
 
 import com.example.mentoring_project.dto.memberDTO.MemberSecurityDTO;
-import com.example.mentoring_project.dto.memberDTO.MenteeDTO;
-import com.example.mentoring_project.dto.memberDTO.MentorDTO;
 import com.example.mentoring_project.service.mailService.MailSenderService;
 import com.example.mentoring_project.service.memberService.SMemberService;
 import lombok.RequiredArgsConstructor;
