@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mentoring_project.mapper.BoardMapper">
+<mapper namespace="com.example.mentoring_project.mapper.boardMapper.BoardMapper">
 
     <select id="getTime" resultType="string">
         select now()
     </select>
 
     <!--insert mapper-->
-    <insert id="insert" parameterType="com.example.mentoring_project.dto.BoardDTO">
+    <insert id="insert" parameterType="com.example.mentoring_project.domain.boardVO.BoardVO">
         INSERT INTO board(boardNo, id, nickName, title, content,  hit, addDate, fileNames, replyCount)
         VALUES (#{boardNo}, #{id}, #{nickName}, #{title}, #{content}, 0, NOW(), #{fileNames}, 0)
     </insert>
@@ -42,7 +42,7 @@
         select *  from  board  where boardNo = #{boardNo};
     </select>
 
-    <select id="selectList" resultType="com.example.mentoring_project.dto.BoardListReplyCountDTO">
+    <select id="selectList" resultType="com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO">
         select b.boardNo, b.title, b.content, b.id, b.nickName, b.hit, b.fileNames, b.addDate, count(r.rno) AS 'replyCount' from board b LEFT JOIN reply r on b.boardNo = r.boardNo
         <include refid="search" />
         group by b.boardNo order by boardNo desc limit #{skip}, #{size}

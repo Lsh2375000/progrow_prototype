@@ -2,7 +2,7 @@ package com.example.mentoring_project.service.replyService;
 
 import com.example.mentoring_project.dto.PageRequestDTO;
 import com.example.mentoring_project.dto.PageResponseDTO;
-import com.example.mentoring_project.dto.ReplyDTO;
+import com.example.mentoring_project.dto.replyDTO.ReplyDTO;
 
 public interface ReplyService {
 

@@ -62,7 +62,7 @@
                             e.preventDefault();
                             e.stopPropagation();
 
-                            if (!frmRegister.id.value) {
+                            if (!frmRegister.name.value) {
                                 alert("이름을 입력하세요.");
                                 return;
                             }
@@ -172,14 +172,14 @@
         // 업로드 된 이미지의 섬네일을 보여줌
         const uploadResult = document.querySelector(`.uploadResult`);
 
-        function showUploadFile({uuid, fileNames, link}) {
+        function showUploadFile({uuid, fileName, link}) {
             const str = `<div class="card col-4">
                     <div class="card-header d-flex justify-content-center">
-                        ${fileNames}
-                        <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}','${fileNames}', this)">X</button>
+                        ${fileName}
+                        <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}','${fileName}', this)">X</button>
         </div>
         <div class="card-body">
-            <img src="/viewTmp/${link}" data-src="${link}">
+            <img style="width: 30%" src="/viewTmp/${link}" data-src="${link}">
         </div>
     </div><!-- card -->`;
             uploadResult.innerHTML += str;

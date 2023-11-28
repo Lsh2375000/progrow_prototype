@@ -20,3 +20,21 @@ async function addReply(replyObj){
     const response = await axios.post(`/replies/`, replyObj);
     return response;
 }
+
+//댓글 내용을 눌렀을 때 내용 불러옴!
+async function getReply(rno) {
+    const response = await axios.get(`/replies/${rno}`);
+    return response.data;
+}
+
+async function modifyReply(replyObj) {
+    const response = await axios.put(`/replies/${replyObj.rno}`, replyObj);
+    return response.data;
+}
+
+async function removeReply(rno){
+    const response = await axios.delete(`/replies/${rno}`);
+    return response.data;
+}
+
+
