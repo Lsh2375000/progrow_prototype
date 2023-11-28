@@ -25,13 +25,13 @@ public class MemberValidationController {
 
     @GetMapping("/sendConfirmMail")
     @ResponseBody
-    public String sendConfirmMail(String mailTo, HttpSession session) throws Exception { // 인증키 전송
+    public String sendConfirmMail(String mailTo, HttpSession session) throws Exception { // 인증문자 전송
         if (mailSenderService.sendMailByAddMember(mailTo)) {
-            String confirmKey = mailSenderService.getConfirmKey(); // 인증키를 변수에 저장
+            String confirmKey = mailSenderService.getConfirmKey(); // 인증문자를 변수에 저장
             session.setAttribute("confirmKey", confirmKey); // 변수를 세션에 저장
             session.setAttribute("inputEmail", mailTo); // 입력한 이메일을 세션에 저장
             log.info("입력한 이메일 : "+ mailTo);
-            log.info("인증키 :" + confirmKey); // 변수를 로그에 출력
+            log.info("인증문자 :" + confirmKey); // 변수를 로그에 출력
 
             return "true";
         }
@@ -42,13 +42,13 @@ public class MemberValidationController {
 
     @PostMapping("/matchConfirmKey")
     @ResponseBody
-    public String  matchConfirmKey(HttpSession session, String confirmKey) throws Exception { // 입력한 인증키 확인
+    public String  matchConfirmKey(HttpSession session, String confirmKey) throws Exception { // 입력한 인증문자 확인
         log.info("matchConfirmKey......");
         String matchConfirmKey =  (String) session.getAttribute("confirmKey"); // 변수에 세션값을 저장
         log.info(matchConfirmKey);
         log.info(confirmKey);
         if (confirmKey.equals(matchConfirmKey)) {
-            session.setAttribute("isEmail", true); // 맞는 인증키를 입력했다면 true를 세션에 담아준다.
+            session.setAttribute("isEmail", true); // 맞는 인증문자를 입력했다면 true를 세션에 담아준다.
             return "true";
         } else {
             return "false";
@@ -64,11 +64,13 @@ public class MemberValidationController {
 
     @PostMapping("/isEmail")
     @ResponseBody
-    public String isEmail(@RequestParam String email, HttpSession session) { // 아이디 존재 유무
+    public String isEmail(@RequestParam String email, HttpSession session) { // 이메일 존재 유무
         log.info("idCheck......");
         log.info(email);
+
         if (sMemberService.getMemberId(email) != null) {
             log.info("null.....");
+            session.setAttribute("email", email);
             return "ture";
         }
         return "false";
@@ -76,7 +78,7 @@ public class MemberValidationController {
 
     @PostMapping("/idCheck")
     @ResponseBody
-    public String idCheck(@RequestParam String mentee_id, HttpSession session) { // 아이디 중복 체크
+    public String idCheck(@RequestParam String mentee_id, HttpSession session) { // 이메일 중복 체크
         log.info("idCheck......");
         log.info(mentee_id);
         if (sMemberService.getMemberId(mentee_id) == null) {
@@ -125,8 +127,8 @@ public class MemberValidationController {
 
         if (!okInputEmail.equals(inputEmail) ||
                 sMemberService.getMemberId(inputEmail ) != null) {
-            // 1. 중복검사할 때 아이디 값과 회원가입 눌렀을 때 아이디 값이 다르거나
-            // 2. 회원가입 버튼눌렀을 때 입력된 아이디의 정보가 이미 존재한다면
+            // 1. 중복검사할 때 이메일 값과 회원가입 눌렀을 때 이메일 값이 다르거나
+            // 2. 회원가입 버튼눌렀을 때 입력된 이메일의 정보가 이미 존재한다면
 
             log.info("이메일 중복검사 재실행!!");
             session.removeAttribute("inputEmail");
@@ -135,7 +137,7 @@ public class MemberValidationController {
 
         } else if (!okInputNickname.equals(inputNickname) ||
                 sMemberService.getMemberNickname(inputNickname) != null) {
-            // 1. 중복검사할 때 닉네임 값과 회원가입 눌렀을 때 아이디 값이 다르거나
+            // 1. 중복검사할 때 닉네임 값과 회원가입 눌렀을 때 이메일 값이 다르거나
             // 2. 회원가입 버튼눌렀을 때 입력된 닉네임의 정보가 이미 존재한다면
 
             log.info("닉네임 중복 검사 재실행!!");

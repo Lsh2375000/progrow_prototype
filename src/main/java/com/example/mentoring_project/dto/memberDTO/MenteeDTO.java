@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenteeDTO {
     private Long menteeNo; // 멘티 고유 번호
-    private String mentee_id; // 멘티 아이디
+
+    private String mentee_id; // 멘티 이메일
     private String passwd; // 멘티 비밀번호
     private String name; // 멘티 이름
     private String region; // 멘티 지역

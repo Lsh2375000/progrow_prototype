@@ -43,7 +43,7 @@ public class CustomUserDetailService implements UserDetailsService {
         log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         log.info(member);
 
-        if(member == null) { // 해당 아이디를 가진 사용자가 없다면
+        if(member == null) { // 해당 이메일를 가진 사용자가 없다면
             throw new UsernameNotFoundException("username not found...");
         }
 

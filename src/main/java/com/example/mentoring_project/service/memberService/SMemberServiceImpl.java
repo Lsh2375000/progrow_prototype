@@ -29,7 +29,7 @@ public class SMemberServiceImpl implements SMemberService {
 
     }
     // --------------------------------------------------------------------------------
-    // 해당 아이디 조회
+    // 해당 이메일 조회
     @Override
     public SMemberVO getMemberId(String mid) {
         return sMemberMapper.getMemberId(mid);

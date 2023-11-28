@@ -17,10 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -44,6 +46,12 @@ public class SMemberController {
             log.info("user logout....");
         }
     }
+
+    // 에러페이지
+    @GetMapping("/errorPage")
+    public void errorPageGET() {
+        log.info("errorPage GET...");
+    }
     // ---------------------------------------------------- 회원 가입 ----------------------------------------------- //
     // 멘티 회원가입
     @GetMapping("/menteeRegister")
@@ -56,7 +64,7 @@ public class SMemberController {
     // ----------------------------------------------------
     //멘토 회원가입
     @GetMapping("/mentorRegister")
-    public void getMentor() {
+    public void registerGET() {
         log.info("/member/mentorRegister......");
         String isConfirmKey = (String) session.getAttribute("confirmKey");
         log.info("confirmKey: " + isConfirmKey);
@@ -64,12 +72,13 @@ public class SMemberController {
     // ----------------------------------------------------
     // 일반 회원 가입 시작
     @PostMapping("/register")
-    public String addMentor(MentorDTO mentorDTO, MenteeDTO menteeDTO, HttpServletRequest request, HttpSession session) {
+    public String registerPOST(MentorDTO mentorDTO, MenteeDTO menteeDTO, List<MultipartFile> files, HttpServletRequest request, HttpSession session) {
         log.info("/register...");
 
         String referer = (String) request.getHeader("REFERER"); // 이전의 URL경로를 들고 온다
         log.info("backHistory........." + referer);
 
+        log.info("여기에 파일 이름찍혀야 함 ㅠㅠ : " + files);
         String torRegisterURL = "http://localhost:8080/member/mentorRegister"; // 멘토 회원가입 주소
         String teeRegisterURL = "http://localhost:8080/member/menteeRegister"; // 멘티 회원가입 주소
 
@@ -80,7 +89,7 @@ public class SMemberController {
 
                 log.info("TYPE : TOR.....");
                 mentorDTO.setType("tor");
-                mentorService.add(mentorDTO);
+                mentorService.add(mentorDTO, files);
                 MemberJoinDTO memberJoinDTO = MemberJoinDTO.builder()
                         .mid(mentorDTO.getMentor_id())
                         .mpw(mentorDTO.getPasswd())
@@ -106,6 +115,8 @@ public class SMemberController {
                     .build();
             log.info(menteeDTO);
             sMemberService.add(memberJoinDTO);
+        } else {
+            return "redirect:/member/errorPage";
         }
 
         return "redirect:/member/login";
@@ -160,11 +171,11 @@ public class SMemberController {
         }
 
     }
-    @PostMapping({"/mentorModify", "/mentorModify"})
-    public String memberModifyPOST(@AuthenticationPrincipal MemberSecurityDTO memberSecurityDTO, MenteeDTO menteeDTO, MentorDTO mentorDTO) {
+    @PostMapping({"/mentorModify", "/menteeModify"})
+    public String memberModifyPOST(@AuthenticationPrincipal MemberSecurityDTO memberSecurityDTO, MenteeDTO menteeDTO, MentorDTO mentorDTO, List<MultipartFile> files) {
         log.info("Member Modify POST() ....");
         log.info( "닉네임 왜 안뜨냐?? " + memberSecurityDTO.getNickname());
-
+        log.info(files);
         MemberJoinDTO memberJoinDTO = MemberJoinDTO.builder()
                 .nickname(memberSecurityDTO.getNickname())
                 .mid(memberSecurityDTO.getMid())
@@ -177,11 +188,11 @@ public class SMemberController {
                     .region(mentorDTO.getRegion())
                     .nickname(memberSecurityDTO.getNickname())
                     .lngName(mentorDTO.getLngName())
-                    .portfolio(mentorDTO.getPortfolio())
+                    .fileNames(mentorDTO.getFileNames())
                     .intro(mentorDTO.getIntro())
                     .mentor_id(memberSecurityDTO.getMid())
                     .build();
-            mentorService.modify(mentorDTO);
+            mentorService.modify(mentorDTO, files);
         } else if (memberSecurityDTO.getType().equals("tee")) {
             menteeDTO = MenteeDTO.builder()
                     .name(menteeDTO.getName())
@@ -205,7 +216,7 @@ public class SMemberController {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodeModifyPw = passwordEncoder.encode(modifyPw);
 
-        log.info("아이디 : " + mid + "새로운 비밀번호 : " + encodeModifyPw);
+        log.info("이메일 : " + mid + "새로운 비밀번호 : " + encodeModifyPw);
 
         String type = memberSecurityDTO.getType();
 
@@ -224,7 +235,7 @@ public class SMemberController {
     }
     // 회원 정보 수정 끝
     // 회원 탈퇴
-    @PostMapping("/quit") // 추후 논리적 삭제 기능 추가해서 회원 아이디 30일 정도 보관
+    @PostMapping("/quit") // 추후 논리적 삭제 기능 추가해서 회원 이메일 30일 정도 보관
     public String quitPOST(@AuthenticationPrincipal MemberSecurityDTO memberSecurityDTO, HttpSession session, String mpwChk) {
         log.info("Quit POST()...");
         log.info("입력한 비밀번호 : " + mpwChk);

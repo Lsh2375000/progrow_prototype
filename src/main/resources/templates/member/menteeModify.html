@@ -13,6 +13,7 @@
     width: 300px;
   }
   .btnFindZipcode {
+    margin-left: 30px;
     cursor: pointer;
     width: 130px;
     height: 40px;
@@ -30,6 +31,20 @@
   .modal-content {
     width: 700px;
   }
+
+  form#frmModify{
+    background-color: #F5F7F8;
+    padding: 10px 10px 10px 30px;
+    margin: 10px;
+    border: 1px solid #e0e2e3;
+    border-radius: 5px;
+    font-family: 'Orbit', sans-serif;
+  }
+  .inputBtn{
+    background-color: black;
+    border: none;
+  }
+
 
 </style>
 <div layout:fragment="content">
@@ -50,7 +65,7 @@
     <div class="form-group row">
       <label class="col-sm-2 control-label">비밀번호 변경</label>
       <div class="col-sm-5">
-        <button type="button" id="pwModifyBtn" class="btn btn-primary">비밀번호 변경하기</button>
+        <button type="button" id="pwModifyBtn" class="btn btn-primary inputBtn">비밀번호 변경하기</button>
       </div>
     </div>
     <!--비밀번호 끝-->
@@ -64,7 +79,7 @@
             <td>
               <input name="region" class="form-control" id="zipcode" size="10" maxlength="7" th:value="${menteeDTO.region.split(',')[0]}" style="width: 300px" readonly>
             </td>
-            <td><span type="button" class="btn btn-primary btnFindZipcode">우편번호 검색</span><br/></td>
+            <td><span type="button" class="btn btn-primary btnFindZipcode inputBtn">우편번호 검색</span><br/></td>
           </tr>
           <tr>
             <td>
@@ -93,7 +108,7 @@
         <input name="nickname" type="text" class="form-control nickname" id="nickname" maxlength="20" th:value="${menteeDTO.nickname}" placeholder="nickname">
       </div>
       <div class="col-sm-2">
-        <button type="button" class="btn btn-primary dupBtn" id="dupNicknameBtn" style="margin-left: 20px;">중복 확인</button>
+        <button type="button" class="btn btn-primary dupBtn inputBtn" id="dupNicknameBtn" style="margin-left: 20px;">중복 확인</button>
       </div>
     </div>
     <!--닉네임 끝-->
@@ -307,13 +322,16 @@
   btnSubmit.addEventListener('click', async function (e) {
     const nickname = document.getElementById('nickname').value;
     const result = await lastModifyCheck(nickname);
-    if (nickname === ''.trim() || result === false) {
-      alert('닉네임 중복체크를 진행해 주세요.');
-      e.preventDefault();
-      e.stopPropagation();
+    if (nickname === ''.trim() || nickname.onchange) {
+      if (result) {
+        alert('닉네임 중복체크를 진행해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
       return;
     }
-    // frmModify.submit();
+    frmModify.submit();
   });
 
   const frmQuitPw = document.getElementById('frmQuitPw'); // 비밀번호 수정 form 태그

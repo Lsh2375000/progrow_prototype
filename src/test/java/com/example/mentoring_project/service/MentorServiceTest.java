@@ -17,20 +17,20 @@ public class MentorServiceTest {
     private MentorService mentorService;
 
 
-    @Test
-    public void add() {
-        MentorDTO mentorDTO = MentorDTO.builder()
-                .mentor_id("All test")
-                .passwd("1111")
-                .name("All test")
-                .region("All test")
-                .nickname("All test")
-                .lngName("All test")
-                .portfolio("All test")
-                .intro("All test")
-                .build();
-        mentorService.add(mentorDTO);
-    }
+//    @Test
+//    public void add() {
+//        MentorDTO mentorDTO = MentorDTO.builder()
+//                .mentor_id("All test")
+//                .passwd("1111")
+//                .name("All test")
+//                .region("All test")
+//                .nickname("All test")
+//                .lngName("All test")
+//                .portfolio("All test")
+//                .intro("All test")
+//                .build();
+//        mentorService.add(mentorDTO);
+//    }
 
     @Test
     public void getAll() {

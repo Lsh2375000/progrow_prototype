@@ -15,7 +15,7 @@
                 <result property="role_set" column="role_set"></result>
             </collection>
         </resultMap>
-        <!--해당 회원테이블의 아이디의 정보와 회원Role테이블의 role_set을 조인 문으로 가져와서 resultMap에 넣어준다.-->
+        <!--해당 회원테이블의 이메일의 정보와 회원Role테이블의 role_set을 조인 문으로 가져와서 resultMap에 넣어준다.-->
 
 
 

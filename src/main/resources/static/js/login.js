@@ -32,7 +32,6 @@ $(document).ready(function () {
       hidden_input.css({
         "opacity": "0",
         "display": "none" });
-  
       login_btn.text("멘티 로그인");
     });
   

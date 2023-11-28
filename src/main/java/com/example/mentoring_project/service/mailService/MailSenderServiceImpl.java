@@ -25,7 +25,7 @@ public class MailSenderServiceImpl implements MailSenderService{
     private final TemplateEngine templateEngine;
 
 
-    private String confirmKey; // 인증키
+    private String confirmKey; // 인증문자
 
     @Value("${myapp.custom.mail.sender.mailFrom}")
     private String mailFrom; // 보내는 메일
@@ -73,8 +73,8 @@ public class MailSenderServiceImpl implements MailSenderService{
 
 
 
-    private static String createConfirmKey() { // 랜덤 인증키 생성 메소드
-        // 인증키 작성
+    private static String createConfirmKey() { // 랜덤 인증문자 생성 메소드
+        // 인증문자 작성
         StringBuilder key = new StringBuilder();
         Random rnd = new Random();
 

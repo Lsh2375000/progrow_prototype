@@ -35,7 +35,7 @@ public class SMemberMapperTests {
 
 
     @Test
-    public void getMemberIdTest() { // 회원 아이디 찾기
+    public void getMemberIdTest() { // 회원 이메일 찾기
         log.info(sMemberMapper.getMemberId("member1"));
     }
 

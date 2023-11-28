@@ -50,7 +50,7 @@
 <div layout:fragment="content">
 
 
-  <form name="frmModify" id="frmModify" action="/member/mentorModify" method="post" class="form-horizontal">
+  <form name="frmModify" id="frmModify" action="/member/mentorModify" method="post" class="form-horizontal" enctype="multipart/form-data">
 
     <!--이메일 아이디 시작-->
     <div class="form-group row" style="margin-top: 20px;">
@@ -104,10 +104,10 @@
     <!--닉네임 시작-->
     <div class="form-group row">
       <label class="col-sm-2 control-label">닉네임</label>
-      <div class="col-sm-2">
+      <div class="col-sm-2" style="width: 30%;">
         <input name="nickname" type="text" class="form-control nickname" maxlength="20" id="nickname" th:value="${mentorDTO.nickname}" placeholder="nickname">
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-2" style="width: 30%;">
         <button type="button" class="btn btn-primary dupBtn inputBtn" id="dupNicknameBtn" style="margin-left: 20px;">중복 확인</button>
       </div>
     </div>
@@ -116,10 +116,20 @@
     <!-- 오류방지용 임시 포트폴리오 text태그로 값을 받음 나중에 파일업로드 기능 구현해서 수정-->
     <div class="form-group row">
       <label class="col-sm-2 control-label">포트폴리오</label>
-      <div class="col-sm-5">
-        <input name="portfolio" id="portfolio" value="testFile.pdf" type="text" class="form-control"  placeholder="portfolio">
+      <div class="col-sm-7" style="border: 1px solid #a6a6a6; border-radius: 5px; background-color: #e7e7e7; padding: 10px; ">
+        <div style="display: flex; flex-direction: column; " th:if="${mentorDTO.fileNames != null}">
+          <div style="display: flex; margin-bottom: 5px;" th:each="file : ${mentorDTO.fileNames.split('\|')}">
+            <img src="/img/pdfIcon.png" style="width: 20px; margin-right: 5px;" alt="pdf"/>
+            <a target="_blank" style="color: black; text-decoration: none;" th:href="|@{/mentorModify/}${file}|">
+              [[${file.split('_')[1]}]]
+            </a>
+          </div>
+        </div>
+        <input class="form-control" name="files" type="file" multiple="multiple" th:value="${file}">
       </div>
     </div>
+
+
     <!-- 포트폴리오 끝-->
 
     <!--프로그래밍 언어 시작-->
@@ -336,21 +346,27 @@
   const inputAll = document.querySelectorAll('input');
 
   inputAll.forEach(input => {
+
      input.addEventListener('change', function (e) {
        btnSubmit.disabled = false;
-
      });
-
   });
+
+
+
 
   const frmModify = document.getElementById('frmModify');
   btnSubmit.addEventListener('click', async function (e) {
-    const nickname = document.getElementById('nickname').value;
+    const nickname = document.getElementById('nickname');
+    const nicknameVal = nickname.value;
     const result = await lastModifyCheck(nickname);
-    if (nickname === ''.trim() || result === false) {
-      alert('닉네임 중복체크를 진행해 주세요.');
-      e.preventDefault();
-      e.stopPropagation();
+    if (nicknameVal === ''.trim() || nickname.onchange) {
+      if (!result) {
+        alert('닉네임 중복체크를 진행해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
       return;
     }
     frmModify.submit();

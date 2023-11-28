@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 "font-weight": "bold",
                 "font-size": "15px",
                 "position": "absolute",
-                "padding-top": "25px",
+                "padding-top": "40px",
                 "z-index" : "-1"
             });
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 "font-weight": "bold",
                 "font-size": "15px",
                 "position": "absolute",
-                "padding-top": "25px",
+                "padding-top": "40px",
                 "z-index" : "-1"
             })
         }

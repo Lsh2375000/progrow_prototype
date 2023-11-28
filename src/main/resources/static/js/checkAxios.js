@@ -39,7 +39,7 @@
         return request.data;
     }
 
-    async function sendConfirmMail(mailTo) { // 이메일 인증키 발송
+    async function sendConfirmMail(mailTo) { // 이메일 인증문자 발송
         // console.log("sendConfirmMail");
         // console.log(mailTo);
         const request = await axios.get(`/member/sendConfirmMail?mailTo=${mailTo}`);
@@ -47,18 +47,17 @@
         return request.data;
     }
 
-    async function matchConfirmKey(confirmKey) { // 이메일 인증키 확인
+    async function matchConfirmKey(confirmKey) { // 이메일 인증문자 확인
         // console.log(confirmKey);
         const request = await axios.post('/member/matchConfirmKey', null, {
             params: { confirmKey: confirmKey },
             responseType: 'text'
         });
-
         // console.log("axios: " + request.data);
         return request.data;
     }
 
-    async function matchCurrentPw(inputPw) {
+    async function matchCurrentPw(inputPw) { // 현재 비밀번호 확인
         console.log('matchCurrentPw')
         const request = await axios.post('/member/passwordCheck', null, {
            params: { inputPw: inputPw },
@@ -68,7 +67,7 @@
         return request.data;
     }
 
-    async function lastCheck(inputEmail, inputNickname) {
+    async function lastCheck(inputEmail, inputNickname) { // 회원가입 마지막 유효성 검사
         const request = await axios.post('/member/lastCheck', null,{
             params: {inputEmail: inputEmail,
             inputNickname: inputNickname},
@@ -77,7 +76,7 @@
 
         return request.data;
     }
-    async function lastModifyCheck(inputNickname) {
+    async function lastModifyCheck(inputNickname) { // 회원수정 마지막 유효성 검사
         const request = await axios.post('/member/lastModifyCheck', null,{
             params: {inputNickname: inputNickname},
             responseType:'text'
