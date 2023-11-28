@@ -1,9 +1,9 @@
 package com.example.mentoring_project.mapper.boardMapper;
 
 import com.example.mentoring_project.domain.boardVO.BoardVO;
-import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
 import com.example.mentoring_project.dto.ImageDTO;
-import com.example.mentoring_project.dto.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

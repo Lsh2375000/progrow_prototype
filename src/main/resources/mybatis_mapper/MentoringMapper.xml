@@ -2,17 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mentoring_project.mapper.MentoringMapper">
+<mapper namespace="com.example.mentoring_project.mapper.mentoringMapper.MentoringMapper">
     <insert id="insert">
         INSERT into mentoring (id, maxNumPeople, menteeNum, region, lngName, cLog, mData, meeting, on_off, addDate, roomNo, payment)
         values (#{id}, #{maxNumPeople}, #{menteeNum}, #{region}, #{lngName}, #{cLog}, #{mData}, #{meeting}, #{on_off}, now(), #{roomNo}, #{payment})
     </insert>
 
-    <select id="selectAll" resultType="com.example.mentoring_project.domain.MentoringVO">
+    <select id="selectAll" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
         SELECT * from mentoring order by mNo DESC;
     </select>
 
-    <select id="selectOne" resultType="com.example.mentoring_project.domain.MentoringVO">
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
         select *
         from mentoring
         where mNo = #{mNo};
@@ -54,7 +54,7 @@
         </where>
     </sql>
 
-    <select id="selectList" resultType="com.example.mentoring_project.domain.MentoringVO">
+    <select id="selectList" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
         select * from mentoring
         <include refid="search"/>
         order by mNo desc limit #{skip}, #{size};

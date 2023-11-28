@@ -1,16 +1,17 @@
-package com.example.mentoring_project.domain;
+package com.example.mentoring_project.dto.mentoringDTO;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class MentoringVO {
+public class MentoringDTO {
     private Long mNo; // 멘토링 세션방 고유 번호
     private String id; // 회원 아이디(멘토 / 멘티 구분용도)
     private int maxNumPeople; // 최대 인원 설정
@@ -24,4 +25,5 @@ public class MentoringVO {
     private LocalDateTime addDate; // 기능 제공할 기간(기본 제공 두달)
     private int roomNo; // 공간 대여 했을 시 방 번호
     private boolean payment; // 결제 여부
+    private String type; // 마이페이지 나누는 목적
 }

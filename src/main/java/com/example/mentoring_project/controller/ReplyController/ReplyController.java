@@ -1,7 +1,7 @@
 package com.example.mentoring_project.controller.ReplyController;
 
-import com.example.mentoring_project.dto.PageRequestDTO;
-import com.example.mentoring_project.dto.PageResponseDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.dto.replyDTO.ReplyDTO;
 import com.example.mentoring_project.service.replyService.ReplyService;
 import io.swagger.annotations.ApiOperation;

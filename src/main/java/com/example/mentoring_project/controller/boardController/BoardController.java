@@ -1,9 +1,9 @@
 package com.example.mentoring_project.controller.boardController;
 
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
-import com.example.mentoring_project.dto.PageRequestDTO;
-import com.example.mentoring_project.dto.PageResponseDTO;
 import com.example.mentoring_project.service.boardService.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

@@ -1,9 +1,9 @@
-package com.example.mentoring_project.controller;
+package com.example.mentoring_project.controller.qBoardController;
 
-import com.example.mentoring_project.dto.PageRequestDTO;
-import com.example.mentoring_project.dto.PageResponseDTO;
-import com.example.mentoring_project.dto.QBoardDTO;
-import com.example.mentoring_project.service.QBoardService;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
+import com.example.mentoring_project.dto.qBoardDTO.QBoardDTO;
+import com.example.mentoring_project.service.qBoardService.QBoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;

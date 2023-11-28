@@ -1,8 +1,8 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.mentoringService;
 
-import com.example.mentoring_project.dto.MentoringDTO;
-import com.example.mentoring_project.dto.PageRequestDTO;
-import com.example.mentoring_project.dto.PageResponseDTO;
+import com.example.mentoring_project.dto.mentoringDTO.MentoringDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 
 import java.util.List;
 

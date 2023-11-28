@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class BoardVO{
+public class BoardVO {
     private Integer boardNo;
     private String id;
     private String nickName;

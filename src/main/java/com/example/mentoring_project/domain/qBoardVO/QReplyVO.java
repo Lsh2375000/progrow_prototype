@@ -1,4 +1,4 @@
-package com.example.mentoring_project.domain;
+package com.example.mentoring_project.domain.qBoardVO;
 
 import lombok.*;
 

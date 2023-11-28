@@ -1,7 +1,8 @@
 package com.example.mentoring_project.mapper;
 
-import com.example.mentoring_project.domain.QBoardVO;
-import com.example.mentoring_project.dto.PageRequestDTO;
+import com.example.mentoring_project.domain.qBoardVO.QBoardVO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.mapper.qBoardMapper.QBoardMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

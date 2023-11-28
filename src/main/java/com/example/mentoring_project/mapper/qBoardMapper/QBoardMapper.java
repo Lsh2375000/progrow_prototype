@@ -1,12 +1,10 @@
-package com.example.mentoring_project.mapper;
+package com.example.mentoring_project.mapper.qBoardMapper;
 
-import com.example.mentoring_project.domain.MentoringVO;
-import com.example.mentoring_project.domain.QBoardVO;
-import com.example.mentoring_project.dto.PageRequestDTO;
+import com.example.mentoring_project.domain.qBoardVO.QBoardVO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Mapper

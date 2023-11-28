@@ -1,6 +1,8 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.qBoardService;
 
-import com.example.mentoring_project.dto.*;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
+import com.example.mentoring_project.dto.qBoardDTO.QBoardDTO;
 
 import java.util.List;
 

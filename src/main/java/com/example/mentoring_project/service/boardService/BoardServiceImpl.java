@@ -1,9 +1,11 @@
 package com.example.mentoring_project.service.boardService;
 
 
-import com.example.mentoring_project.domain.boardVO.BoardVO;
 import com.example.mentoring_project.domain.ImageVO;
-import com.example.mentoring_project.dto.*;
+import com.example.mentoring_project.domain.boardVO.BoardVO;
+import com.example.mentoring_project.dto.ImageDTO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardDTO;
 import com.example.mentoring_project.dto.boardDTO.BoardListReplyCountDTO;
 import com.example.mentoring_project.mapper.boardMapper.BoardMapper;

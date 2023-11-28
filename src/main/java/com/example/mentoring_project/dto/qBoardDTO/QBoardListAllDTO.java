@@ -1,4 +1,4 @@
-package com.example.mentoring_project.dto;
+package com.example.mentoring_project.dto.qBoardDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

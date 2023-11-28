@@ -1,10 +1,10 @@
-package com.example.mentoring_project.service;
+package com.example.mentoring_project.service.qBoardService;
 
-import com.example.mentoring_project.domain.QReplyVO;
-import com.example.mentoring_project.dto.PageRequestDTO;
-import com.example.mentoring_project.dto.PageResponseDTO;
-import com.example.mentoring_project.dto.QReplyDTO;
-import com.example.mentoring_project.mapper.QReplyMapper;
+import com.example.mentoring_project.domain.qBoardVO.QReplyVO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
+import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
+import com.example.mentoring_project.dto.qBoardDTO.QReplyDTO;
+import com.example.mentoring_project.mapper.qBoardMapper.QReplyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

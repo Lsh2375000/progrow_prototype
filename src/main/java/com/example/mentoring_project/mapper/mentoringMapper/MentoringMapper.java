@@ -1,7 +1,7 @@
-package com.example.mentoring_project.mapper;
+package com.example.mentoring_project.mapper.mentoringMapper;
 
-import com.example.mentoring_project.domain.MentoringVO;
-import com.example.mentoring_project.dto.PageRequestDTO;
+import com.example.mentoring_project.domain.mentoringVO.MentoringVO;
+import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mentoring_project.mapper.QBoardMapper">
+<mapper namespace="com.example.mentoring_project.mapper.qBoardMapper.QBoardMapper">
     <!--insert mapper-->
     <insert id="insert">
         insert into qnaboard (id, hit, nickName, content, title)
@@ -36,14 +36,14 @@
     </select>
 
     <!-- selectList mapper -->
-    <select id="selectList" resultType="com.example.mentoring_project.domain.QBoardVO">
+    <select id="selectList" resultType="com.example.mentoring_project.domain.qBoardVO.QBoardVO">
         SELECT * FROM qnaboard
         <include refid="search"/>
         ORDER BY qBoardNo DESC limit #{skip}, #{size}
     </select>
 
 
-    <select id="selectOne" resultType="com.example.mentoring_project.domain.QBoardVO">
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.qBoardVO.QBoardVO">
         SELECT * FROM qnaboard WHERE qBoardNo = #{qBoardNo}
     </select>
 

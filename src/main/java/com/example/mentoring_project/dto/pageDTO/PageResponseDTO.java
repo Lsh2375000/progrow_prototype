@@ -1,4 +1,4 @@
-package com.example.mentoring_project.dto;
+package com.example.mentoring_project.dto.pageDTO;
 
 import lombok.Builder;
 import lombok.Getter;
