@@ -3,26 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mentoring_project.mapper.mentoringMapper.MentoringMapper">
+    <!-- 멘토의 멘토링 생성 -->
     <insert id="insert">
-        INSERT into mentoring (id, maxNumPeople, menteeNum, region, lngName, cLog, mData, meeting, on_off, addDate, roomNo, payment)
-        values (#{id}, #{maxNumPeople}, #{menteeNum}, #{region}, #{lngName}, #{cLog}, #{mData}, #{meeting}, #{on_off}, now(), #{roomNo}, #{payment})
+        INSERT into mentoring (mentor_id, mentee_id, region, lngName, cLog, mData, meeting, on_off, addDate, roomNo, payment)
+        values (#{mentor_id}, #{mentee_id}, #{region}, #{lngName}, #{cLog}, #{mData}, #{meeting}, #{on_off}, now(), #{roomNo}, #{payment})
     </insert>
-
-    <select id="selectAll" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
-        SELECT * from mentoring order by mNo DESC;
-    </select>
-
-    <select id="selectOne" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
-        select *
-        from mentoring
-        where mNo = #{mNo};
-    </select>
-    
+    <!--  멘토의 멘토링 수정  -->
     <update id="update">
         update mentoring
-        set maxNumPeople=#{maxNumPeople},
-            menteeNum=#{menteeNum},
-            region=#{region},
+        set region=#{region},
             lngName=#{lngName},
             meeting=#{meeting},
             on_off=#{on_off}
@@ -34,6 +23,113 @@
         from mentoring
         where mNo = #{mNo};
     </delete>
+    <!-- 멘토의 멘토링 생성 시 user_mentor 테이블에 멘토 멘토링 여부 true로 변경-->
+    <update id="mentorIsMentoring">
+        UPDATE user_mentor SET isMentoring = TRUE
+        WHERE mentor_id = #{mentor_id}
+    </update>
+
+    <!-- 멘토의 멘토링참여여부 조회 -->
+    <select id="isMentorMentoring" resultType="boolean">
+        SELECT isMentoring FROM user_mentor WHERE mentor_id = #{mentor_id};
+    </select>
+
+    <!-- 멘티의 멘토링참여  -->
+    <update id="recruitInsert">
+        UPDATE mentoring SET mentee_id =
+        if(mentee_id = NULL, #{mentee_id}, CONCAT_WS(', ', mentee_id, #{mentee_id}))
+        WHERE mNo=#{mNo};
+    </update>
+
+    <!-- 멘티의 멘토링참여시 user_mentee 테이블에 멘토링여부 true, mNo 등록 -->
+    <update id="menteeRecruit">
+        UPDATE user_mentee SET isMentoring = TRUE, mNo = #{mNo}
+        WHERE mentee_id = #{mentee_id}
+    </update>
+
+    <!-- 멘티의 멘토링참여여부 조회 -->
+    <select id="isMenteeMentoring" resultType="boolean">
+        SELECT isMentoring FROM user_mentee WHERE mentee_id = #{mentee_id};
+    </select>
+
+
+
+    <select id="selectAll" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
+        SELECT * from mentoring order by mNo DESC;
+    </select>
+
+    <select id="selectOne" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
+        select *
+        from mentoring
+        where mNo = #{mNo};
+    </select>
+
+    <!--  멘토의 멘토링방 -->
+    <select id="mentorRoom" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
+        SELECT *
+        FROM mentoring
+        JOIN user_mentor ON mentoring.mentor_id = user_mentor.mentor_id
+        WHERE mentoring.mentor_id = #{mentor_id};
+--         SELECT *
+--         FROM mentoring, user_mentor
+--         WHERE mentoring.mentor_id = user_mentor.mentor_id
+--         AND mentoring.mentor_id = #{mentor_id};
+    </select>
+
+    <!-- 멘토의 멘토링방 공지사항 생성 -->
+    <insert id="insertNotice">
+        INSERT into mentor_room_notice (mentor_id, title, content, addDate)
+        values (#{mentor_id}, #{title},#{content}, now())
+    </insert>
+
+    <!-- 멘토의 멘토링방 공지사항 수정 -->
+    <update id="updateNotice">
+        update mentor_room_notice
+        set title=#{title},
+            content=#{content}
+        where num = #{num};
+    </update>
+    <!-- 멘토의 멘토링방 공지사항 삭제 -->
+    <delete id="deleteNotice">
+        delete
+        from mentor_room_notice
+        where num = #{num}
+    </delete>
+
+
+    <!--  멘토링방 공지사항 list  -->
+    <select id="selectAllNotice" resultType="com.example.mentoring_project.domain.mentoringVO.MentorRoomNoticeVO">
+        SELECT * from mentor_room_notice order by num DESC;
+    </select>
+
+
+    <select id="selectOneNotice" resultType="com.example.mentoring_project.domain.mentoringVO.MentorRoomNoticeVO">
+        select *
+        from mentor_room_notice
+        where num = #{num};
+    </select>
+
+
+    <!--  멘티의 멘토링방 -->
+    <select id="menteeRoom" resultType="com.example.mentoring_project.domain.mentoringVO.MentoringVO">
+        SELECT *
+        FROM mentoring
+                 JOIN user_mentee ON mentoring.mNo = user_mentee.mNo
+        WHERE user_mentee.mentee_id = #{mentee_id};
+        --         SELECT *
+--         FROM mentoring, user_mentor
+--         WHERE mentoring.mentor_id = user_mentor.mentor_id
+--         AND mentoring.mentor_id = #{mentor_id};
+    </select>
+
+    <!--    지금 해야하는 멘티의 멘토링방에서 멘토정보 조회-->
+    <select id="menteeRoomMentorInfo" resultType="com.example.mentoring_project.domain.memberVO.MentorVO">
+        select * from user_mentor
+
+    </select>
+    <!-- 멘티의 멘토링 방 끝-->
+
+
 
     <sql id="search">
         <where>
@@ -46,7 +142,7 @@
                         region like concat('%',#{keyword},'%')
                     </if>
                     <if test="type=='i'.toString()">
-                        id like concat('%',#{keyword},'%')
+                        mentor_id like concat('%',#{keyword},'%')
                     </if>
                 </foreach>
             </if>
@@ -64,6 +160,8 @@
         select count(mNo) from mentoring
         <include refid="search"/>
     </select>
+
+
 
 
 </mapper>
