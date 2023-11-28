@@ -26,5 +26,5 @@ public interface NoticeReplyMapper {
 
     List<NoticeReplyVO> selectAll(Long num); // 전체 리스트(페이징없음) - 사용안함
 
-//    bno 대신에 num  이다!!!!!!!!!!!!!
+//    bno 아니고 num  이다!!!!!!!!!!!
 }

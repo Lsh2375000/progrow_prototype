@@ -191,9 +191,9 @@
                             <span class="badge bg-secondary" id="menteeID" style="margin-bottom: 10px">[[${#authentication.principal.username}]] 님 환영합니다.</span>
                             <th:block th:if="${#authentication.principal.getType() == 'tor'}"> <!--멘토 로그인시-->
 <!--                                <a class="badge bg-primary room" th:href="@{/mentoring/mentorRoom}">내 멘토링 방으로</a><br><br>-->
-                                <h4><span><a class="badge bg-primary room" th:href="@{/mentoring/mentorRoom}">내 멘토링 방으로</a></span></h4>
+                                <span><a class="badge bg-primary room" th:href="@{/mentoring/mentorRoom}">내 멘토링 방으로</a></span>
 
-                                <h4><a href="/mentoring/register" id="mentorRegister" onclick="checkForm(); return false;" class="badge bg-primary">멘토링 생성하기</a></h4>
+                                <a href="/mentoring/register" id="mentorRegister" onclick="checkForm(); return false;" class="badge bg-primary">멘토링 생성하기</a>
                                 <span id="isMentorMentoring" style="color: white">[[${isMentorMentoring}]]</span>
 
                             </th:block>
@@ -455,6 +455,35 @@
 
     $("#best_search").mouseleave(function() {
         rtcarousel = setInterval(function(){ view(viewcount) },4000);
+    });
+
+    // 해당 테이블의 tr 요소들을 선택합니다.
+    const tableRows = document.querySelectorAll(".table-success tr");
+
+    // 각 행을 반복하며 값을 체크하여 변경합니다.
+    tableRows.forEach(row => {
+        const onMeetingCell = row.cells[6]; // 사전만남 여부 정보가 있는 셀 (0부터 시작하는 인덱스)
+        const onMeetingValue = onMeetingCell.textContent.trim(); // 셀의 텍스트 값을 가져옵니다.
+
+        // 사전만남 여부 값에 따라 표시를 변경합니다.
+        if (onMeetingValue === "true") {
+            onMeetingCell.textContent = "O";
+        } else if (onMeetingValue === "false") {
+            onMeetingCell.textContent = "X";
+        }
+    });
+
+    // 각 행을 반복하며 값을 체크하여 변경합니다.
+    tableRows.forEach(row => {
+        const onOffCell = row.cells[7]; // 온/오프라인 정보가 있는 셀 (0부터 시작하는 인덱스)
+        const onOffValue = onOffCell.textContent.trim(); // 셀의 텍스트 값을 가져옵니다.
+
+        // 온/오프라인 값에 따라 표시를 변경합니다.
+        if (onOffValue === "true") {
+            onOffCell.textContent = "온라인";
+        } else if (onOffValue === "false") {
+            onOffCell.textContent = "오프라인";
+        }
     });
 </script>
 

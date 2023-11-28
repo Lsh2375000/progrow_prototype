@@ -29,6 +29,7 @@ import java.util.List;
 public class MentoringController {
     private final MentoringService mentoringService;
 
+//    int a=0;
 
     @GetMapping("/")
     public String mainBa(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model, Principal principal) {

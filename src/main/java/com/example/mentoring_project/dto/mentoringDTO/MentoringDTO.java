@@ -15,8 +15,7 @@ public class MentoringDTO {
     private Long mNo; // 멘토링 세션방 고유 번호
     private String mentor_id; // 멘토 아이디
     private String mentee_id; // 멘티 아이디
-//    private int maxNumPeople; // 최대 인원 설정
-//    private int menteeNum; // 현재 모집된 멘티수
+
     private String region; // 오프라인일 경우 모일 지역
     private String lngName; // 멘토가 가르칠 프로그래밍 언어
     private String cLog; // 채팅 로그
@@ -27,4 +26,6 @@ public class MentoringDTO {
     private int roomNo; // 공간 대여 했을 시 방 번호
     private boolean payment; // 결제 여부
     private String type; // 마이페이지 나누는 목적
+
+    //    int a=0;
 }

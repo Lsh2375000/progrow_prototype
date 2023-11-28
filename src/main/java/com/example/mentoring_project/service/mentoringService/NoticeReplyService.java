@@ -10,7 +10,7 @@ public interface NoticeReplyService {
 
     Long register(NoticeReplyDTO noticeReplyDTO);
 
-
+    // 제발..
 
     NoticeReplyDTO read(Long rno);
 

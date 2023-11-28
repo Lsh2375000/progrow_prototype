@@ -16,6 +16,6 @@ public class GlobalExceptionHandler {
         log.error("에러 발생: ", e);
 
         // 에러 페이지로 리다이렉트
-        return "errorPage"; // 에러 페이지로 이동하는 경로를 설정해주세요.
+        return "errorPage"; // 에러 페이지로 이동하는 경로를 설정해주세요 .
     }
 }

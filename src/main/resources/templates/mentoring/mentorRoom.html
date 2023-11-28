@@ -18,7 +18,7 @@
 
 
 <div layout:fragment="content">
-    <span class="badge bg-success">[[${mentorRoom.mentor_id}]] 멘토님의 멘토링 방 </span>
+    <h4><span class="badge bg-secondary">[[${mentorRoom.mentor_id}]] 멘토님의 멘토링 방 </span></h4>
 
     <table class="table table-hover">
         <tr>
@@ -149,6 +149,26 @@
             this.submit(); // 폼 제출
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const onOffCell = document.querySelector(".table-hover tr:nth-child(2) td:nth-child(8)"); // 사전만남 여부 셀
+        const meetingCell = document.querySelector(".table-hover tr:nth-child(2) td:nth-child(7)"); // 온/오프라인 셀
+
+        // 온/오프라인 값에 따라 변경
+        if (onOffCell.textContent.trim() === "true") {
+            onOffCell.textContent = "온라인";
+        } else if (onOffCell.textContent.trim() === "false") {
+            onOffCell.textContent = "오프라인";
+        }
+
+        // O/X 값에 따라 변경
+        if (meetingCell.textContent.trim() === "true") {
+            meetingCell.textContent = "O";
+        } else if (meetingCell.textContent.trim() === "false") {
+            meetingCell.textContent = "X";
+        }
+    });
+
 
 </script>
 

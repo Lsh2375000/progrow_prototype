@@ -122,11 +122,11 @@
 
 <div layout:fragment="content">
 
-  <form action="/mentoring/main" method="get">
+  <form action="/mentoring/list" method="get">
     <div id="wrap">
       <div class="container">
         <ul id="best_search">
-          <li style="margin-bottom: 20px"><p>개발언어 순위</p></li>
+          <li style="margin-bottom: 2%;margin-right: 1% "><button type="button" class="btn btn-secondary">Language Ranking</button></li>
           <li>
             <dl class="time1">
               <dd><a class="t" href="#"><div class="num">1</div>Python</a></dd>
@@ -177,26 +177,28 @@
           </select> <input class="col-sm-4" name="keyword" type="text"/>
           <input type="submit" id="btnAdd" class="btn btn-primary" value="검색"/>
         </td>
-        <td width="100%" align="right">
-          <th:block th:if="${#authentication.principal != 'anonymousUser'}"><!-- 회원 로그인 -->
-            <th:block th:if="${#authentication.principal.getType() == 'tor'}"> <!--멘토 로그인시-->
-              <a href="/mentoring/register" id="mentorRegister" onclick="checkForm(); return false;" class="btn btn-primary">글쓰기</a>
-            </th:block>
+        <!--                <td width="100%" align="right">-->
+        <!--                    <th:block th:if="${#authentication.principal != 'anonymousUser'}">&lt;!&ndash; 회원 로그인 &ndash;&gt;-->
+        <!--                        <th:block th:if="${#authentication.principal.getType() == 'tor'}"> &lt;!&ndash;멘토 로그인시&ndash;&gt;-->
+        <!--                            <a href="/mentoring/register" id="mentorRegister" onclick="checkForm(); return false;" class="btn btn-primary">글쓰기</a>-->
+        <!--                        </th:block>-->
 
-          </th:block>
-
-        </td>
+        <!--                    </th:block>-->
+        <!--                </td>-->
         <td>
           <th:block th:if="${#authentication.principal != 'anonymousUser'}"><!-- 회원 로그인 -->
             <p id="p1">
-              <span class="badge bg-success" id="menteeID" style="margin-bottom: 10px">[[${#authentication.principal.username}]] 님 환영합니다.</span>
+              <span class="badge bg-secondary" id="menteeID" style="margin-bottom: 10px">[[${#authentication.principal.username}]] 님 환영합니다.</span>
               <th:block th:if="${#authentication.principal.getType() == 'tor'}"> <!--멘토 로그인시-->
-                <a class="badge bg-success room" th:href="@{/mentoring/mentorRoom}">내 멘토링 방으로 이동</a>
-                <br><span id="isMentorMentoring" style="color: white">[[${isMentorMentoring}]]</span>
+                <!--                                <a class="badge bg-primary room" th:href="@{/mentoring/mentorRoom}">내 멘토링 방으로</a><br><br>-->
+                <span><a class="badge bg-primary room" th:href="@{/mentoring/mentorRoom}">내 멘토링 방으로</a></span>
+
+                <a href="/mentoring/register" id="mentorRegister" onclick="checkForm(); return false;" class="badge bg-primary">멘토링 생성하기</a>
+                <span id="isMentorMentoring" style="color: white">[[${isMentorMentoring}]]</span>
 
               </th:block>
               <th:block th:if="${#authentication.principal.getType() == 'tee'}"> <!--멘티 로그인시-->
-                <a class="badge bg-success room" th:href="@{/mentoring/menteeRoom}">참여중인 멘토링 방으로 이동</a>
+                <a class="badge bg-primary room" th:href="@{/mentoring/menteeRoom}">참여중인 멘토링 방으로 이동</a>
                 <br><span id="isMenteeMentoring" style="color: white">[[${isMenteeMentoring}]]</span>
               </th:block>
 
@@ -217,7 +219,7 @@
         <th>멘토 ID</th>
         <th>멘티 ID</th>
         <th>지역</th>
-        <th>개발 언어</th>
+        <th>멘토링 언어</th>
         <th>작성일</th>
         <th>사전만남여부</th>
         <th>온/오프라인</th>
@@ -243,7 +245,7 @@
 
           <th:block th:if="${#authentication.principal != 'anonymousUser'}"><!-- 회원 로그인 -->
             <th:block th:if="${#authentication.principal.getType() == 'tee'}"> <!--멘티 로그인시-->
-              <button class="btn btn-info recruit" th:value="${dto.mNo}">가입하기</button>
+              <button class="btn btn-primary recruit" th:value="${dto.mNo}">가입하기</button>
             </th:block>
             <th:block th:if="${#authentication.principal.getType() == 'tor'}"> <!--멘토 로그인시-->
               <!--              <button class="btn btn-info recruit" th:value="${dto.mNo}">멘티전용(삭제예정)</button>-->
@@ -453,6 +455,35 @@
 
   $("#best_search").mouseleave(function() {
     rtcarousel = setInterval(function(){ view(viewcount) },4000);
+  });
+
+  // 해당 테이블의 tr 요소들을 선택합니다.
+  const tableRows = document.querySelectorAll(".table-success tr");
+
+  // 각 행을 반복하며 값을 체크하여 변경합니다.
+  tableRows.forEach(row => {
+    const onMeetingCell = row.cells[6]; // 사전만남 여부 정보가 있는 셀 (0부터 시작하는 인덱스)
+    const onMeetingValue = onMeetingCell.textContent.trim(); // 셀의 텍스트 값을 가져옵니다.
+
+    // 사전만남 여부 값에 따라 표시를 변경합니다.
+    if (onMeetingValue === "true") {
+      onMeetingCell.textContent = "O";
+    } else if (onMeetingValue === "false") {
+      onMeetingCell.textContent = "X";
+    }
+  });
+
+  // 각 행을 반복하며 값을 체크하여 변경합니다.
+  tableRows.forEach(row => {
+    const onOffCell = row.cells[7]; // 온/오프라인 정보가 있는 셀 (0부터 시작하는 인덱스)
+    const onOffValue = onOffCell.textContent.trim(); // 셀의 텍스트 값을 가져옵니다.
+
+    // 온/오프라인 값에 따라 표시를 변경합니다.
+    if (onOffValue === "true") {
+      onOffCell.textContent = "온라인";
+    } else if (onOffValue === "false") {
+      onOffCell.textContent = "오프라인";
+    }
   });
 </script>
 

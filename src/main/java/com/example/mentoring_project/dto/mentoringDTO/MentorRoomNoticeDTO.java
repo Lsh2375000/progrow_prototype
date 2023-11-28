@@ -17,4 +17,5 @@ public class MentorRoomNoticeDTO {
     String title; // 제목
     String content; // 내용
     private LocalDateTime addDate; // 등록시간
+    //    int a=0;
 }

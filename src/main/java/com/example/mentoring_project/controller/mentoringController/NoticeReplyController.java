@@ -22,7 +22,7 @@ import java.util.Map;
 @Log4j2
 public class NoticeReplyController {
     private final NoticeReplyService noticeReplyService;
-
+    //    int a=0;
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE) // JSON으로 처리하는 어노테이션
     public Map<String, Long> register(@Valid @RequestBody NoticeReplyDTO noticeReplyDTO, BindingResult bindingResult)
             throws BindException { // @RequestBody는 JSON 문자열을 ReplyDTO로 변환해 줌

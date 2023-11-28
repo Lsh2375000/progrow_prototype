@@ -27,6 +27,7 @@ import java.util.List;
 public class MentoringServiceImpl implements MentoringService{
     private final MentoringMapper mentoringMapper;
     private final ModelMapper modelMapper;
+    // 제발..
     @Override
     public void add(MentoringDTO mentoringDTO) {
         MentoringVO mentoringVO = modelMapper.map(mentoringDTO, MentoringVO.class);

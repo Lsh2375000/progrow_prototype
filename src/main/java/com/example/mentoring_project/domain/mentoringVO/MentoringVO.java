@@ -25,4 +25,6 @@ public class MentoringVO {
     private LocalDateTime addDate; // 기능 제공할 기간(기본 제공 두달)
     private int roomNo; // 공간 대여 했을 시 방 번호
     private boolean payment; // 결제 여부
+
+    //    int a=0;
 }

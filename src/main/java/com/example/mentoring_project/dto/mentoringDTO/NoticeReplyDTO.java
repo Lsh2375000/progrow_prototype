@@ -29,4 +29,6 @@ public class NoticeReplyDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate; // 리플 작성일자
+
+    //    int a=0;
 }

@@ -247,6 +247,7 @@
         const authCode = document.getElementById('authCode'); // 인증문자 입력
         const keyChkBtn = document.getElementById('keyChk'); // 인증문자 확인 버튼
         const frmAdd = document.getElementById('frmAdd');
+        const hiddenDiv = document.getElementById('hidden_div');
 
         emailAuthBtn.addEventListener('click', async function (e) { // 이메일 인증 버튼 이벤트
             const emailVal = document.getElementById('email').value;
@@ -263,6 +264,7 @@
                 alert('인증문자가 전송되었습니다.');
                 authCode.disabled = false;
                 keyChkBtn.disabled = false;
+                hiddenDiv.hidden = false;
             }
 
         });

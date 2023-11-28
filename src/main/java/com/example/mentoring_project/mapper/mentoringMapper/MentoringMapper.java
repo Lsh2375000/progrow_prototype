@@ -57,7 +57,7 @@ public interface MentoringMapper {
 
     MentorRoomNoticeVO selectOneNotice(Long num);
 
-
+//    private boolean isMentoring;
 
 
 

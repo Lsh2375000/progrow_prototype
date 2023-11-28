@@ -20,4 +20,6 @@ public class MentorVO {
     private int mNo; // 현재 참여하고 있는 멘토링방 번호
     private int gradeByMNum; // 멘토링 참여 횟수
     private String type; // 멘토 타입
+
+    private boolean isMentoring;
 }

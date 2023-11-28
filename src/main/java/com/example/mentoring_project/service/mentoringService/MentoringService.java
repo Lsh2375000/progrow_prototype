@@ -20,7 +20,7 @@ public interface MentoringService {
     MentoringDTO mentorRoom(String mentor_id); // 멘토의 멘토링 방정보 조회
     //
 
-    // <멘티>
+    // <멘티>다
     void recruitAdd(MentoringDTO mentoringDTO); // 멘티의 멘토링 가입
     void recruitMentee(MenteeDTO menteeDTO); // 멘티의 멘토링 가입 시 user_mentee 테이블의 isMentoring 컬럼 true 로 변경, mNo 저장
 //    MenteeDTO menteeIsMentoring(String mentee_id);

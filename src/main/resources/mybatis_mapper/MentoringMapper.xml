@@ -127,7 +127,7 @@
         select * from user_mentor
 
     </select>
-    <!-- 멘티의 멘토링 방 끝-->
+    <!-- 멘티의 멘토링 방 끝 -->
 
 
 
