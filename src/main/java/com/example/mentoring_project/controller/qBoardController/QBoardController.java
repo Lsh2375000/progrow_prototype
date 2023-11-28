@@ -1,4 +1,4 @@
-package com.example.mentoring_project.controller.qBoardController;
+package com.example.mentoring_project.controller.qBoardcontroller;
 
 import com.example.mentoring_project.dto.pageDTO.PageRequestDTO;
 import com.example.mentoring_project.dto.pageDTO.PageResponseDTO;
@@ -26,7 +26,7 @@ public class QBoardController {
     private final QBoardService qBoardService;
 
     @GetMapping("/list")
-    public void qBoardList(@Valid PageRequestDTO pageRequestDTO, Long qBoardNo, BindingResult bindingResult, Model model) {
+    public void qBoardList(@Valid PageRequestDTO pageRequestDTO, Long qnaBoardNo, BindingResult bindingResult, Model model) {
         log.info(pageRequestDTO);
 
         if (bindingResult.hasErrors()) { // @Valid 를 이용해서 잘못된 파라미터 값들이 들어오면 page는 1, size는 10으로 고정된 값을 처리
@@ -52,28 +52,41 @@ public class QBoardController {
     }
 
     @GetMapping({"/read", "modify"})
-    public void view(Long qBoardNo, PageRequestDTO pageRequestDTO, Model model, HttpServletRequest request) {
+    public void view(Long qnaBoardNo, PageRequestDTO pageRequestDTO, Model model, HttpServletRequest request) {
         log.info("/qboard/read...");
         String requestedUrl = request.getRequestURI();
         log.info(requestedUrl);
 
         QBoardDTO qBoardDTO = null;
         if (requestedUrl.equals("/qboard/read")) {
-            qBoardDTO = qBoardService.getOne(qBoardNo, "read");
+            qBoardDTO = qBoardService.getOne(qnaBoardNo, "read");
         } else {
-            qBoardDTO = qBoardService.getOne(qBoardNo, "modify");
+            qBoardDTO = qBoardService.getOne(qnaBoardNo, "modify");
         }
 
         model.addAttribute("dto", qBoardDTO);
     }
 
     @PostMapping("/modify")
-    public String modify(QBoardDTO qBoardDTO, RedirectAttributes redirectAttributes) {
+    public String modify(PageRequestDTO pageRequestDTO,
+                         @Valid QBoardDTO qBoardDTO,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
         log.info("qboard modify post....." + qBoardDTO);
 
-        qBoardService.modify(qBoardDTO);
+        if(bindingResult.hasErrors()){
+            log.info("has errors....");
 
-        redirectAttributes.addAttribute("qBoardNo", qBoardDTO.getQBoardNo());
+            String link = pageRequestDTO.getLink();
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addAttribute("qnaBoardNo", qBoardDTO.getQnaBoardNo());
+            return "redirect:/qboard/modify? + link";
+        }
+
+        qBoardService.modifyOne(qBoardDTO);
+
+        redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addAttribute("qnaBoardNo", qBoardDTO.getQnaBoardNo());
 
         return "redirect:/qboard/read";
     }
@@ -81,11 +94,11 @@ public class QBoardController {
 
     @PostMapping("/remove")
     public String remove(QBoardDTO qBoardDTO, RedirectAttributes redirectAttributes){
-        Long qBoardNo = qBoardDTO.getQBoardNo();
-        log.info("qBoard remove post" + qBoardNo);
+        Long qnaBoardNo = qBoardDTO.getQnaBoardNo();
+        log.info("qBoard remove post" + qnaBoardNo);
 
-        qBoardService.deleteOne(qBoardNo);
-        log.info(qBoardDTO.getQBoardNo());
+        qBoardService.deleteOne(qnaBoardNo);
+        log.info(qBoardDTO.getQnaBoardNo());
         return "redirect:/qboard/list";
 
     }
