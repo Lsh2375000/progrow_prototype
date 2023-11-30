@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class ReplyController {
     private final ReplyService replyService;
 
     //댓글 등록
+
     @ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> register(@Valid @RequestBody ReplyDTO replyDTO, BindingResult bindingResult) throws BindException {
@@ -56,7 +58,8 @@ public class ReplyController {
         return replyDTO;
     }
 
-    @ApiOperation(value = "Reply Modify", notes = "GET 방식으로 댓글 수정")
+
+    @ApiOperation(value = "Reply Modify", notes = "PUT 방식으로 댓글 수정")
     @PutMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long> modify(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO){
         replyDTO.setRno(rno);
@@ -65,6 +68,7 @@ public class ReplyController {
         resultMap.put("rno", rno);
         return resultMap;
     }
+
 
 
     @ApiOperation(value = "Delete reply", notes = "Delete 방식으로 댓글 삭제")

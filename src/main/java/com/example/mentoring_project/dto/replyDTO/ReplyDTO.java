@@ -13,15 +13,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReplyDTO {
+
     private Long rno; //리플 고유 번호
-
-    @NotNull
+    private String content; //리플의 내용
+    private String nickname; //리플 작성자
     private Long boardNo; //게시판의 글 고유번호
-
-    @NotEmpty
-    private String replyText; //리플의 내용
-
-    @NotEmpty
-    private String replyWriter; //리플 작성자
 
 }

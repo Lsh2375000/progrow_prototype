@@ -48,7 +48,7 @@ public class BoardController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
-    @PreAuthorize("isAuthenticated()") //로그인한 시용자만
+   @PreAuthorize("isAuthenticated()") //로그인한 시용자만
     @GetMapping("/register")
     public void addGet(){
         log.info("/board/add..HI");
@@ -74,6 +74,7 @@ public class BoardController {
 
 
     /*read, modify 페이지로 이동*/
+    @PreAuthorize("isAuthenticated()") //로그인한 시용자만
     @GetMapping({"/view", "/modify"})
     public void read(int boardNo, PageRequestDTO pageRequestDTO, Model model, HttpServletRequest request){
         log.info("boardNo " + boardNo );
@@ -92,7 +93,7 @@ public class BoardController {
     }
 
 
-    @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO nickname가 같다면 수정 가능
+   @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO nickname가 같다면 수정 가능
     @PostMapping("/modify")
     public String modify(PageRequestDTO pageRequestDTO,
                          @Valid BoardDTO boardDTO,
@@ -118,7 +119,7 @@ public class BoardController {
 
     }
 
-    @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO nickname 가 같다면 삭제 가능
+   @PreAuthorize("principal.username == #boardDTO.id") //로그인 정보와 전달 받은 boardDTO nickname 가 같다면 삭제 가능
     @PostMapping("/remove")
     public String removeOne(BoardDTO boardDTO, RedirectAttributes redirectAttributes){
         int boardNo = boardDTO.getBoardNo();

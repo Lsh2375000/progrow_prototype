@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mentoring_project.mapper.replyMapper.ReplyMapper">
 
-    <insert id="register" parameterType="com.example.mentoring_project.domain.replyVO.ReplyVO">
-        insert into reply(rno, replyText, replyWriter, boardNo)
-        values (#{rno}, #{replyText}, #{replyWriter}, #{boardNo})
+    <insert id="register" parameterType="com.example.mentoring_project.domain.replyVO.ReplyVO" useGeneratedKeys="true" keyProperty="rno">
+        insert into reply(rno, content, nickname, boardNo)
+        values (#{rno}, #{content}, #{nickname}, #{boardNo})
     </insert>
 
     <select id="selectList" resultType="com.example.mentoring_project.domain.replyVO.ReplyVO">
@@ -19,7 +19,7 @@
     </select>
 
     <update id="modify">
-        update reply set replyText=#{replyText} where rno=#{rno}
+        update reply set content=#{content} where rno=#{rno}
     </update>
 
     <delete id="delete">
