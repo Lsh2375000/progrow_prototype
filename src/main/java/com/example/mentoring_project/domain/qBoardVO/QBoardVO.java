@@ -15,7 +15,7 @@ public class QBoardVO {
     private Long qnaBoardNo; // 게시글 No
     private String id; // ID
     private Integer hit; // 조회수
-    private String nickName; // 닉네임
+    private String nickname; // 닉네임
     private String content; // 게시글 내용
     private String title; // 게시글 제목
 
@@ -25,10 +25,10 @@ public class QBoardVO {
     @JsonIgnore
     private LocalDateTime modDate; // 리플 수정일자
 
-    public void change(String title, String content, String nickName) { // 게시글 변경 시 메서드
+    public void change(String title, String content) { // 게시글 변경 시 메서드
         this.title = title;
         this.content = content;
-        this.nickName = nickName;
+
     }
 
 }

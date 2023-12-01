@@ -35,7 +35,7 @@
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text">Writer</span>
-              <input type="text" class="form-control" th:value="${dto.nickName}" readonly>
+              <input type="text" class="form-control" th:value="${dto.nickname}" readonly>
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text">RegDate</span>
@@ -115,7 +115,7 @@
             <input type="text" class="form-control qnaReplyContent">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text">nickName</span>
+            <span class="input-group-text">nickname</span>
             <input type="text" class="form-control qnaNickName">
           </div>
         </div>
@@ -186,7 +186,7 @@
         str += `<li class="list-group-item d-flex qReplyItem">
                     <span class="col-2">${dto.qnaRno}</span>
                     <span class="col-6" data-qnaRno="${dto.qnaRno}">${dto.content}</span>
-                    <span class="col-2">${dto.nickName}</span>
+                    <span class="col-2">${dto.nickname}</span>
                     <span class="col-2">${dto.regDate}</span>
                 </li>`;
       }
@@ -230,7 +230,7 @@
 
   // 댓글 등록 자바스크립트
   qnaRegisterBtn.addEventListener("click", function (e) {
-    const replyObj = {qnaBoardNo:qnaBoardNo, content:content.value, nickName:nickName.value}
+    const replyObj = {qnaBoardNo:qnaBoardNo, content:content.value, nickName:nickname.value}
     console.log(replyObj);
     addQReply(replyObj).then(result => { // 등록 후 결과처리
       alert(result.data.qnaRno);

@@ -14,7 +14,7 @@ public class QBoardListAllDTO {
     private Long qnaBoardNo;
     private String title;
     private String content;
-    private String nickName;
+    private String nickname;
     private Integer hit; // 조회수
     private LocalDateTime regDate;
     private Long qReplyCount;

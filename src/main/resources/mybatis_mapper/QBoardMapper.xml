@@ -5,8 +5,8 @@
 <mapper namespace="com.example.mentoring_project.mapper.qBoardMapper.QBoardMapper">
     <!--insert mapper-->
     <insert id="insert">
-        insert into qboard (id, hit, nickName, content, title, regDate, modDate)
-        values(#{id}, #{hit}, #{nickName}, #{content}, #{title}, NOW(), NOW())
+        insert into qboard (id, hit, nickname, content, title, regDate, modDate)
+        values(#{id}, #{hit}, #{nickname}, #{content}, #{title}, NOW(), NOW())
     </insert>
     <!--update mapper-->
     <update id="update">
