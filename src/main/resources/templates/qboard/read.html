@@ -22,6 +22,10 @@
         <form th:action="@{/qboard/read}" method="post">
           <div class="card-body">
             <div class="input-group mb-3">
+              <span class="input-group-text " hidden>ID</span>
+              <input type="text" class="form-control id" th:value="${#authentication.principal.mid}" hidden>
+            </div>
+            <div class="input-group mb-3">
               <span class="input-group-text">QnaBoardNo</span>
               <input type="text" class="form-control" th:value="${dto.qnaBoardNo}" readonly>
             </div>
@@ -35,7 +39,7 @@
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text">Writer</span>
-              <input type="text" class="form-control" th:value="${dto.nickname}" readonly>
+              <input type="text" class="form-control" th:value="${#authentication.principal.nickname}" readonly>
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text">RegDate</span>
@@ -116,7 +120,11 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text">nickname</span>
-            <input type="text" class="form-control qnaNickName">
+            <input type="text" class="form-control qnaNickName" th:value="${#authentication.principal.nickname}" readonly>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" hidden>id</span>
+            <input type="text" class="form-control qnaID" th:value="${#authentication.principal.mid}" hidden>
           </div>
         </div>
         <div class="modal-footer">
@@ -186,7 +194,7 @@
         str += `<li class="list-group-item d-flex qReplyItem">
                     <span class="col-2">${dto.qnaRno}</span>
                     <span class="col-6" data-qnaRno="${dto.qnaRno}">${dto.content}</span>
-                    <span class="col-2">${dto.nickname}</span>
+                    <span class="col-2">${dto.nickName}</span>
                     <span class="col-2">${dto.regDate}</span>
                 </li>`;
       }
@@ -217,6 +225,7 @@
   // registerModal
   const qnaRegisterBtn = document.querySelector(".qnaRegisterBtn");
   const content = document.querySelector(".qnaReplyContent");
+  const id = document.querySelector(".qnaID");
   const nickName = document.querySelector(".qnaNickName");
   const qnaCloseRegisterBtn = document.querySelector(".qnaCloseRegisterBtn");
   console.log();
@@ -230,14 +239,15 @@
 
   // 댓글 등록 자바스크립트
   qnaRegisterBtn.addEventListener("click", function (e) {
-    const replyObj = {qnaBoardNo:qnaBoardNo, content:content.value, nickName:nickname.value}
+    const replyObj = {qnaBoardNo:qnaBoardNo, content:content.value, nickName:nickName.value, id:id.value}
     console.log(replyObj);
     addQReply(replyObj).then(result => { // 등록 후 결과처리
       alert(result.data.qnaRno);
       console.log(result);
-      registerModal.hide();
+      qnaRegisterModal.hide();
       content.value = '';
       nickName.value = '';
+      id.value = this.id.value;
       printReplies(1, 10 ,true); // 댓글 목록 갱신
     }).catch(e => {
       alert("Exception...");
@@ -256,7 +266,7 @@
     console.log(target);
 
     if (!target || target.tagName != 'A') {
-      return
+      return;
     }
 
     const pageNum = target.getAttribute("data-page");

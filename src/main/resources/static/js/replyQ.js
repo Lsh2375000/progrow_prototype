@@ -32,6 +32,6 @@ async function modifyQReply(replyObj) { // 댓글 수정
 }
 
 async function removeQReply(qnaRno) { // 댓글 삭제
-    const response = await axios.delete(`/qReplies/${qnaRno}`);
+    const response = await axios.delete(`/qnaReplies/${qnaRno}`);
     return response.data;
 }

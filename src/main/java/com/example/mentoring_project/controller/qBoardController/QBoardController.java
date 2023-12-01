@@ -88,7 +88,7 @@ public class QBoardController {
         redirectAttributes.addFlashAttribute("result", "modified");
         redirectAttributes.addAttribute("qnaBoardNo", qBoardDTO.getQnaBoardNo());
 
-        return "redirect:/qboard/read";
+        return "redirect:/qboard/list";
     }
 
 

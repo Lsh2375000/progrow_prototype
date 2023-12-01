@@ -34,8 +34,8 @@ public class QReplyServiceImpl implements QReplyService {
 //        return qReplyVO.getQRno();
 //    }
     @Override
-    public QReplyDTO read(Long qRno) {
-        QReplyVO qReplyVO = qReplyMapper.selectOneQR(qRno);
+    public QReplyDTO read(Long qnaRno) {
+        QReplyVO qReplyVO = qReplyMapper.selectOneQR(qnaRno);
         return modelMapper.map(qReplyVO, QReplyDTO.class);
     }
 
@@ -47,8 +47,8 @@ public class QReplyServiceImpl implements QReplyService {
     }
 
     @Override
-    public void removeOne(Long qRno) {
-        qReplyMapper.deleteOneQR(qRno);
+    public void removeOne(Long qnaRno) {
+        qReplyMapper.deleteOneQR(qnaRno);
     }
 
     @Override
